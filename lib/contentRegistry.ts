@@ -24,6 +24,14 @@ export type Field =
   | { type: "text"; label: string; placeholder?: string; help?: string }
   | { type: "paragraph"; label: string; placeholder?: string; help?: string; rows?: number }
   | { type: "url"; label: string; placeholder?: string; help?: string }
+  | {
+      /** Dropdown picker — value is one of the option strings. */
+      type: "select";
+      label: string;
+      help?: string;
+      options: Array<{ value: string; label: string }>;
+    }
+  | { type: "boolean"; label: string; help?: string }
   | { type: "list"; label: string; itemType: "text" | "paragraph"; help?: string }
   | { type: "object"; label: string; help?: string; shape: Record<string, Field> }
   | {

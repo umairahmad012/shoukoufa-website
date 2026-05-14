@@ -276,31 +276,18 @@ type ClosingsGridData = WithWrapper<{
   eyebrow?: string;
   heading?: string;
   subtitle?: string;
-  cta?: { label?: string; href?: string };
+  /** "preview" = first 6 with "See All Closings" CTA (homepage); "full" = all + Load More (/closings). */
+  mode?: "preview" | "full";
 }>;
 
 export async function ClosingsGridBlock({ data }: { data: ClosingsGridData }) {
   const items = await getClosings();
+  const preview = data.mode === "preview";
   return (
     <BlockShell wrapper={data.wrapper}>
-      <div className="max-w-3xl mx-auto text-center mb-14">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
-        {data.heading ? (
-          <h2
-            className="heading-section text-ink mb-6"
-            style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
-          >
-            {data.heading}
-          </h2>
-        ) : null}
-        {data.subtitle ? (
-          <p className="text-base md:text-lg font-light text-ink/75 leading-[1.9]">
-            {data.subtitle}
-          </p>
-        ) : null}
-      </div>
       <ClosingsGalleryClient
         items={items}
+        preview={preview}
         content={{
           eyebrow: data.eyebrow || "",
           heading: data.heading || "",

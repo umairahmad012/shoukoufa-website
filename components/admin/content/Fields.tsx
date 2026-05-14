@@ -66,6 +66,40 @@ export function FieldRenderer({ field, value, onChange, depth = 0 }: FieldRender
         </div>
       );
 
+    case "select":
+      return (
+        <div>
+          <label className="admin-label">{field.label}</label>
+          <select
+            className="admin-input"
+            value={asString(value) || field.options[0]?.value || ""}
+            onChange={(e) => onChange(e.target.value)}
+          >
+            {field.options.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+          {field.help && <p className="text-[11px] text-ink/50 mt-1.5">{field.help}</p>}
+        </div>
+      );
+
+    case "boolean":
+      return (
+        <div>
+          <label className="admin-label flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={Boolean(value)}
+              onChange={(e) => onChange(e.target.checked)}
+            />
+            <span>{field.label}</span>
+          </label>
+          {field.help && <p className="text-[11px] text-ink/50 mt-1.5">{field.help}</p>}
+        </div>
+      );
+
     case "paragraph":
       return (
         <div>

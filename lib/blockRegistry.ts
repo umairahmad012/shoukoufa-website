@@ -72,25 +72,47 @@ export const wrapperShape: Record<string, Field> = {
       "Optional autoplaying muted-loop video background. Overrides the background image when filled in.",
   },
   overlay: {
-    type: "text",
+    type: "select",
     label: "Overlay",
-    help: '"none" · "light" · "dark" · "heavy". Dimming layer over the background.',
+    help: "Dimming layer over the background. Helps text stay readable on busy photos.",
+    options: [
+      { value: "none", label: "None — no dim" },
+      { value: "light", label: "Light — subtle white wash" },
+      { value: "dark", label: "Dark — soft black wash" },
+      { value: "heavy", label: "Heavy — strong dim" },
+    ],
   },
   spacing: {
-    type: "text",
+    type: "select",
     label: "Spacing",
-    help: '"compact" · "normal" · "large". Section vertical padding.',
+    help: "Vertical padding around this section.",
+    options: [
+      { value: "compact", label: "Compact — tight" },
+      { value: "normal", label: "Normal — default" },
+      { value: "large", label: "Large — airy" },
+    ],
   },
   theme: {
-    type: "text",
+    type: "select",
     label: "Theme",
-    help: '"cream" · "white" · "navy" · "transparent". Base color of this section.',
+    help: "Base background color of this section. Ignored when a background image / video is set.",
+    options: [
+      { value: "transparent", label: "Transparent — inherit page bg" },
+      { value: "cream", label: "Cream — warm off-white" },
+      { value: "white", label: "White — pure white" },
+      { value: "navy", label: "Navy — dark brand blue" },
+    ],
   },
   textColor: {
-    type: "text",
+    type: "select",
     label: "Text Color",
     help:
-      '"auto" (default — light text on dark/photo sections, dark text on cream/white) · "light" (force white text) · "dark" (force ink text). Use this when you upload a dark background photo to a normally-cream section and the text becomes unreadable.',
+      "Use this when contrast looks wrong — e.g. you put a dark photo on a normally-cream section and the body text becomes unreadable.",
+    options: [
+      { value: "auto", label: "Auto — match background" },
+      { value: "light", label: "Light — force white text" },
+      { value: "dark", label: "Dark — force ink text" },
+    ],
   },
 };
 
@@ -484,19 +506,29 @@ export const BLOCK_DEFS: BlockDef[] = [
   {
     type: "closings_grid",
     label: "Closings Grid",
-    description: "Closings managed in Admin → Recent Closings.",
+    description:
+      "Closings managed in Admin → Recent Closings. Use preview mode on the homepage to show just the first 6 with a 'See All' link; full mode (used on /closings) shows all and paginates.",
     category: "Special Sections",
     dataShape: {
       eyebrow: { type: "text", label: "Eyebrow" },
       heading: { type: "text", label: "Heading" },
       subtitle: { type: "paragraph", label: "Subtitle", rows: 2 },
-      cta: { type: "object", label: "Button (optional)", shape: ctaShape },
+      mode: {
+        type: "select",
+        label: "Mode",
+        help:
+          'Preview = first 6 only + "See All Closings" link (use on homepage). Full = all closings with Load More (use on /closings).',
+        options: [
+          { value: "preview", label: "Preview — first 6 + See All link" },
+          { value: "full", label: "Full — all closings + Load More" },
+        ],
+      },
     },
     defaultData: () => ({
       eyebrow: "Recent Closings",
       heading: "",
       subtitle: "",
-      cta: { label: "", href: "" },
+      mode: "full",
     }),
   },
   {

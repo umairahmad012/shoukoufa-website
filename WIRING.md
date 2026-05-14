@@ -142,12 +142,12 @@ anywhere; the three "background" types must not repeat adjacent.
 | 45 | quote_pullquote ("Why I'm in this work") | ⬜ T |
 | 50 | community_grid (six neighborhoods) | **🟧 P2** |
 | 60 | cta_band Invest teaser (navy) | **🟫 S** |
-| 70 | cta_band Closings teaser (cream theme) | ⬜ T |
+| 70 | closings_grid (first 6 + See All link) | **🟧 P2** |
 | 80 | dark_break ("Why I do this work") | **🟦 P1** |
 | 90 | reviews_strip (glass-light cards) | ⬜ T |
 | 100 | bottom_signoff | ⬜ T |
 
-Adjacencies: P1↔T, T↔T, T↔P2, P2↔T, T↔P2, P2↔S, S↔T, T↔P1, P1↔T, T↔T.
+Adjacencies: P1↔T, T↔T, T↔P2, P2↔T, T↔P2, P2↔S, S↔P2, P2↔P1, P1↔T, T↔T.
 No same-bucket pair touches. ✅
 
 ### When you add a new block via the admin
@@ -169,7 +169,7 @@ If you spot a same-bucket adjacency, you have three easy fixes:
 
 | Page | Sequence |
 |---|---|
-| home | 🟦 ⬜ ⬜ 🟧 ⬜ 🟧 🟫 ⬜ 🟦 ⬜ ⬜ |
+| home | 🟦 ⬜ ⬜ 🟧 ⬜ 🟧 🟫 🟧 🟦 ⬜ ⬜ |
 | about | 🟦 ⬜ ⬜ 🟦 ⬜ 🟫 |
 | buyers | 🟦 ⬜ ⬜ 🟦 ⬜ 🟦 ⬜ |
 | sellers | 🟦 ⬜ ⬜ 🟦 ⬜ 🟦 ⬜ |
@@ -267,7 +267,7 @@ headings/intro copy:
 |---|---|---|
 | `community_grid` · `comparison_table` | `communities` table | `/admin/communities` |
 | `reviews_strip` · `reviews_full` | `reviews` table | `/admin/reviews` |
-| `closings_grid` | `closings` table | `/admin/closings` |
+| `closings_grid` | `closings` table | `/admin/closings` — has a **Mode** dropdown: `preview` (first 6 + "See All Closings" link, used on Home) or `full` (all + Load More, used on `/closings`) |
 | `partners_directory` | `partners` + `partner_categories` tables | `/admin/partners` |
 | `direct_contact` | `site` constants in `lib/site.ts` (phone, email, licenses) | `/admin/brand` (Brand Identity) |
 | `meet_agent` | `media` portrait via `getPortrait()` | `/admin/brand` (Realtor Image) |
@@ -304,18 +304,19 @@ background-image-or-YouTube-video / overlay / theme / spacing wrapper.
 | Live URL | `/` |
 | Admin URL | `/admin/builder/home` |
 
-Default sections (10):
+Default sections (11):
 
 1. `hero` — eyebrow / title lines / subtitle / CTAs / stats
 2. `meet_agent` — Meet Shoukoufa intro + portrait
-3. `dark_break` — "What Clients Say Most" photo strip
+3. `quote_pullquote` — "What clients say most"
 4. `three_cards` — Three Ways I Help (Buying / Selling / Invest)
-5. `community_grid` — six neighborhood cards (data from `communities` table)
-6. `cta_band` — Invest teaser
-7. `cta_band` — Recent Closings teaser
-8. `dark_break` — "Why I Do This Work" photo strip
-9. `reviews_strip` — featured reviews (data from `reviews` table)
-10. `bottom_signoff` — closing line
+5. `quote_pullquote` — "Why I'm in this work"
+6. `community_grid` — six neighborhood cards (data from `communities` table)
+7. `cta_band` — Invest teaser (navy)
+8. `closings_grid` — **first 6 closings + "See All Closings" link** (data from `closings` table, `mode: "preview"`)
+9. `dark_break` — "Why I Do This Work" photo strip
+10. `reviews_strip` — featured reviews (data from `reviews` table)
+11. `bottom_signoff` — closing line
 
 #### 5.2 About — `/about`
 
