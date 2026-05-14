@@ -58,8 +58,9 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
             <div className="absolute inset-0 overlay-card" />
 
             {/* Frosted glass strip at the bottom — state header, name,
-                and median / YoY / DOM stats */}
-            <div className="absolute left-5 right-5 bottom-5 md:left-8 md:right-8 md:bottom-8 glass-dark p-5 md:p-9 text-white">
+                and median / YoY / DOM stats. Larger padding + offset for
+                better breathing room over the photo. */}
+            <div className="absolute left-6 right-6 bottom-6 md:left-10 md:right-10 md:bottom-10 glass-dark p-6 md:p-10 text-white">
               <div className="flex items-baseline justify-between mb-3 md:mb-4">
                 <p className="text-[0.62rem] md:text-[0.72rem] tracking-[0.32em] uppercase text-white/70">
                   {c.state}

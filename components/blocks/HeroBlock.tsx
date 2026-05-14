@@ -132,41 +132,58 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
         </div>
 
         {stats.length > 0 && (
-          <div className="pb-10 md:pb-14 px-6 sm:px-8">
-            <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-12">
-              {stats.map((s, i) => {
-                const num =
-                  typeof s.value === "number"
-                    ? s.value
-                    : parseFloat(String(s.value ?? "0")) || 0;
-                const dec =
-                  typeof s.decimals === "number"
-                    ? s.decimals
-                    : s.decimals
-                      ? parseInt(String(s.decimals), 10)
-                      : undefined;
-                return (
-                  <div
-                    key={i}
-                    className="glass-pill px-6 py-5 sm:py-6 text-center"
-                  >
-                    <p
-                      className="text-3xl md:text-4xl text-white mb-2"
-                      style={{ fontWeight: 200 }}
+          // Frosted glass stat strip — ONE container with internal dividers.
+          // Uses `glass-dark` (not glass-pill) so the animated golden border
+          // shine runs around the whole strip. The thin white line under each
+          // counter is the "accent line" — restored from the original Hero.
+          <div className="pb-14 md:pb-20 px-4 sm:px-6">
+            <div
+              className="max-w-6xl mx-auto glass-dark rounded-[2px] animate-fade-in-up"
+              style={{ animationDelay: "1.3s", animationFillMode: "both" }}
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3">
+                {stats.map((s, i) => {
+                  const num =
+                    typeof s.value === "number"
+                      ? s.value
+                      : parseFloat(String(s.value ?? "0")) || 0;
+                  const dec =
+                    typeof s.decimals === "number"
+                      ? s.decimals
+                      : s.decimals
+                        ? parseInt(String(s.decimals), 10)
+                        : undefined;
+                  return (
+                    <div
+                      key={i}
+                      className={`px-6 sm:px-8 md:px-12 py-10 sm:py-12 md:py-16 text-center ${
+                        i > 0
+                          ? "md:border-l border-white/15 border-t md:border-t-0"
+                          : ""
+                      }`}
                     >
-                      <Counter
-                        to={num}
-                        decimals={dec}
-                        prefix={s.prefix}
-                        suffix={s.suffix}
-                      />
-                    </p>
-                    <p className="text-[0.62rem] tracking-[0.3em] uppercase text-white/80 leading-[1.7]">
-                      {s.label}
-                    </p>
-                  </div>
-                );
-              })}
+                      <p
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-wide"
+                        style={{ fontWeight: 200, letterSpacing: "0.04em" }}
+                      >
+                        <Counter
+                          to={num}
+                          decimals={dec}
+                          prefix={s.prefix}
+                          suffix={s.suffix}
+                        />
+                      </p>
+                      <div className="mx-auto my-4 md:my-5 w-8 md:w-9 h-px bg-white/35" />
+                      <p
+                        className="text-[0.62rem] sm:text-[0.68rem] md:text-[0.75rem] tracking-[0.30em] md:tracking-[0.32em] uppercase text-white/80 px-2"
+                        style={{ fontWeight: 400 }}
+                      >
+                        {s.label}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}

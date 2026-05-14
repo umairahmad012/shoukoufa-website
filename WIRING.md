@@ -98,6 +98,49 @@ toggle / add / delete / edit, and writes back through server actions in
 
 ---
 
+## 3.5 Section background alternation rule
+
+**Visual rhythm rule** — followed by `scripts/normalizeSectionBackgrounds.ts`
+and every default-layout seed. Worth re-reading before adding new blocks.
+
+```
+1. Sections should ALTERNATE between BG-bearing and plain.
+   • BG-bearing  = wrapper has a background image or YouTube video
+   • plain       = wrapper has no media (theme color + content only)
+
+2. At most TWO plain sections may sit back-to-back.
+   The THIRD section in any sequence MUST carry a background.
+
+3. NEVER two BG-bearing sections back-to-back.
+   (Two photos stacked = visual fight. Always break with one plain.)
+
+4. If a block has IMAGE-BEARING CONTAINERS INSIDE
+   (three_cards with per-card images, community_grid, closings_grid),
+   the SECTION wrapper must be plain — never two photo layers.
+   The cards themselves carry the photographs.
+```
+
+**Block types that always carry a wrapper bg:**
+`hero`, `dark_break` — their whole identity is the photo.
+
+**Block types that NEVER carry a wrapper bg** (their cards do):
+`three_cards` (when cards have images), `community_grid`,
+`closings_grid`, `partners_directory`, `reviews_strip` (glass cards),
+`reviews_full` (glass cards), `practice_areas` (numbered glass cards).
+
+**Block types that CAN have a wrapper bg** (used as variety/anchors):
+`paragraph_block`, `bullet_list`, `stats_strip`, `cta_band`, `faq`,
+`process_steps`, `quote_pullquote`, `two_column`, `valuation_form`,
+`contact_form`.
+
+When you add a new block via Admin → Page Builder → + Add Block, the
+admin doesn't currently enforce this rule for you — it's a design
+discipline. If you violate it, run `scripts/normalizeSectionBackgrounds.ts`
+again (or just manually toggle off the wrapper image in the offending
+section's edit modal).
+
+---
+
 ## 4. Block library — the 24 types
 
 Every block carries an optional `data.wrapper` object:

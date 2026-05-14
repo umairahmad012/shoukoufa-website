@@ -11,6 +11,18 @@
  * Universal wrapper fields (background image, YouTube video, theme,
  * spacing) are NOT part of dataShape — they live in `data.wrapper` and
  * are rendered/edited by the renderer + admin shell, not the block itself.
+ *
+ * ─── BACKGROUND-ALTERNATION RULE (see WIRING.md §3.5) ───
+ *   1. Sections alternate BG-bearing ↔ plain.
+ *   2. Max 2 plain in a row; the 3rd must have a background.
+ *   3. Never 2 BG-bearing sections back-to-back.
+ *   4. If a block has image-bearing CONTAINERS INSIDE (three_cards with
+ *      card.image, community_grid, closings_grid), the SECTION wrapper
+ *      stays plain — never two photo layers stacked.
+ *   Always-bg blocks: hero, dark_break.
+ *   Always-plain blocks: three_cards (with images), community_grid,
+ *     closings_grid, partners_directory, reviews_strip, reviews_full,
+ *     practice_areas.
  */
 import type { Field } from "./contentRegistry";
 

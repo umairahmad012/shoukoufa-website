@@ -131,18 +131,20 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
               {/* Subtle dim so text on glass stays legible against any photo */}
               <div className="absolute inset-0 overlay-card" />
 
-              {/* Frosted glass content panel anchored at the bottom */}
-              <div className="absolute left-5 right-5 bottom-5 md:left-8 md:right-8 md:bottom-8 glass-dark p-6 md:p-9 text-white">
+              {/* Frosted glass content panel anchored at the bottom.
+                  Larger padding + edge-offset (`inset-6 md:inset-10`-ish)
+                  for breathing room and symmetry with the photo border. */}
+              <div className="absolute left-6 right-6 bottom-6 md:left-10 md:right-10 md:bottom-10 glass-dark p-7 md:p-11 text-white">
                 {c.title ? (
                   <h3
-                    className="text-lg md:text-2xl uppercase mb-4 md:mb-5"
+                    className="text-xl md:text-3xl uppercase mb-5 md:mb-6"
                     style={{ fontWeight: 400, letterSpacing: "0.08em" }}
                   >
                     {c.title}
                   </h3>
                 ) : null}
                 {c.body ? (
-                  <p className="text-sm md:text-[0.95rem] font-light leading-[1.8] md:leading-[1.85] text-white/85 mb-5 md:mb-7">
+                  <p className="text-sm md:text-base font-light leading-[1.85] md:leading-[1.9] text-white/85 mb-6 md:mb-8">
                     {c.body}
                   </p>
                 ) : null}
