@@ -178,9 +178,9 @@ export async function ReviewsStripBlock({ data }: { data: ReviewsStripData }) {
         ) : null}
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-        {reviews.map((r) => (
+        {reviews.map((r, i) => (
           <figure
-            key={r.id}
+            key={i}
             className="glass-light p-7 md:p-9 flex flex-col h-full"
           >
             <p className="text-amber-500 text-lg mb-4" style={{ letterSpacing: "0.1em" }}>
@@ -190,8 +190,7 @@ export async function ReviewsStripBlock({ data }: { data: ReviewsStripData }) {
               “{r.quote}”
             </blockquote>
             <figcaption className="mt-6 pt-5 border-t border-navy/15 text-[0.65rem] tracking-[0.32em] uppercase text-ink-muted">
-              {r.author_short_label || r.author_name} ·{" "}
-              <span className="text-navy">{r.source}</span>
+              {r.short ?? ""} · <span className="text-navy">{r.source}</span>
             </figcaption>
           </figure>
         ))}
@@ -201,13 +200,13 @@ export async function ReviewsStripBlock({ data }: { data: ReviewsStripData }) {
 }
 
 // ────────────────────────────────────────────────────────────── REVIEWS FULL
-export async function ReviewsFullBlock({ data }: { data: WithWrapper<{}> }) {
+export async function ReviewsFullBlock({ data }: { data: WithWrapper<Record<string, unknown>> }) {
   const reviews = await getReviews({ onlyHomepage: false });
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-        {reviews.map((r) => (
-          <figure key={r.id} className="glass-light p-7 md:p-9 flex flex-col h-full">
+        {reviews.map((r, i) => (
+          <figure key={i} className="glass-light p-7 md:p-9 flex flex-col h-full">
             <p className="text-amber-500 text-lg mb-4" style={{ letterSpacing: "0.1em" }}>
               ★★★★★
             </p>
@@ -215,8 +214,7 @@ export async function ReviewsFullBlock({ data }: { data: WithWrapper<{}> }) {
               “{r.quote}”
             </blockquote>
             <figcaption className="mt-6 pt-5 border-t border-navy/15 text-[0.65rem] tracking-[0.32em] uppercase text-ink-muted">
-              {r.author_short_label || r.author_name} ·{" "}
-              <span className="text-navy">{r.source}</span>
+              {r.short ?? ""} · <span className="text-navy">{r.source}</span>
             </figcaption>
           </figure>
         ))}
@@ -259,10 +257,6 @@ export async function ClosingsGridBlock({ data }: { data: ClosingsGridData }) {
           eyebrow: data.eyebrow || "",
           heading: data.heading || "",
           subtitle: data.subtitle || "",
-          cta: {
-            label: data.cta?.label || "",
-            href: data.cta?.href || "",
-          },
         }}
       />
     </BlockShell>
