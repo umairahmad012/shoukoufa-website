@@ -4,7 +4,7 @@
 > its data lives, and which admin screen edits each piece. If you're trying to
 > figure out "where do I change X?", start here.
 
-Last refreshed: 2026-05-14 · Owner: Umair @ Brand Bonjour
+Last refreshed: 2026-05-14 (Site Settings + dynamic metadata + Privacy in builder) · Owner: Umair @ Brand Bonjour
 
 ---
 
@@ -65,6 +65,7 @@ toggle / add / delete / edit, and writes back through server actions in
 | **Page builder UI** | `app/admin/builder/[page]/` + `components/admin/builder/BuilderClient.tsx` | List · reorder · toggle · edit · duplicate · delete · add-block-from-library |
 | **Server actions** | `app/admin/builder/[page]/actions.ts`, `app/admin/pages/actions.ts`, etc. | Authenticated mutations against Supabase |
 | **Brand Identity** | `app/admin/brand/` + `lib/site.ts` defaults | Brand-wide values (name, role, brokerage, tagline, portrait, broker logo, favicon, share image) |
+| **Site Settings** | `app/admin/settings/` + `lib/siteSettings.ts` | Phone, email, social URLs, licenses, brokerage office, fixed-nav order, per-page metadata (title / description) |
 | **Specialized admins** | `/admin/communities`, `/admin/reviews`, `/admin/closings`, `/admin/partners`, `/admin/open-houses`, `/admin/forms`, `/admin/seo`, `/admin/media`, `/admin/integrations` | Each owns its own table; special blocks pull from these |
 | **Cloudinary** | `lib/cloudinary.ts`, `lib/cloudinaryAdmin.ts` | Image delivery URLs (q_auto:best, dpr_auto, etc.) + admin storage tracking. Preset: `shoukoufa-uploads` → folder `shoukoufa-website/` |
 
@@ -75,8 +76,10 @@ toggle / add / delete / edit, and writes back through server actions in
 | Table | Purpose | Edited from |
 |---|---|---|
 | `page_blocks` | One row per section instance on any page. `page_key` + `block_type` + `position` + `data` (jsonb) | **Admin → Page Builder** |
-| `pages` | Admin-created custom pages (slug, title, description, published, show_in_nav, nav_order) | **Admin → Pages** |
-| `content_blocks` | Legacy section content (key/value pairs per page). Still used by Brand Identity + a few non-builder spots (open-house, realtor-in) | **Admin → Brand Identity** + content forms |
+| `pages` | Admin-created custom pages (slug, title, description, published, show_in_nav, nav_order) | **Admin → Custom Pages** |
+| `site_settings` | Singleton row: phone, email, social URLs, licenses, brokerage office, fixed-nav config | **Admin → Site Settings** |
+| `page_meta` | Per-page title + meta description for fixed routes (home/about/buyers/.../privacy) | **Admin → Site Settings → Page Metadata** |
+| `content_blocks` | Brand Identity values only now (portrait, broker logo, favicon, share image, name, role, brokerage, tagline). Was the original section-content store before page-builder. | **Admin → Brand Identity** |
 | `content_history` | Versioned history of content_blocks edits (30-day rollback) | Auto-written by save actions |
 | `media` | Uploaded image + YouTube video records (Cloudinary public_id, alt, kind) | **Admin → Media Library** |
 | `reviews` | Testimonials (source, author, quote, rating, featured-on-homepage) | **Admin → Reviews** |
@@ -300,7 +303,20 @@ Sections: `hero` · `partners_directory` (from `partners` table) ·
 
 Sections: `hero` · `contact_form` · `direct_contact`
 
-#### 5.11 Custom pages — `/<slug>`
+#### 5.11 Privacy — `/privacy`
+
+| Field | Value |
+|---|---|
+| Source file | `app/privacy/page.tsx` |
+| Page key | `privacy` |
+| Admin URL | `/admin/builder/privacy` |
+
+Sections (7 seeded): `hero` · `paragraph_block` (Your Information) · `paragraph_block`
+(Communications) · `paragraph_block` (Cookies & Analytics) · `bullet_list`
+(Real Estate Disclaimers) · `paragraph_block` (Licensing) · `paragraph_block`
+(Contact Shoukoufa)
+
+#### 5.12 Custom pages — `/<slug>`
 
 | Field | Value |
 |---|---|
@@ -404,7 +420,22 @@ Google Business Profile link. Stored in `integrations` table.
 GA4 ID is read by `app/layout.tsx` at request time and injected as
 `<script>gtag.js</script>`.
 
-### 6.10 Team — `/admin/team`
+### 6.11 Site Settings — `/admin/settings`
+
+Singleton `site_settings` row holds the brand-wide values that used to be
+hardcoded in `lib/site.ts`. Loaded via `lib/siteSettings.ts` `getSiteSettings()`
+in the root layout and passed down to Footer + Header via props.
+
+Four tabs in the admin UI:
+
+| Tab | Edits |
+|---|---|
+| **Contact** | Phone (display + tel: link), email (+ mailto:), brokerage office (name / street / city·state·zip / phone), Virginia / Maryland / D.C. license numbers |
+| **Social** | Instagram, Facebook, TikTok, YouTube, LinkedIn URLs |
+| **Header Nav** | For the 10 fixed routes: toggle visibility, drag-reorder, rename label. Custom pages with `show_in_nav = true` slot in automatically before Contact. |
+| **Page Metadata** | Title + meta description for every fixed route + Privacy. Read by each page's `generateMetadata()` from the `page_meta` table. |
+
+### 6.12 Team — `/admin/team`
 
 Roster of admin users with role (owner / editor). For now invite flow is
 manual: create user via Supabase Auth Admin API + insert row in `team_members`.
@@ -417,7 +448,6 @@ These have their own templates because they need very specific layouts.
 
 | Route | Source file | Why hand-coded |
 |---|---|---|
-| `/privacy` | `app/privacy/page.tsx` | Long-form legal text. Stable. |
 | `/open-house/<slug>` | `app/open-house/[slug]/page.tsx` | Flyer-perfect layout + print stylesheet |
 | `/realtor-in/<county>` | `app/realtor-in/[slug]/page.tsx` | County-specific SEO template (different per-county fields) |
 | `/form/<slug>` | `app/form/[slug]/page.tsx` | Form renderer reads `forms` table definition |
@@ -446,19 +476,21 @@ Everything below requires a developer to change (code edit + deploy).
   social URLs come from `lib/site.ts`, which is hardcoded — see "Brand
   constants in `lib/site.ts`" below.
 
-### 8.2 Brand constants in `lib/site.ts` (not in admin)
-- **Phone number** + tel link (`(703) 307-0889`)
-- **Email** + mailto link (`realtor@shoukoufahomes.com`)
-- **Brokerage office** — name, street, city/state/zip, phone, logo path
-- **Office address**
-- **License numbers** — VA, MD, DC
-- **Social URLs** — Instagram, Facebook, TikTok
-- **Hero stats fallbacks** (the `heroStats` constant)
-- **Nav structure** — the fixed nav array (Home, About, Buyers, ...)
+### 8.2 Brand constants in `lib/site.ts` — ✅ now ADMIN-EDITABLE
 
-If Shoukoufa changes her phone number, gets a new license, or wants the
-office address swapped, that's a code edit. Could be moved into admin in a
-future "Site Settings" section.
+Most of these moved into the `site_settings` table and are edited via
+**Admin → Site Settings**. `lib/site.ts` stays as the compile-time fallback
+in case the DB is unavailable.
+
+- ✅ Phone number + tel link — `Site Settings → Contact`
+- ✅ Email + mailto link — `Site Settings → Contact`
+- ✅ Brokerage office (name, street, city/state/zip, phone) — `Site Settings → Contact`
+- ✅ License numbers (VA, MD, DC) — `Site Settings → Contact`
+- ✅ Social URLs (Instagram, Facebook, TikTok, YouTube, LinkedIn) — `Site Settings → Social`
+- ✅ Fixed-nav order + visibility + labels — `Site Settings → Header Nav`
+- ❌ **Office address** (`site.office`) — still in `lib/site.ts`, currently only used as a fallback. Brokerage office in Site Settings is the live one.
+- ❌ **Brokerage logo path** (`brokerageOffice.logoSrc`) — image picker not yet wired into Site Settings. Path is hardcoded to `/images/Remax%20Galaxy.png`.
+- ❌ **Hero stats fallbacks** (the `heroStats` constant) — only used as a last-resort fallback; the actual stats live on the homepage Hero block's `stats` field.
 
 ### 8.3 Block library itself
 - The 24 block types are defined in `lib/blockRegistry.ts`. You can use,
@@ -527,14 +559,16 @@ future "Site Settings" section.
   Resend / SendGrid integration.
 
 ### 8.9 SEO basics
-- **`<title>` and `<meta description>` for fixed pages** — hardcoded in
-  each `app/<page>/page.tsx`'s `metadata` export. Custom pages get their
-  title / description from the `pages` table (editable).
-- **Sitemap structure** — `app/sitemap.ts`. Custom pages auto-appear, but
-  the priority + change-frequency values per route are hardcoded.
-- **robots.txt** — `app/robots.ts`.
-- **OpenGraph image** — default editable via Brand → Featured Image, but
-  the per-route OG overrides (open-house listings, etc.) are code-level.
+- ✅ **`<title>` and `<meta description>` for every fixed page** — editable
+  in `Site Settings → Page Metadata`. Reads from the `page_meta` table
+  via `generateMetadata()` in each route.
+- ✅ Custom pages get their title / description from the `pages` table
+  (Custom Pages screen).
+- ❌ **Sitemap priority + change-frequency** per route — hardcoded in
+  `app/sitemap.ts`. Custom pages auto-appear with default priority.
+- ❌ **robots.txt** — `app/robots.ts`.
+- ✅ **Default OpenGraph image** — Brand → Featured Image.
+- ❌ **Per-route OG image overrides** (open-house listings, etc.) — code-level.
 
 ### 8.10 Page-builder edge controls
 - **Block-internal element order** — e.g. swapping image-left / image-right
@@ -560,7 +594,10 @@ future "Site Settings" section.
 | Create a brand new page | `/admin/pages` → + New Page |
 | Publish a draft page | `/admin/pages` → click 👁 on the row |
 | Put a custom page in the header menu | `/admin/pages` → ⚙ on row → "Show in header nav" |
-| Phone number, email, social, license | **Code edit** to `lib/site.ts` (today). Future: Site Settings admin |
+| Phone, email, brokerage office, licenses | `/admin/settings` → Contact |
+| Social URLs (Instagram, Facebook, TikTok, YouTube, LinkedIn) | `/admin/settings` → Social |
+| Header navigation order / visibility / labels | `/admin/settings` → Header Nav |
+| Page title or meta description (any fixed page) | `/admin/settings` → Page Metadata |
 | Realtor name / role / brokerage / tagline | `/admin/brand` → Brand Identity |
 | Realtor portrait | `/admin/brand` → Realtor Image |
 | Broker / brokerage logo | `/admin/brand` → Broker Image |
@@ -575,6 +612,8 @@ future "Site Settings" section.
 | Custom forms | `/admin/forms` |
 | County landing pages (SEO) | `/admin/seo` |
 | Google Analytics ID | `/admin/integrations` |
+| Privacy policy text | `/admin/builder/privacy` |
+| Create a new page (e.g. "Moving to Vienna") | `/admin/pages` → + New Page |
 | Add a new admin user | `/admin/signup` (first user only) or manual SQL after |
 | Tweak colors, fonts, motion, layout chrome | **Code edit** (see §8.6) |
 
@@ -594,9 +633,11 @@ future "Site Settings" section.
 - `lib/blockRegistry.ts` — block type definitions + auto-form schemas
 - `lib/pageBlocks.ts` — block loader
 - `lib/customPages.ts` — pages table loader + slug validator (with the reserved-slug list)
-- `lib/site.ts` — hardcoded brand constants (phone, email, social, licenses, etc.) ← *most code-only edits start here*
+- `lib/site.ts` — compile-time DEFAULTS only. Live values come from `lib/siteSettings.ts` `getSiteSettings()` reading `site_settings` table.
+- `lib/siteSettings.ts` — runtime loader for brand constants + per-page metadata
+- `app/admin/settings/` — Site Settings admin (Contact / Social / Header Nav / Page Metadata)
 - `lib/content.ts` — legacy static content defaults (used as fallback before DB is populated)
-- `supabase/migrations/0014_page_blocks.sql` + `0015_custom_pages.sql` — the page-builder migrations
+- `supabase/migrations/0014_page_blocks.sql` + `0015_custom_pages.sql` + `0016_site_settings.sql` — the page-builder + custom-pages + site-settings migrations
 
 ---
 
