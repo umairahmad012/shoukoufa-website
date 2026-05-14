@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { extractCommon, type FormField } from "@/lib/forms";
+import { sendLeadNotification } from "@/lib/emailNotifications";
 
 type Result = { ok: true; id?: string; slug?: string } | { ok: false; error: string };
 
@@ -87,6 +88,36 @@ export async function submitFormPublic(input: {
   });
   if (error) return { ok: false, error: error.message };
 
+  // Look up the form title for a nicer email subject line. Tolerate
+  // missing rows so a corrupt form_id still allows the submission.
+  let formTitle: string | null = null;
+  try {
+    const { data: form } = await supabase
+      .from("forms")
+      .select("title")
+      .eq("id", input.formId)
+      .maybeSingle();
+    formTitle = (form as { title?: string } | null)?.title ?? null;
+  } catch {
+    /* non-fatal */
+  }
+
+  // Fire the email notification but don't block the response on it.
+  // Failures are logged server-side; the visitor still sees success.
+  void sendLeadNotification({
+    source: input.source,
+    formTitle,
+    data: input.data,
+    name: common.name,
+    email: common.email,
+    phone: common.phone,
+    message: common.message,
+  }).then((r) => {
+    if (!r.ok && r.reason === "send-failed") {
+      console.error("[lead-notify]", r.error);
+    }
+  });
+
   revalidatePath("/admin/inbox");
   return { ok: true };
 }
@@ -113,6 +144,19 @@ export async function submitBuiltInForm(input: {
     status: "new",
   });
   if (error) return { ok: false, error: error.message };
+
+  void sendLeadNotification({
+    source: input.source,
+    data: input.data,
+    name: common.name,
+    email: common.email,
+    phone: common.phone,
+    message: common.message,
+  }).then((r) => {
+    if (!r.ok && r.reason === "send-failed") {
+      console.error("[lead-notify]", r.error);
+    }
+  });
 
   revalidatePath("/admin/inbox");
   return { ok: true };

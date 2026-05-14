@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import type { NavEntry } from "@/lib/siteSettings";
+import { sendTestNotification } from "@/lib/emailNotifications";
 
 type SettingsPatch = {
   phone?: string;
@@ -28,6 +29,13 @@ type SettingsPatch = {
   footer_credit?: string;
   footer_newsletter_headline?: string;
   footer_newsletter_blurb?: string;
+  // Email notifications (admin-editable at /admin/settings → Notifications)
+  notification_email?: string;
+  notification_cc?: string;
+  notify_contact?: boolean;
+  notify_valuation?: boolean;
+  notify_forms?: boolean;
+  notify_rsvp?: boolean;
 };
 
 export async function updateSiteSettings(
@@ -62,4 +70,25 @@ export async function updatePageMeta(input: {
   revalidatePath(`/${input.page_key === "home" ? "" : input.page_key}`);
   revalidatePath(`/admin/settings`);
   return { ok: true };
+}
+
+/**
+ * Fire a sample lead-notification email to the currently-saved
+ * `notification_email`. Used by the "Send test email" button so the
+ * admin can verify wiring before relying on real form submissions.
+ */
+export async function sendNotificationTest(): Promise<
+  | { ok: true; id: string | null }
+  | { ok: false; error: string; reason: string }
+> {
+  // Require auth so this can't be hammered from outside the admin panel.
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, error: "Not signed in", reason: "auth" };
+
+  const res = await sendTestNotification();
+  if (res.ok) return { ok: true, id: res.id };
+  return { ok: false, error: res.error, reason: res.reason };
 }

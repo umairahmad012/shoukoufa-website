@@ -12,11 +12,15 @@
  */
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Save, ArrowUp, ArrowDown, Eye, EyeOff } from "lucide-react";
+import { Save, ArrowUp, ArrowDown, Eye, EyeOff, Send } from "lucide-react";
 import type { SiteSettings, NavEntry, PageMetaRow } from "@/lib/siteSettings";
-import { updateSiteSettings, updatePageMeta } from "@/app/admin/settings/actions";
+import {
+  updateSiteSettings,
+  updatePageMeta,
+  sendNotificationTest,
+} from "@/app/admin/settings/actions";
 
-type Tab = "contact" | "social" | "nav" | "meta" | "footer";
+type Tab = "contact" | "social" | "nav" | "meta" | "footer" | "notifications";
 
 export default function SettingsClient({
   initialSettings,
@@ -66,6 +70,12 @@ export default function SettingsClient({
         <TabButton active={tab === "footer"} onClick={() => setTab("footer")}>
           Footer Copy
         </TabButton>
+        <TabButton
+          active={tab === "notifications"}
+          onClick={() => setTab("notifications")}
+        >
+          Notifications
+        </TabButton>
       </div>
 
       {tab === "contact" && (
@@ -82,6 +92,9 @@ export default function SettingsClient({
       )}
       {tab === "footer" && (
         <FooterTab settings={settings} setSettings={setSettings} />
+      )}
+      {tab === "notifications" && (
+        <NotificationsTab settings={settings} setSettings={setSettings} />
       )}
     </div>
   );
@@ -635,6 +648,202 @@ function FooterTab({
       />
     </div>
   );
+}
+
+// ────────────────────────────────────────────────────── NOTIFICATIONS TAB
+
+function NotificationsTab({
+  settings,
+  setSettings,
+}: {
+  settings: SiteSettings;
+  setSettings: (s: SiteSettings) => void;
+}) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [testing, startTestTransition] = useTransition();
+  const [testResult, setTestResult] = useState<
+    | { kind: "ok"; id: string | null }
+    | { kind: "err"; message: string }
+    | null
+  >(null);
+
+  function save() {
+    setError(null);
+    startTransition(async () => {
+      const res = await updateSiteSettings({
+        notification_email: settings.notificationEmail.trim(),
+        notification_cc: settings.notificationCc.trim(),
+        notify_contact: settings.notifyContact,
+        notify_valuation: settings.notifyValuation,
+        notify_forms: settings.notifyForms,
+        notify_rsvp: settings.notifyRsvp,
+      });
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      setSavedAt(new Date());
+      router.refresh();
+    });
+  }
+
+  function sendTest() {
+    setTestResult(null);
+    startTestTransition(async () => {
+      const res = await sendNotificationTest();
+      if (res.ok) {
+        setTestResult({ kind: "ok", id: res.id });
+      } else {
+        setTestResult({
+          kind: "err",
+          message: explainSendError(res.error, res.reason),
+        });
+      }
+    });
+  }
+
+  const hasRecipient = settings.notificationEmail.trim().length > 0;
+
+  return (
+    <div className="space-y-8">
+      <Section title="Where to send lead notifications">
+        <Field
+          label="Recipient email"
+          value={settings.notificationEmail}
+          onChange={(v) =>
+            setSettings({ ...settings, notificationEmail: v })
+          }
+          placeholder="realtor@example.com"
+          help="When a visitor submits any form on the website, the lead's name + contact info + message lands in this inbox within seconds."
+        />
+        <Field
+          label="Also CC (optional)"
+          value={settings.notificationCc}
+          onChange={(v) => setSettings({ ...settings, notificationCc: v })}
+          placeholder="assistant@example.com"
+          help="A second email that gets a copy of every notification. Leave blank if you don't want anyone CC'd."
+        />
+        <div className="rounded-md bg-cream-soft border border-ink/10 p-4 text-xs text-ink/75 leading-relaxed">
+          <p style={{ fontWeight: 500 }} className="text-ink mb-1">
+            Sender details
+          </p>
+          <p>
+            Emails are sent from{" "}
+            <span className="font-mono text-[11px]">
+              {settings.name} Website &lt;notifications@brandbonjour.com&gt;
+            </span>
+            . When you hit Reply, your response goes directly to the visitor
+            (we set the reply-to header to whatever email they submitted).
+          </p>
+        </div>
+      </Section>
+
+      <Section title="Which forms should trigger an email?">
+        <ToggleRow
+          label="Contact form (the public Contact page)"
+          checked={settings.notifyContact}
+          onChange={(v) => setSettings({ ...settings, notifyContact: v })}
+        />
+        <ToggleRow
+          label="Home valuation requests (the Sellers form)"
+          checked={settings.notifyValuation}
+          onChange={(v) => setSettings({ ...settings, notifyValuation: v })}
+        />
+        <ToggleRow
+          label="Custom forms (anything you build in /admin/forms)"
+          checked={settings.notifyForms}
+          onChange={(v) => setSettings({ ...settings, notifyForms: v })}
+        />
+        <ToggleRow
+          label="Open House RSVPs"
+          checked={settings.notifyRsvp}
+          onChange={(v) => setSettings({ ...settings, notifyRsvp: v })}
+        />
+      </Section>
+
+      <Section title="Verify delivery">
+        <p className="text-sm text-ink/70 leading-relaxed">
+          Hit the button below to send a test email to{" "}
+          <span className="font-mono text-xs">
+            {settings.notificationEmail || "your recipient"}
+          </span>
+          . The email looks exactly like a real lead notification — if it
+          arrives, everything is wired correctly.
+        </p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <button
+            type="button"
+            disabled={!hasRecipient || testing}
+            onClick={sendTest}
+            className="admin-btn inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Send size={14} />
+            {testing ? "Sending…" : "Send test email"}
+          </button>
+          {!hasRecipient && (
+            <span className="text-xs text-ink/55">
+              Enter a recipient email above and save before testing.
+            </span>
+          )}
+          {testResult?.kind === "ok" && (
+            <span className="text-xs text-emerald-700">
+              ✓ Sent. Check your inbox{testResult.id ? ` (id: ${testResult.id.slice(0, 8)}…)` : ""}.
+            </span>
+          )}
+          {testResult?.kind === "err" && (
+            <span className="text-xs text-red-700 max-w-md">{testResult.message}</span>
+          )}
+        </div>
+      </Section>
+
+      <SaveBar
+        pending={pending}
+        onSave={save}
+        savedAt={savedAt}
+        error={error}
+      />
+    </div>
+  );
+}
+
+function ToggleRow({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (next: boolean) => void;
+}) {
+  return (
+    <label className="inline-flex items-center gap-3 cursor-pointer min-h-[36px]">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="w-4 h-4 accent-navy cursor-pointer"
+      />
+      <span className="text-sm text-ink/85">{label}</span>
+    </label>
+  );
+}
+
+function explainSendError(error: string, reason: string): string {
+  switch (reason) {
+    case "no-api-key":
+      return "RESEND_API_KEY is not set in the environment. Add it in Netlify → Site settings → Environment variables, then redeploy.";
+    case "no-recipient":
+      return "Enter a recipient email and click Save Changes before sending a test.";
+    case "auth":
+      return "You're not signed in. Refresh and try again.";
+    case "send-failed":
+      return `Resend rejected the send: ${error}. Common causes: unverified sender domain, recipient address blocked, or out of monthly quota.`;
+    default:
+      return error || "Unknown error.";
+  }
 }
 
 function Field({

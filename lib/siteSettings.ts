@@ -58,6 +58,13 @@ export type SiteSettings = {
     newsletterHeadline: string;
     newsletterBlurb: string;
   };
+  /** Email notification preferences (set in /admin/settings → Notifications). */
+  notificationEmail: string;
+  notificationCc: string;
+  notifyContact: boolean;
+  notifyValuation: boolean;
+  notifyForms: boolean;
+  notifyRsvp: boolean;
   fixedNav: NavEntry[];
 };
 
@@ -163,6 +170,12 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     portrait: { ...staticSite.portrait },
     brokerLogo: "/images/Remax%20Galaxy.png",
     footer: { ...DEFAULT_FOOTER_COPY },
+    notificationEmail: "",
+    notificationCc: "",
+    notifyContact: true,
+    notifyValuation: true,
+    notifyForms: true,
+    notifyRsvp: true,
     fixedNav: DEFAULT_FIXED_NAV,
   };
 
@@ -238,6 +251,17 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         (row?.footer_newsletter_blurb as string) ||
         fallback.footer.newsletterBlurb,
     },
+    notificationEmail:
+      (row?.notification_email as string | null)?.trim() || "",
+    notificationCc: (row?.notification_cc as string | null)?.trim() || "",
+    notifyContact:
+      typeof row?.notify_contact === "boolean" ? row.notify_contact : true,
+    notifyValuation:
+      typeof row?.notify_valuation === "boolean" ? row.notify_valuation : true,
+    notifyForms:
+      typeof row?.notify_forms === "boolean" ? row.notify_forms : true,
+    notifyRsvp:
+      typeof row?.notify_rsvp === "boolean" ? row.notify_rsvp : true,
     fixedNav: Array.isArray(row?.fixed_nav)
       ? (row!.fixed_nav as NavEntry[])
       : fallback.fixedNav,
