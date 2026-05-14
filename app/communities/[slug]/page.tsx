@@ -54,10 +54,10 @@ export default async function CommunityPage({
           <div className="flex-1 flex flex-col items-center justify-center text-center px-6 pt-32 pb-12">
             <p className="eyebrow-light mb-10">{c.state}</p>
             <h1
-              className="heading-display text-white"
+              className="heading-display text-white break-words max-w-full"
               style={{
-                fontSize: "clamp(3rem, 8vw, 6.5rem)",
-                lineHeight: 1.02,
+                fontSize: "clamp(2.25rem, 8vw, 6.5rem)",
+                lineHeight: 1.04,
               }}
             >
               <ShimmerText>{c.name}</ShimmerText>
@@ -72,14 +72,14 @@ export default async function CommunityPage({
           <div className="pb-24 px-6">
             <div className="max-w-6xl mx-auto glass-dark">
               <div className="grid grid-cols-2 md:grid-cols-4">
-                <Stat label="Median (Mar 2026)" value={c.median} />
-                <Stat label="YoY Change" value={c.yoy} className={yoyColor} divider />
-                <Stat label="Days on Market" value={c.dom} divider />
+                <Stat label="Median (Mar 2026)" value={c.median} pos={0} />
+                <Stat label="YoY Change" value={c.yoy} className={yoyColor} pos={1} />
+                <Stat label="Days on Market" value={c.dom} pos={2} />
                 <Stat
                   label="Market"
                   value={c.marketType === "Balanced" ? "Balanced" : `${c.marketType}'s`}
                   small
-                  divider
+                  pos={3}
                 />
               </div>
             </div>
@@ -138,7 +138,7 @@ export default async function CommunityPage({
             Three Price Tiers
           </h2>
         </div>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 md:gap-10">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {c.priceTiers.map((p, i) => (
             <div key={i} className="glass-light p-7 md:p-12 flex flex-col">
               <p
@@ -229,7 +229,7 @@ export default async function CommunityPage({
       {/* Related */}
       <section className="section-y gutter-x bg-cream">
         <p className="eyebrow mb-16 text-center">More Communities</p>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 md:gap-10">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {others.map((o) => (
             <Link
               key={o.slug}
@@ -265,19 +265,31 @@ function Stat({
   value,
   className,
   small,
-  divider,
+  pos = 0,
 }: {
   label: string;
   value: string;
   className?: string;
   small?: boolean;
-  divider?: boolean;
+  /** Index 0-3 in the 4-stat grid. Drives correct divider direction at each viewport. */
+  pos?: number;
 }) {
+  // Phone (grid-cols-2): items at column 1 (pos 1, 3) get a left border;
+  //   items in row 2 (pos 2, 3) get a top border.
+  // Tablet+ (md:grid-cols-4): all items after the first get a left border, no tops.
+  const phoneLeft = pos % 2 === 1; // col 2 in the 2-col phone grid
+  const phoneTop = pos >= 2;       // row 2 in the 2-col phone grid
+  const mdLeft = pos > 0;          // every column except the first on md+
   return (
     <div
-      className={`px-6 py-10 md:py-12 text-center ${
-        divider ? "border-t md:border-t-0 md:border-l border-white/15" : ""
-      }`}
+      className={[
+        "px-5 sm:px-6 py-10 md:py-12 text-center border-white/15",
+        phoneLeft ? "border-l md:border-l-0" : "",
+        phoneTop ? "border-t md:border-t-0" : "",
+        mdLeft ? "md:border-l" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
     >
       <p
         className={`${small ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"} tracking-wide ${className ?? "text-white"}`}

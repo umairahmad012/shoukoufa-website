@@ -31,7 +31,11 @@ export default function ClosingsGalleryClient({
   const canLoadMore = !preview && shown < items.length;
 
   return (
-    <section className="section-y-lg gutter-x bg-cream">
+    // Note: when rendered via ClosingsGridBlock, the parent BlockShell already
+    // provides gutter-x + vertical spacing. We omit them here so phone gutters
+    // don't double-up. The bg-cream is also dropped since the block wrapper's
+    // theme drives the section background.
+    <section className="">
       <div className="max-w-[1500px] mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-28">
           <Reveal as="p" className={tc("eyebrow mb-8", content.eyebrowColor)}>

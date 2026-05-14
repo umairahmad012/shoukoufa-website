@@ -352,34 +352,11 @@ export async function PartnersDirectoryBlock({
 }: {
   data: PartnersDirectoryData;
 }) {
-  // Partners table read — minimal direct query so we don't need a new loader
-  const { getServiceClient } = await import("@/lib/contentLoader");
-  const supabase = getServiceClient();
-  type PartnerRow = {
-    id: string;
-    category: string;
-    name: string;
-    role: string | null;
-    company: string | null;
-    phone: string | null;
-    email: string | null;
-    notes: string | null;
-    display_order: number;
-  };
-  const rows: PartnerRow[] =
-    (supabase
-      ? (
-          await supabase
-            .from("partners")
-            .select(
-              "id, category, name, role, company, phone, email, notes, display_order",
-            )
-            .order("display_order")
-        ).data as PartnerRow[] | null
-      : null) ?? [];
-  // Group by category
-  const grouped: Record<string, PartnerRow[]> = {};
-  for (const r of rows) (grouped[r.category] ||= []).push(r);
+  // Use the loader that joins partner_categories ↔ partners on category_id.
+  // The earlier inline query against partners.category silently failed (the
+  // column is category_id) and rendered zero partner cards.
+  const { getPartnerCategories } = await import("@/lib/partnersLoader");
+  const categories = await getPartnerCategories();
 
   return (
     <BlockShell wrapper={data.wrapper}>
@@ -407,17 +384,22 @@ export async function PartnersDirectoryBlock({
         ) : null}
       </div>
       <div className="space-y-16 max-w-5xl mx-auto">
-        {Object.entries(grouped).map(([cat, list]) => (
-          <div key={cat}>
+        {categories.map((cat) => (
+          <div key={cat.title}>
             <h3
               className="text-lg uppercase mb-8 text-ink"
               style={{ fontWeight: 400, letterSpacing: "0.1em" }}
             >
-              {cat}
+              {cat.title}
             </h3>
+            {cat.body ? (
+              <p className="text-sm md:text-base font-light text-ink/70 leading-[1.9] mb-6 max-w-2xl">
+                {cat.body}
+              </p>
+            ) : null}
             <div className="grid md:grid-cols-2 gap-6">
-              {list.map((p) => (
-                <div key={p.id} className="glass-light p-7">
+              {cat.contacts.map((p, i) => (
+                <div key={i} className="glass-light p-7">
                   <p
                     className="text-lg text-ink mb-1"
                     style={{ fontWeight: 400 }}

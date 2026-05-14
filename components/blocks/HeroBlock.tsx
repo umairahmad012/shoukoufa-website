@@ -107,17 +107,20 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
           {titleLines.length > 0 && (
             <h1
               className={tc(
-                "heading-display text-white animate-fade-in-up",
+                "heading-display text-white animate-fade-in-up max-w-full",
                 data.titleLinesColor,
               )}
               style={{
-                fontSize: "clamp(1.25rem, 6.5vw, 6rem)",
+                fontSize: "clamp(1.5rem, 6.5vw, 6rem)",
                 lineHeight: 1.06,
               }}
             >
               <ShimmerText delay={1.2}>
                 {titleLines.map((line, i) => (
-                  <span key={i} className="block whitespace-nowrap">
+                  <span
+                    key={i}
+                    className="block whitespace-normal sm:whitespace-nowrap break-words"
+                  >
                     {line}
                   </span>
                 ))}

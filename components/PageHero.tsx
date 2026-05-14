@@ -12,7 +12,7 @@ export default function PageHero({
   image?: string;
 }) {
   return (
-    <section className="relative pt-48 pb-32 md:pt-56 md:pb-40 gutter-x overflow-hidden bg-cream">
+    <section className="relative pt-36 pb-24 sm:pt-44 sm:pb-28 md:pt-56 md:pb-40 gutter-x overflow-hidden bg-cream">
       {image && (
         <>
           <div
@@ -25,8 +25,8 @@ export default function PageHero({
       <div className="relative max-w-4xl mx-auto text-center">
         {eyebrow && <p className="eyebrow mb-10">{eyebrow}</p>}
         <h1
-          className="heading-display text-ink"
-          style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 1.05 }}
+          className="heading-display text-ink break-words"
+          style={{ fontSize: "clamp(1.85rem, 6vw, 4.5rem)", lineHeight: 1.06 }}
         >
           <ShimmerText tone="light">{title}</ShimmerText>
         </h1>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Instagram, Facebook, Music2 } from "lucide-react";
+import { Instagram, Facebook, Music2, Youtube, Linkedin } from "lucide-react";
 import { site as staticSite } from "@/lib/site";
 import type { SiteSettings } from "@/lib/siteSettings";
 
@@ -65,10 +65,18 @@ export default function Footer({
             Shoukoufa&nbsp;Aboubakri · Real Estate Specialist
           </p>
           <p
-            className="text-[0.6rem] tracking-[0.32em] uppercase text-white/55 mb-10"
+            className="text-[0.6rem] tracking-[0.32em] uppercase text-white/55 mb-2"
             style={{ fontWeight: 300 }}
           >
             Licensed in Virginia, Maryland &amp; D.C.
+          </p>
+          <p
+            className="text-[0.55rem] tracking-[0.28em] uppercase text-white/40 mb-10 leading-[1.7]"
+            style={{ fontWeight: 300 }}
+          >
+            {site.licenses.va ? <>VA&nbsp;{site.licenses.va}</> : null}
+            {site.licenses.md ? <> · MD&nbsp;{site.licenses.md}</> : null}
+            {site.licenses.dc ? <> · DC&nbsp;{site.licenses.dc}</> : null}
           </p>
 
           {/* Direct contact */}
@@ -155,15 +163,31 @@ export default function Footer({
           </form>
 
           <div className="mt-12 flex items-center gap-7">
-            <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-70 transition-opacity">
-              <Instagram size={22} strokeWidth={1.5} />
-            </a>
-            <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-70 transition-opacity">
-              <Facebook size={22} strokeWidth={1.5} />
-            </a>
-            <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:opacity-70 transition-opacity">
-              <Music2 size={22} strokeWidth={1.5} />
-            </a>
+            {site.social.instagram ? (
+              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-70 transition-opacity">
+                <Instagram size={22} strokeWidth={1.5} />
+              </a>
+            ) : null}
+            {site.social.facebook ? (
+              <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-70 transition-opacity">
+                <Facebook size={22} strokeWidth={1.5} />
+              </a>
+            ) : null}
+            {site.social.tiktok ? (
+              <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:opacity-70 transition-opacity">
+                <Music2 size={22} strokeWidth={1.5} />
+              </a>
+            ) : null}
+            {site.social.youtube ? (
+              <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:opacity-70 transition-opacity">
+                <Youtube size={22} strokeWidth={1.5} />
+              </a>
+            ) : null}
+            {site.social.linkedin ? (
+              <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:opacity-70 transition-opacity">
+                <Linkedin size={22} strokeWidth={1.5} />
+              </a>
+            ) : null}
           </div>
         </div>
       </div>

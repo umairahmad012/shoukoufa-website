@@ -182,6 +182,42 @@ export async function getAllPageMeta(): Promise<PageMetaRow[]> {
   return (data as PageMetaRow[] | null) ?? [];
 }
 
+/**
+ * Build a complete Next.js Metadata object for a fixed page. Centralizes
+ * title + description + og:image so per-page generateMetadata() doesn't
+ * accidentally drop openGraph.images (which Next.js shallow-merges out
+ * when a page overrides only title/description in its openGraph block).
+ */
+export async function buildPageMetadata(pageKey: string) {
+  const [meta, featured] = await Promise.all([
+    getPageMeta(pageKey),
+    // Import lazily to avoid a circular dep between siteSettings and contentLoader.
+    import("./contentLoader").then((m) => m.getFeaturedImage()),
+  ]);
+  if (!meta) {
+    // Even with no row, include the og:image so shares of an unconfigured
+    // page still get the brand featured photo.
+    return {
+      openGraph: featured ? { images: [{ url: featured }] } : undefined,
+      twitter: featured ? { images: [featured] } : undefined,
+    };
+  }
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: {
+      title: meta.title,
+      description: meta.description ?? undefined,
+      ...(featured ? { images: [{ url: featured }] } : {}),
+    },
+    twitter: {
+      title: meta.title,
+      description: meta.description ?? undefined,
+      ...(featured ? { images: [featured] } : {}),
+    },
+  };
+}
+
 // Reference staticNav so the import isn't unused if we ever switch to a
 // runtime nav assembly that needs the original href map.
 void staticNav;

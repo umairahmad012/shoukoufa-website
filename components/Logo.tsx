@@ -19,13 +19,13 @@ export default function Logo({
   return (
     <Link
       href="/"
-      className={cn("inline-flex items-center gap-4 leading-none", color, className)}
+      className={cn("inline-flex items-center gap-3 sm:gap-4 leading-none min-w-0", color, className)}
       aria-label="Shoukoufa Aboubakri — Home"
     >
       {/* Circular portrait — left of wordmark */}
       <span
         className={cn(
-          "relative inline-block w-11 h-11 md:w-12 md:h-12 rounded-full overflow-hidden ring-1 transition-all duration-500 ease-editorial",
+          "relative inline-block w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full overflow-hidden ring-1 transition-all duration-500 ease-editorial flex-shrink-0",
           ringColor,
         )}
       >
@@ -36,15 +36,15 @@ export default function Logo({
         />
       </span>
 
-      <span className="flex flex-col">
+      <span className="flex flex-col min-w-0">
         <span
-          className="text-[1.55rem] md:text-[1.8rem] font-thin tracking-[0.18em] uppercase"
+          className="text-[1.05rem] sm:text-[1.3rem] md:text-[1.8rem] font-thin tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.18em] uppercase whitespace-nowrap"
           style={{ fontWeight: 200 }}
         >
           Shoukoufa&nbsp;Aboubakri
         </span>
         <span
-          className="text-[0.6rem] md:text-[0.68rem] font-light tracking-[0.42em] uppercase opacity-90 mt-1.5 self-end"
+          className="text-[0.5rem] sm:text-[0.55rem] md:text-[0.68rem] font-light tracking-[0.32em] sm:tracking-[0.36em] md:tracking-[0.42em] uppercase opacity-90 mt-1 md:mt-1.5 self-end whitespace-nowrap"
           style={{ fontWeight: 300 }}
         >
           Real Estate Specialist
