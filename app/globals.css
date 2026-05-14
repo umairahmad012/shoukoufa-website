@@ -66,47 +66,47 @@ button {
    (25%) keep the panel readable as "dark" while letting the underlying
    image be visibly recognizable, not obliterated. */
 .glass-dark {
-  --frost: blur(16px) saturate(140%);
-  background: rgba(0, 0, 0, 0.28);
+  --frost: blur(20px) saturate(140%);
+  background: rgba(0, 0, 0, 0.14);
   -webkit-backdrop-filter: var(--frost);
   backdrop-filter: var(--frost);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 30px 60px -20px rgba(0, 0, 0, 0.45);
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 30px 60px -20px rgba(0, 0, 0, 0.4);
 }
 
 /* For overlays on bright/varied photos — softer */
 .glass-mid {
-  --frost: blur(44px) saturate(170%);
-  background: rgba(255, 255, 255, 0.10);
+  --frost: blur(48px) saturate(170%);
+  background: rgba(255, 255, 255, 0.05);
   -webkit-backdrop-filter: var(--frost);
   backdrop-filter: var(--frost);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 24px 60px -20px rgba(0, 0, 0, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 24px 60px -20px rgba(0, 0, 0, 0.3);
 }
 
 /* For light backgrounds where we want a card to lift off cream */
 .glass-light {
-  --frost: blur(48px) saturate(190%);
-  background: rgba(255, 255, 255, 0.45);
+  --frost: blur(52px) saturate(190%);
+  background: rgba(255, 255, 255, 0.22);
   -webkit-backdrop-filter: var(--frost);
   backdrop-filter: var(--frost);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 24px 60px -24px rgba(20, 40, 64, 0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 24px 60px -24px rgba(20, 40, 64, 0.16);
 }
 
 /* Glass tag/pill */
 .glass-pill {
   --frost: blur(28px) saturate(190%);
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
   -webkit-backdrop-filter: var(--frost);
   backdrop-filter: var(--frost);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* ============================================================
@@ -228,7 +228,7 @@ button {
   align-items: center;
   justify-content: center;
   padding: 1.2rem 2.6rem;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.28);
   -webkit-backdrop-filter: var(--frost);
   backdrop-filter: var(--frost);
   color: white;
@@ -237,7 +237,7 @@ button {
   font-size: 0.72rem;
   text-transform: uppercase;
   transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   white-space: nowrap;
 }
 .btn-glass:hover {
