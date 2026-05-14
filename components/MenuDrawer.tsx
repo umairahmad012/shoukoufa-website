@@ -11,12 +11,20 @@ export default function MenuDrawer({
   portraitAvatar,
   extraNavItems,
   fixedNavItems,
+  phone,
+  phoneHref,
+  email,
+  emailHref,
 }: {
   open: boolean;
   onClose: () => void;
   portraitAvatar?: string;
   extraNavItems?: Array<{ label: string; href: string }>;
   fixedNavItems?: Array<{ label: string; href: string }>;
+  phone?: string;
+  phoneHref?: string;
+  email?: string;
+  emailHref?: string;
 }) {
   // Three-tier nav assembly:
   //   1) Fixed nav from site_settings (enabled + ordered) — if provided
@@ -147,11 +155,11 @@ export default function MenuDrawer({
             <p className="tracking-wider uppercase text-[0.7rem] opacity-70 mb-3">
               Direct
             </p>
-            <a href={site.phoneHref} className="block hover:opacity-100">
-              {site.phone}
+            <a href={phoneHref || site.phoneHref} className="block hover:opacity-100">
+              {phone || site.phone}
             </a>
-            <a href={site.emailHref} className="block hover:opacity-100">
-              {site.email}
+            <a href={emailHref || site.emailHref} className="block hover:opacity-100">
+              {email || site.email}
             </a>
           </div>
         </nav>

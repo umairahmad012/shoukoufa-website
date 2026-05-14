@@ -19,9 +19,14 @@ export type NavEntry = {
 };
 
 export type SiteSettings = {
+  // Brand identity (sourced from content_blocks.brand.identity admin form
+  // when present; otherwise static defaults).
   name: string;
-  tagline: string;
+  role: string;
   brokerage: string;
+  tagline: string;
+  serviceArea: string;
+  languages: string[];
   phone: string;
   phoneHref: string;
   email: string;
@@ -44,6 +49,8 @@ export type SiteSettings = {
     linkedin?: string;
   };
   portrait: { avatar: string; full: string };
+  /** Resolved broker logo URL (Cloudinary if admin uploaded one; static fallback otherwise). */
+  brokerLogo: string;
   fixedNav: NavEntry[];
 };
 
@@ -78,12 +85,54 @@ export const FIXED_NAV_HREF: Record<string, string> = {
   contact: "/contact",
 };
 
-/** Read site_settings from DB; merge with static defaults. */
+/**
+ * Read brand identity (name / role / brokerage / tagline / serviceArea
+ * / languages) from `content_blocks.brand.identity`. Returns `null`
+ * when the admin has never saved the form — the caller falls back to
+ * `lib/site.ts` defaults in that case.
+ */
+type BrandIdentity = {
+  name?: string;
+  role?: string;
+  brokerage?: string;
+  tagline?: string;
+  serviceArea?: string;
+  languages?: string[];
+};
+
+async function readBrandIdentity(): Promise<BrandIdentity | null> {
+  const supabase = getServiceClient();
+  if (!supabase) return null;
+  const { data: row } = await supabase
+    .from("content_blocks")
+    .select("value")
+    .eq("page", "brand")
+    .eq("key", "identity")
+    .maybeSingle();
+  if (!row?.value) return null;
+  try {
+    const parsed = JSON.parse(row.value as string);
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      return parsed as BrandIdentity;
+    }
+  } catch {
+    /* fall through */
+  }
+  return null;
+}
+
+/** Read site_settings + brand.identity from DB; merge with static defaults. */
 export async function getSiteSettings(): Promise<SiteSettings> {
+  // Lazy import to avoid a circular dep between siteSettings and contentLoader.
+  const { getPortrait, getBrokerLogo } = await import("./contentLoader");
+
   const fallback: SiteSettings = {
     name: staticSite.name,
-    tagline: staticSite.tagline,
+    role: staticSite.role,
     brokerage: staticSite.brokerage,
+    tagline: staticSite.tagline,
+    serviceArea: staticSite.serviceArea,
+    languages: [...staticSite.languages],
     phone: staticSite.phone,
     phoneHref: staticSite.phoneHref,
     email: staticSite.email,
@@ -97,57 +146,74 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     },
     social: { ...staticSite.social },
     portrait: { ...staticSite.portrait },
+    brokerLogo: "/images/Remax%20Galaxy.png",
     fixedNav: DEFAULT_FIXED_NAV,
   };
 
+  // Pull all three sources in parallel: site_settings row, brand identity
+  // content block, and the resolved portrait + broker logo URLs.
   const supabase = getServiceClient();
-  if (!supabase) return fallback;
 
-  const { data } = await supabase
-    .from("site_settings")
-    .select("*")
-    .eq("id", 1)
-    .maybeSingle();
+  const [siteRow, brandIdentity, portrait, brokerLogo] = await Promise.all([
+    supabase
+      ? supabase.from("site_settings").select("*").eq("id", 1).maybeSingle()
+      : Promise.resolve({ data: null }),
+    readBrandIdentity(),
+    getPortrait(),
+    getBrokerLogo(),
+  ]);
 
-  if (!data) return fallback;
-
-  const row = data as Record<string, unknown>;
+  const row = (siteRow.data as Record<string, unknown> | null) ?? null;
 
   return {
-    name: fallback.name,
-    tagline: fallback.tagline,
-    brokerage: fallback.brokerage,
-    phone: (row.phone as string) || fallback.phone,
-    phoneHref: (row.phone_href as string) || fallback.phoneHref,
-    email: (row.email as string) || fallback.email,
-    emailHref: (row.email_href as string) || fallback.emailHref,
+    // Identity comes from content_blocks.brand.identity (admin form);
+    // each field falls back to the static default if unset.
+    name: brandIdentity?.name?.trim() || fallback.name,
+    role: brandIdentity?.role?.trim() || fallback.role,
+    brokerage: brandIdentity?.brokerage?.trim() || fallback.brokerage,
+    tagline: brandIdentity?.tagline?.trim() || fallback.tagline,
+    serviceArea: brandIdentity?.serviceArea?.trim() || fallback.serviceArea,
+    languages:
+      Array.isArray(brandIdentity?.languages) && brandIdentity!.languages!.length > 0
+        ? (brandIdentity!.languages as string[])
+        : fallback.languages,
+    // Contact + office + licenses + social + nav come from site_settings.
+    phone: (row?.phone as string) || fallback.phone,
+    phoneHref: (row?.phone_href as string) || fallback.phoneHref,
+    email: (row?.email as string) || fallback.email,
+    emailHref: (row?.email_href as string) || fallback.emailHref,
     brokerageOffice: {
-      name: (row.brokerage_office_name as string) || fallback.brokerageOffice.name,
-      street: (row.brokerage_office_street as string) || fallback.brokerageOffice.street,
+      name:
+        (row?.brokerage_office_name as string) || fallback.brokerageOffice.name,
+      street:
+        (row?.brokerage_office_street as string) || fallback.brokerageOffice.street,
       cityStateZip:
-        (row.brokerage_office_city_state_zip as string) ||
+        (row?.brokerage_office_city_state_zip as string) ||
         fallback.brokerageOffice.cityStateZip,
-      phone: (row.brokerage_office_phone as string) || fallback.brokerageOffice.phone,
+      phone:
+        (row?.brokerage_office_phone as string) || fallback.brokerageOffice.phone,
       phoneHref:
-        (row.brokerage_office_phone_href as string) || fallback.brokerageOffice.phoneHref,
-      logoSrc: fallback.brokerageOffice.logoSrc,
+        (row?.brokerage_office_phone_href as string) ||
+        fallback.brokerageOffice.phoneHref,
+      logoSrc: brokerLogo || fallback.brokerageOffice.logoSrc,
     },
     office: fallback.office,
     licenses: {
-      va: (row.license_va as string) || fallback.licenses.va,
-      md: (row.license_md as string) || fallback.licenses.md,
-      dc: (row.license_dc as string) || fallback.licenses.dc,
+      va: (row?.license_va as string) || fallback.licenses.va,
+      md: (row?.license_md as string) || fallback.licenses.md,
+      dc: (row?.license_dc as string) || fallback.licenses.dc,
     },
     social: {
-      instagram: (row.instagram_url as string) || fallback.social.instagram,
-      facebook: (row.facebook_url as string) || fallback.social.facebook,
-      tiktok: (row.tiktok_url as string) || fallback.social.tiktok,
-      youtube: (row.youtube_url as string) || undefined,
-      linkedin: (row.linkedin_url as string) || undefined,
+      instagram: (row?.instagram_url as string) || fallback.social.instagram,
+      facebook: (row?.facebook_url as string) || fallback.social.facebook,
+      tiktok: (row?.tiktok_url as string) || fallback.social.tiktok,
+      youtube: (row?.youtube_url as string) || undefined,
+      linkedin: (row?.linkedin_url as string) || undefined,
     },
-    portrait: fallback.portrait,
-    fixedNav: Array.isArray(row.fixed_nav)
-      ? (row.fixed_nav as NavEntry[])
+    portrait,
+    brokerLogo,
+    fixedNav: Array.isArray(row?.fixed_nav)
+      ? (row!.fixed_nav as NavEntry[])
       : fallback.fixedNav,
   };
 }

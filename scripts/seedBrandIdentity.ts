@@ -42,7 +42,7 @@ const BRAND = {
   brokerage: "REMAX Galaxy",
   tagline: "Building Legacies, One House at a Time",
   serviceArea: "Virginia · Maryland · D.C.",
-  languages: ["English"],
+  languages: ["English", "Farsi"],
 };
 
 async function main() {

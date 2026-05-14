@@ -13,10 +13,24 @@ export default function Header({
   portraitAvatar,
   extraNavItems,
   fixedNavItems,
+  name,
+  role,
+  phone,
+  phoneHref,
+  email,
+  emailHref,
 }: {
   portraitAvatar?: string;
   extraNavItems?: ExtraNavItem[];
   fixedNavItems?: ExtraNavItem[];
+  /** Brand identity from getSiteSettings(). */
+  name?: string;
+  role?: string;
+  /** Contact info from getSiteSettings(). */
+  phone?: string;
+  phoneHref?: string;
+  email?: string;
+  emailHref?: string;
 }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -72,7 +86,12 @@ export default function Header({
         className={`fixed top-0 left-0 right-0 z-30 transition-all duration-500 ease-editorial ${headerClass}`}
       >
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between gap-3">
-          <Logo variant={logoVariant} portraitAvatar={portraitAvatar} />
+          <Logo
+            variant={logoVariant}
+            portraitAvatar={portraitAvatar}
+            name={name}
+            role={role}
+          />
 
           <div className="flex items-center gap-3 md:gap-6">
             <Link
@@ -99,6 +118,10 @@ export default function Header({
         portraitAvatar={portraitAvatar}
         extraNavItems={extraNavItems}
         fixedNavItems={fixedNavItems}
+        phone={phone}
+        phoneHref={phoneHref}
+        email={email}
+        emailHref={emailHref}
       />
     </>
   );

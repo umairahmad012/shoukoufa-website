@@ -8,7 +8,7 @@ import {
 } from "@/lib/countyLandingLoader";
 import { getBrand, getPortrait } from "@/lib/contentLoader";
 import { getReviews } from "@/lib/reviewsLoader";
-import { site } from "@/lib/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 import { siteOrigin } from "@/lib/qrcode";
 // Reuse the homepage's "Three ways I help" cards (Buying / Selling /
 // Path to Ownership). Editing them in admin → home.services flows here too.
@@ -81,11 +81,12 @@ export default async function CountyLandingPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [page, brand, portrait, reviews] = await Promise.all([
+  const [page, brand, portrait, reviews, site] = await Promise.all([
     getCountyLanding(slug),
     getBrand(),
     getPortrait(),
     getReviews(),
+    getSiteSettings(),
   ]);
   if (!page) notFound();
 

@@ -109,6 +109,12 @@ export default async function RootLayout({
           portraitAvatar={portrait.avatar}
           fixedNavItems={fixedNavItems}
           extraNavItems={extraNavItems}
+          name={settings.name}
+          role={settings.role}
+          phone={settings.phone}
+          phoneHref={settings.phoneHref}
+          email={settings.email}
+          emailHref={settings.emailHref}
         />
         <main>{children}</main>
         <Footer portraitAvatar={portrait.avatar} settings={settings} />

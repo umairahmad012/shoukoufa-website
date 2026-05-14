@@ -15,8 +15,10 @@ export default function Footer({
 }) {
   const pathname = usePathname();
   // Prefer admin-edited settings; fall back to compile-time defaults
-  const site = settings ?? {
+  const site = settings ?? ({
     name: staticSite.name,
+    role: staticSite.role,
+    brokerage: staticSite.brokerage,
     phone: staticSite.phone,
     phoneHref: staticSite.phoneHref,
     email: staticSite.email,
@@ -29,10 +31,22 @@ export default function Footer({
     },
     social: staticSite.social,
     portrait: staticSite.portrait,
+    brokerLogo: "/images/Remax%20Galaxy.png",
   } as Pick<
     SiteSettings,
-    "phone" | "phoneHref" | "email" | "emailHref" | "brokerageOffice" | "licenses" | "social" | "portrait"
-  >;
+    | "name"
+    | "role"
+    | "brokerage"
+    | "phone"
+    | "phoneHref"
+    | "email"
+    | "emailHref"
+    | "brokerageOffice"
+    | "licenses"
+    | "social"
+    | "portrait"
+    | "brokerLogo"
+  >);
   const bo = site.brokerageOffice;
   const avatar = portraitAvatar || site.portrait.avatar;
 
@@ -62,7 +76,8 @@ export default function Footer({
             className="text-[0.7rem] tracking-[0.42em] uppercase text-white/85 mb-2"
             style={{ fontWeight: 300 }}
           >
-            Shoukoufa&nbsp;Aboubakri · Real Estate Specialist
+            {site.name}
+            {site.role ? <> · {site.role}</> : null}
           </p>
           <p
             className="text-[0.6rem] tracking-[0.32em] uppercase text-white/55 mb-2"
@@ -121,11 +136,11 @@ export default function Footer({
               {bo.phone}
             </a>
 
-            {/* REMAX Galaxy logo — displayed at the END of the brokerage info */}
+            {/* Broker logo — wired from Brand → Broker Image admin field */}
             <div className="mt-7">
               <img
-                src="/images/Remax%20Galaxy.png"
-                alt="REMAX Galaxy"
+                src={site.brokerLogo}
+                alt={site.brokerage || "Brokerage"}
                 className="h-20 md:h-24 w-auto object-contain"
               />
             </div>
@@ -200,7 +215,18 @@ export default function Footer({
           {/* Left — copyright + privacy link */}
           <div className="flex flex-wrap items-center gap-3 md:gap-5">
             <span>
-              © {new Date().getFullYear()} Shoukoufa Aboubakri · Licensed in VA, MD &amp; DC
+              © {new Date().getFullYear()} {site.name}
+              {[
+                site.licenses.va ? "VA" : null,
+                site.licenses.md ? "MD" : null,
+                site.licenses.dc ? "DC" : null,
+              ]
+                .filter(Boolean)
+                .reduce<string | null>((acc, s, i, arr) => {
+                  if (i === 0) return ` · Licensed in ${s}`;
+                  if (i === arr.length - 1) return `${acc} & ${s}`;
+                  return `${acc}, ${s}`;
+                }, null)}
             </span>
             <span className="opacity-60 hidden sm:inline">·</span>
             <Link

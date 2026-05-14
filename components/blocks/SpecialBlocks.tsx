@@ -450,6 +450,16 @@ type DirectContactData = WithWrapper<{
 }>;
 
 export async function DirectContactBlock({ data }: { data: DirectContactData }) {
+  // Read contact + licenses from runtime settings so admin edits in
+  // /admin/settings propagate here. The static `lib/site.ts` defaults
+  // only ever surface as the SSR-safe fallback.
+  const { getSiteSettings } = await import("@/lib/siteSettings");
+  const settings = await getSiteSettings();
+  const licenseStates = [
+    settings.licenses.va ? "VA" : null,
+    settings.licenses.md ? "MD" : null,
+    settings.licenses.dc ? "DC" : null,
+  ].filter(Boolean) as string[];
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-12">
@@ -467,19 +477,20 @@ export async function DirectContactBlock({ data }: { data: DirectContactData }) 
       </div>
       <div className="text-center space-y-3 text-lg font-light text-ink/85">
         <p>
-          <a href={site.phoneHref} className="hover:opacity-70">
-            {site.phone}
+          <a href={settings.phoneHref} className="hover:opacity-70">
+            {settings.phone}
           </a>
         </p>
         <p>
-          <a href={site.emailHref} className="hover:opacity-70">
-            {site.email}
+          <a href={settings.emailHref} className="hover:opacity-70">
+            {settings.email}
           </a>
         </p>
-        <p className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-muted mt-6">
-          Licensed in VA {site.licenses.md ? "· MD" : ""}{" "}
-          {(site.licenses as { dc?: string }).dc ? "· DC" : ""}
-        </p>
+        {licenseStates.length > 0 ? (
+          <p className="text-[0.65rem] tracking-[0.32em] uppercase text-ink-muted mt-6">
+            Licensed in {licenseStates.join(" · ")}
+          </p>
+        ) : null}
       </div>
     </BlockShell>
   );

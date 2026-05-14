@@ -3,6 +3,9 @@
 
 export const site = {
   name: "Shoukoufa Aboubakri",
+  role: "Real Estate Specialist",
+  serviceArea: "Virginia · Maryland · D.C.",
+  languages: ["English", "Farsi"],
   tagline: "Building Legacies, One House at a Time",
   brokerage: "REMAX Galaxy",
   phone: "(703) 307-0889",

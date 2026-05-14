@@ -7,6 +7,8 @@
  * server-side.
  */
 import { getPageBlocks, type PageBlockRow } from "@/lib/pageBlocks";
+import { getSiteSettings } from "@/lib/siteSettings";
+import { resolveTemplateDeep } from "@/lib/textTemplate";
 import HeroBlock from "./HeroBlock";
 import {
   ParagraphBlock,
@@ -70,7 +72,13 @@ const BLOCK_COMPONENTS: Record<
 };
 
 export default async function PageRenderer({ pageKey }: { pageKey: string }) {
-  const blocks = await getPageBlocks(pageKey);
+  // Pull blocks AND settings in parallel. Settings drives template-variable
+  // resolution so e.g. `{name}` / `{phone}` / `{license_va}` inside any
+  // block's text fields automatically substitute the live brand values.
+  const [blocks, settings] = await Promise.all([
+    getPageBlocks(pageKey),
+    getSiteSettings(),
+  ]);
   if (blocks.length === 0) {
     return (
       <div className="py-20 text-center text-ink-muted">
@@ -95,7 +103,11 @@ export default async function PageRenderer({ pageKey }: { pageKey: string }) {
             </div>
           );
         }
-        return <Comp key={b.id} data={b.data as Record<string, unknown>} />;
+        const resolved = resolveTemplateDeep(
+          b.data as Record<string, unknown>,
+          settings,
+        );
+        return <Comp key={b.id} data={resolved} />;
       })}
     </>
   );

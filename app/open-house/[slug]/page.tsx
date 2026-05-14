@@ -6,7 +6,7 @@ import {
   OPEN_HOUSE_FEATURE_BY_KEY,
   TOTAL_FLYER_PILLS,
 } from "@/lib/openHouseFeatures";
-import { site } from "@/lib/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 import * as LucideIcons from "lucide-react";
 import PrintFlyerActions from "@/components/openhouse/PrintFlyerActions";
 import { qrDataUrl, siteOrigin } from "@/lib/qrcode";
@@ -114,10 +114,11 @@ export default async function OpenHousePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [oh, portrait, brokerLogo] = await Promise.all([
+  const [oh, portrait, brokerLogo, site] = await Promise.all([
     getOpenHouseBySlug(slug),
     getPortrait(),
     getBrokerLogo(),
+    getSiteSettings(),
   ]);
   if (!oh) notFound();
 
@@ -353,7 +354,8 @@ export default async function OpenHousePage({
                     className="text-[0.55rem] md:text-[0.6rem] tracking-[0.22em] uppercase opacity-80 mt-0.5"
                     style={{ fontWeight: 500 }}
                   >
-                    Real Estate Specialist · VA Lic # {site.licenses.va}
+                    {site.role}
+                    {site.licenses.va ? <> · VA Lic # {site.licenses.va}</> : null}
                   </p>
                   <div className="mt-1.5 flex flex-col gap-0.5 text-[0.66rem] md:text-[0.72rem]">
                     <a
