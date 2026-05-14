@@ -98,65 +98,90 @@ toggle / add / delete / edit, and writes back through server actions in
 
 ---
 
-## 3.5 Visual rhythm rule — alternate photo & text sections
+## 3.5 Section rhythm rule — three background types, never the same kind back-to-back
 
-**THE rule** the whole site follows. Updated after the first pass got it
-wrong (only counted wrapper backgrounds; missed that a section full of
-photo-cards is visually a photo section too).
+Every section on every page falls into one of four buckets. The rule
+is: **never put two sections of the same background type directly next
+to each other.** Text sections are the connective tissue and can sit
+anywhere; the three "background" types must not repeat adjacent.
 
-```
-DEFINITION — a section is PHOTO-DOMINANT if EITHER:
-  (a) its wrapper has a backgroundImage / backgroundYouTubeUrl, OR
-  (b) it contains photo-bearing cards (three_cards with per-card
-      image, community_grid, closings_grid, partners_directory)
-Otherwise it's TEXT-DOMINANT.
+### The four buckets
 
-RULES:
-  1. Sections alternate PHOTO ↔ TEXT.
-  2. At most TWO text sections may sit back-to-back. The third in any
-     sequence must be a photo section.
-  3. NEVER two photo-dominant sections back-to-back, even if one is
-     wrapper-bg and the other is photo-cards. Always break with text.
-  4. If a block has photo-bearing cards, its WRAPPER must be plain
-     (no double photo layer).
-```
+| Symbol | Bucket | What it is | Block types |
+|---|---|---|---|
+| **🟦 P1** | **Photo Primary background** | Full-bleed photo or YouTube video fills the entire section wrapper. The strongest visual moment a page can have. | `hero`, `dark_break`, any block whose `wrapper.backgroundImage` or `wrapper.backgroundYouTubeUrl` is set (e.g. an Invest CTA with a wrapper photo) |
+| **🟧 P2** | **Photo Background** | Section wrapper is plain (cream/white) but contains photo-bearing **cards / containers**. Photos read smaller, framed inside the layout. | `three_cards` (when cards have `card.image`), `community_grid`, `closings_grid` |
+| **🟫 S** | **Secondary background** | Solid colored band (no photo), visually distinct from cream/white. Carries weight without imagery. | `cta_band` with default `theme: navy`, or any other block themed dark; future band-style blocks |
+| **⬜ T** | **Plain (text)** | Cream or white wrapper. No photo content. Glass-light cards with text only count as plain. Connective tissue between bg sections. | `meet_agent`, `paragraph_block`, `bullet_list`, `quote_pullquote`, `stats_strip`, `process_steps`, `faq`, `practice_areas` (numbered, no photos), `reviews_strip`/`reviews_full` (glass cards, no photos), `partners_directory` (glass cards, no photos), `valuation_form`, `contact_form`, `direct_contact`, `video_embed`, `bottom_signoff`, plus `cta_band` with `theme: cream` or `theme: white` |
 
-**Photo-dominant block types**: `hero`, `dark_break`, `three_cards`
-(when cards have images), `community_grid`, `closings_grid`,
-`partners_directory`, plus any block whose wrapper has bg/video set.
-
-**Always-text-dominant block types**: `meet_agent`, `paragraph_block`,
-`bullet_list`, `quote_pullquote`, `stats_strip` (numbers only),
-`process_steps`, `faq`, `cta_band` (when wrapper is plain),
-`practice_areas` (numbered glass-light cards, no photos),
-`reviews_strip` / `reviews_full` (glass-light cards, no photos),
-`valuation_form`, `contact_form`, `direct_contact`, `bottom_signoff`,
-`video_embed` *(technically photo if a video is embedded but the
-embed sits inside a content frame so visually it acts like a content
-section)*.
-
-**Worked example — homepage sequence**:
+### The rule
 
 ```
-10  🖼️  hero                  ← photo
-20  📝  meet_agent             ← text (portrait inset, not a photo section)
-30  📝  quote_pullquote        ← text bridge ("What clients say most")
-40  🖼️  three_cards            ← photo (cards have images)
-45  📝  quote_pullquote        ← text bridge ("Why I'm in this work")
-50  🖼️  community_grid         ← photo (cards have images)
-60  📝  cta_band Invest        ← text (plain navy band, no wrapper bg)
-70  📝  cta_band Closings      ← text (plain navy band)
-80  🖼️  dark_break             ← photo ("Why I do this work" quote)
-90  📝  reviews_strip          ← text (glass-light review cards)
-100 📝  bottom_signoff         ← text
+1. The three BACKGROUND buckets (P1 / P2 / S) can appear in ANY order.
+2. NEVER place two sections of the SAME background bucket back-to-back.
+   • P1 followed directly by P1  →  forbidden
+   • P2 followed directly by P2  →  forbidden
+   • S  followed directly by S   →  forbidden
+3. Text sections (T) are not a "background" — they can sit anywhere and
+   repeat freely. They're the bridge between mismatched-or-matched bg
+   sections.
+4. Allowed cross-bucket adjacencies (any direction):
+   • P1 ↔ P2,  P1 ↔ S,  P2 ↔ S
+5. Corollary: if a block has photo-bearing cards (P2), its WRAPPER
+   must be plain — never paint two photo layers on one section.
 ```
 
-Sequence: 🖼️📝📝🖼️📝🖼️📝📝🖼️📝📝 — never 2 photo in a row, max 2 text in a row.
+### Worked example — homepage
 
-When you add a new block via Admin → Page Builder → + Add Block, the
-admin doesn't enforce this for you — it's design discipline. If the
-rhythm gets off, look for two 🖼️ blocks back-to-back and either drop
-the wrapper bg on one, or insert a text block between them.
+| pos | block | bucket |
+|---:|---|---|
+| 10 | hero | **🟦 P1** |
+| 20 | meet_agent | ⬜ T |
+| 30 | quote_pullquote ("What clients say most") | ⬜ T |
+| 40 | three_cards (Buying / Selling / Invest) | **🟧 P2** |
+| 45 | quote_pullquote ("Why I'm in this work") | ⬜ T |
+| 50 | community_grid (six neighborhoods) | **🟧 P2** |
+| 60 | cta_band Invest teaser (navy) | **🟫 S** |
+| 70 | cta_band Closings teaser (cream theme) | ⬜ T |
+| 80 | dark_break ("Why I do this work") | **🟦 P1** |
+| 90 | reviews_strip (glass-light cards) | ⬜ T |
+| 100 | bottom_signoff | ⬜ T |
+
+Adjacencies: P1↔T, T↔T, T↔P2, P2↔T, T↔P2, P2↔S, S↔T, T↔P1, P1↔T, T↔T.
+No same-bucket pair touches. ✅
+
+### When you add a new block via the admin
+
+The admin doesn't enforce this — it's design discipline. The Page
+Builder shows section types in a list; eyeball them top-to-bottom and
+check that no two 🟦/🟦, 🟧/🟧, or 🟫/🟫 sit next to each other.
+
+If you spot a same-bucket adjacency, you have three easy fixes:
+1. **Swap one to a different bucket** — e.g. flip a `cta_band` from
+   `theme: navy` (S) to `theme: cream` (T), or drop the wrapper photo
+   on a P1 to demote it to T.
+2. **Insert a T between them** — a `paragraph_block`, `quote_pullquote`,
+   `bullet_list`, etc.
+3. **Reorder** — move one bg section earlier or later on the page so a
+   T already in the page sits between them.
+
+### Current state across all 11 pages
+
+| Page | Sequence |
+|---|---|
+| home | 🟦 ⬜ ⬜ 🟧 ⬜ 🟧 🟫 ⬜ 🟦 ⬜ ⬜ |
+| about | 🟦 ⬜ ⬜ 🟦 ⬜ 🟫 |
+| buyers | 🟦 ⬜ ⬜ 🟦 ⬜ 🟦 ⬜ |
+| sellers | 🟦 ⬜ ⬜ 🟦 ⬜ 🟦 ⬜ |
+| invest | 🟦 ⬜ ⬜ 🟦 ⬜ 🟦 ⬜ 🟫 |
+| communities | 🟦 ⬜ 🟧 🟦 |
+| closings | 🟦 🟧 |
+| reviews | 🟦 ⬜ 🟫 |
+| partners | 🟦 ⬜ 🟦 ⬜ |
+| contact | 🟦 ⬜ ⬜ |
+| privacy | 🟦 ⬜ ⬜ 🟦 ⬜ ⬜ 🟦 |
+
+No same-bucket adjacency on any page. ✅
 
 **Block types that always carry a wrapper bg:**
 `hero`, `dark_break` — their whole identity is the photo.

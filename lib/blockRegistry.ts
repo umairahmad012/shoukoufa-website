@@ -12,16 +12,24 @@
  * spacing) are NOT part of dataShape — they live in `data.wrapper` and
  * are rendered/edited by the renderer + admin shell, not the block itself.
  *
- * ─── VISUAL RHYTHM RULE (see WIRING.md §3.5) ───
- *   A section is PHOTO-DOMINANT if its wrapper has a bg image/video
- *   OR it contains photo-bearing cards (three_cards w/ images,
- *   community_grid, closings_grid, partners_directory). Otherwise
- *   it's TEXT-DOMINANT.
+ * ─── SECTION RHYTHM RULE (see WIRING.md §3.5) ───
+ * Every section is one of four buckets:
  *
- *   1. Sections alternate PHOTO ↔ TEXT.
- *   2. Max 2 text in a row; the 3rd must be a photo section.
- *   3. NEVER two photo-dominant sections back-to-back — break with text.
- *   4. If a block has photo-bearing cards, its wrapper must be plain.
+ *   🟦 P1 — Photo Primary background  (wrapper bg image/video)
+ *           hero, dark_break, any block w/ wrapper.backgroundImage
+ *   🟧 P2 — Photo Background           (cream wrapper, photo cards inside)
+ *           three_cards w/ card.image, community_grid, closings_grid
+ *   🟫 S  — Secondary background       (solid colored band, no photo)
+ *           cta_band default (theme: navy)
+ *   ⬜ T  — Plain text                  (cream/white, no photo content)
+ *           everything else
+ *
+ *   RULE: never two sections of the SAME background bucket back-to-back.
+ *         T can repeat freely — it's the bridge between bg sections.
+ *         Allowed adjacencies: P1↔P2, P1↔S, P2↔S, and any ↔ T.
+ *
+ *   Corollary: if a block has photo cards inside (P2), its wrapper
+ *   must be plain — never paint two photo layers on one section.
  */
 import type { Field } from "./contentRegistry";
 
