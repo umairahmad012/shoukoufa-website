@@ -30,10 +30,14 @@ export async function qrDataUrl(
 /** Resolve the absolute URL of the deployed site (for embedding in QR codes). */
 export function siteOrigin(): string {
   // Honour an explicit override, then Netlify's URL var, then localhost.
-  return (
+  const raw =
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.URL ||
     process.env.DEPLOY_PRIME_URL ||
-    "http://localhost:3009"
-  );
+    "http://localhost:3009";
+  // Netlify's `URL` / `DEPLOY_PRIME_URL` arrive as bare hosts in some build
+  // contexts (e.g. "shoukoufa-website.netlify.app"). Prepend https:// so the
+  // result is always a valid absolute URL for `new URL()` consumers.
+  if (/^https?:\/\//i.test(raw)) return raw;
+  return `https://${raw}`;
 }
