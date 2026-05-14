@@ -160,7 +160,7 @@ export default function ImagePicker({
                 onChange(null);
               }}
               className="absolute top-2 right-2 bg-white/90 hover:bg-white text-ink/70 hover:text-red-600 rounded-full p-1.5 shadow"
-              title="Remove"
+              aria-label="Remove" data-tooltip="Remove"
             >
               <X size={14} />
             </button>
@@ -197,7 +197,7 @@ export default function ImagePicker({
               type="button"
               onClick={() => setEditingCrop(true)}
               className="text-xs text-navy hover:underline inline-flex items-center gap-1.5"
-              title="Drag + zoom to fine-tune the framing"
+              aria-label="Drag + zoom to fine-tune the framing" data-tooltip="Drag + zoom to fine-tune the framing"
             >
               <CropIcon size={13} /> Adjust crop
             </button>

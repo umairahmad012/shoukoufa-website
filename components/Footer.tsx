@@ -101,15 +101,22 @@ export default function Footer({
           >
             Direct
           </p>
-          <p className="text-base font-light leading-[1.85]">
-            <a href={site.phoneHref} className="hover:opacity-70 transition-opacity">
+          {/* Phone + email rendered as block links with min-h-[44px] so
+              they meet the 44px tap-target floor on phone. */}
+          <div className="text-base font-light leading-[1.85]">
+            <a
+              href={site.phoneHref}
+              className="inline-flex items-center min-h-[44px] hover:opacity-70 transition-opacity"
+            >
               {site.phone}
             </a>
-            <br />
-            <a href={site.emailHref} className="hover:opacity-70 transition-opacity">
+            <a
+              href={site.emailHref}
+              className="block inline-flex items-center min-h-[44px] hover:opacity-70 transition-opacity"
+            >
               {site.email}
             </a>
-          </p>
+          </div>
 
           {/* Brokerage card — info + large REMAX Galaxy logo at the end */}
           <div className="mt-10 pt-6 border-t border-white/10">
@@ -131,9 +138,10 @@ export default function Footer({
             </p>
             <a
               href={bo.phoneHref}
-              className="text-sm font-light text-white/85 hover:opacity-70 transition-opacity"
+              className="inline-flex items-center min-h-[44px] text-sm font-light text-white/85 hover:opacity-70 transition-opacity"
+              aria-label={`Office line: ${bo.phone}`}
             >
-              {bo.phone}
+              Office: {bo.phone}
             </a>
 
             {/* Broker logo — wired from Brand → Broker Image admin field */}
@@ -179,27 +187,27 @@ export default function Footer({
 
           <div className="mt-12 flex items-center gap-7">
             {site.social.instagram ? (
-              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-70 transition-opacity">
+              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex items-center justify-center w-11 h-11 -m-3 hover:opacity-70 transition-opacity">
                 <Instagram size={22} strokeWidth={1.5} />
               </a>
             ) : null}
             {site.social.facebook ? (
-              <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-70 transition-opacity">
+              <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex items-center justify-center w-11 h-11 -m-3 hover:opacity-70 transition-opacity">
                 <Facebook size={22} strokeWidth={1.5} />
               </a>
             ) : null}
             {site.social.tiktok ? (
-              <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hover:opacity-70 transition-opacity">
+              <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="inline-flex items-center justify-center w-11 h-11 -m-3 hover:opacity-70 transition-opacity">
                 <Music2 size={22} strokeWidth={1.5} />
               </a>
             ) : null}
             {site.social.youtube ? (
-              <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:opacity-70 transition-opacity">
+              <a href={site.social.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex items-center justify-center w-11 h-11 -m-3 hover:opacity-70 transition-opacity">
                 <Youtube size={22} strokeWidth={1.5} />
               </a>
             ) : null}
             {site.social.linkedin ? (
-              <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:opacity-70 transition-opacity">
+              <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex items-center justify-center w-11 h-11 -m-3 hover:opacity-70 transition-opacity">
                 <Linkedin size={22} strokeWidth={1.5} />
               </a>
             ) : null}
@@ -231,7 +239,7 @@ export default function Footer({
             <span className="opacity-60 hidden sm:inline">·</span>
             <Link
               href="/privacy"
-              className="hover:text-white transition-colors"
+              className="inline-flex items-center min-h-[44px] hover:text-white transition-colors"
             >
               Privacy &amp; Disclaimers
             </Link>

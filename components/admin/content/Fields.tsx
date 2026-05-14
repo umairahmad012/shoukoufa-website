@@ -69,7 +69,7 @@ function FieldColorPicker({
       className="text-[11px] tracking-wide border border-black/15 rounded bg-white px-2 py-0.5 text-ink/80 cursor-pointer hover:border-black/30"
       value={value || "auto"}
       onChange={(e) => onChange(e.target.value)}
-      title="Text color for this field"
+      aria-label="Text color for this field" data-tooltip="Text color for this field"
     >
       <option value="auto">Color: Auto</option>
       <option value="light">Color: White</option>
@@ -330,7 +330,7 @@ function ListField({
               onClick={() => move(i, -1)}
               disabled={i === 0}
               className="text-ink/40 hover:text-ink disabled:opacity-30"
-              title="Move up"
+              aria-label="Move up" data-tooltip="Move up"
             >
               <ChevronUp size={14} />
             </button>
@@ -339,7 +339,7 @@ function ListField({
               onClick={() => move(i, 1)}
               disabled={i === items.length - 1}
               className="text-ink/40 hover:text-ink disabled:opacity-30"
-              title="Move down"
+              aria-label="Move down" data-tooltip="Move down"
             >
               <ChevronDown size={14} />
             </button>
@@ -363,7 +363,7 @@ function ListField({
             type="button"
             onClick={() => remove(i)}
             className="text-ink/40 hover:text-red-600 mt-2.5"
-            title="Remove"
+            aria-label="Remove" data-tooltip="Remove"
           >
             <Trash2 size={15} />
           </button>
@@ -504,7 +504,7 @@ function ArrayField({
                   onClick={() => move(i, -1)}
                   disabled={i === 0}
                   className="text-ink/40 hover:text-ink disabled:opacity-20"
-                  title="Move up"
+                  aria-label="Move up" data-tooltip="Move up"
                 >
                   <ChevronUp size={15} />
                 </button>
@@ -513,7 +513,7 @@ function ArrayField({
                   onClick={() => move(i, 1)}
                   disabled={i === value.length - 1}
                   className="text-ink/40 hover:text-ink disabled:opacity-20"
-                  title="Move down"
+                  aria-label="Move down" data-tooltip="Move down"
                 >
                   <ChevronDown size={15} />
                 </button>
@@ -521,7 +521,7 @@ function ArrayField({
                   type="button"
                   onClick={() => remove(i)}
                   className="text-ink/40 hover:text-red-600"
-                  title="Remove"
+                  aria-label="Remove" data-tooltip="Remove"
                 >
                   <Trash2 size={15} />
                 </button>

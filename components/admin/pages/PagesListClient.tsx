@@ -174,7 +174,7 @@ export default function PagesListClient({
                 <Link
                   href={`/admin/builder/${p.slug}`}
                   className="p-2 rounded hover:bg-ink/5"
-                  title="Open in Page Builder"
+                  aria-label="Open in Page Builder" data-tooltip="Open in Page Builder"
                 >
                   <Layers size={16} />
                 </Link>
@@ -184,7 +184,7 @@ export default function PagesListClient({
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 rounded hover:bg-ink/5"
-                    title="Open live page"
+                    aria-label="Open live page" data-tooltip="Open live page"
                   >
                     <ExternalLink size={16} />
                   </a>
@@ -193,7 +193,7 @@ export default function PagesListClient({
                   onClick={() => setEditing(p.slug)}
                   disabled={pending}
                   className="p-2 rounded hover:bg-ink/5"
-                  title="Page settings"
+                  aria-label="Page settings" data-tooltip="Page settings"
                 >
                   <Settings2 size={16} />
                 </button>
@@ -201,7 +201,7 @@ export default function PagesListClient({
                   onClick={() => handleDelete(p)}
                   disabled={pending}
                   className="p-2 rounded hover:bg-red-50 hover:text-red-700"
-                  title="Delete page"
+                  aria-label="Delete page" data-tooltip="Delete page"
                 >
                   <Trash2 size={16} />
                 </button>

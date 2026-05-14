@@ -31,7 +31,7 @@ export default function ShareLinkButton() {
       <button
         onClick={copy}
         className="admin-btn admin-btn-secondary inline-flex"
-        title="Copy share link"
+        aria-label="Copy share link" data-tooltip="Copy share link"
       >
         {copied ? (
           <>

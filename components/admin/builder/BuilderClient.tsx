@@ -223,6 +223,7 @@ export default function BuilderClient({
                   disabled={i === 0 || pending}
                   className="p-1 rounded hover:bg-ink/5 disabled:opacity-30"
                   aria-label="Move up"
+                  data-tooltip="Move up"
                 >
                   <ArrowUp size={14} />
                 </button>
@@ -231,6 +232,7 @@ export default function BuilderClient({
                   disabled={i === blocks.length - 1 || pending}
                   className="p-1 rounded hover:bg-ink/5 disabled:opacity-30"
                   aria-label="Move down"
+                  data-tooltip="Move down"
                 >
                   <ArrowDown size={14} />
                 </button>
@@ -260,7 +262,8 @@ export default function BuilderClient({
                   onClick={() => handleToggle(block.id, !block.enabled)}
                   disabled={pending}
                   className="p-2 rounded hover:bg-ink/5"
-                  title={block.enabled ? "Hide" : "Show"}
+                  aria-label={block.enabled ? "Hide" : "Show"}
+                  data-tooltip={block.enabled ? "Hide" : "Show"}
                 >
                   {block.enabled ? <Eye size={16} /> : <EyeOff size={16} />}
                 </button>
@@ -268,7 +271,7 @@ export default function BuilderClient({
                   onClick={() => setEditingId(block.id)}
                   disabled={pending}
                   className="p-2 rounded hover:bg-ink/5"
-                  title="Edit content"
+                  aria-label="Edit content" data-tooltip="Edit content"
                 >
                   <Settings2 size={16} />
                 </button>
@@ -276,7 +279,7 @@ export default function BuilderClient({
                   onClick={() => handleDuplicate(block.id)}
                   disabled={pending}
                   className="p-2 rounded hover:bg-ink/5"
-                  title="Duplicate"
+                  aria-label="Duplicate" data-tooltip="Duplicate"
                 >
                   <Copy size={16} />
                 </button>
@@ -284,7 +287,7 @@ export default function BuilderClient({
                   onClick={() => handleDelete(block.id)}
                   disabled={pending}
                   className="p-2 rounded hover:bg-red-50 hover:text-red-700"
-                  title="Delete"
+                  aria-label="Delete" data-tooltip="Delete"
                 >
                   <Trash2 size={16} />
                 </button>

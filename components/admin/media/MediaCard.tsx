@@ -242,7 +242,7 @@ export default function MediaCard({
             type="button"
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 text-[11px] text-ink/70 hover:text-navy"
-            title="Copy delivery URL"
+            aria-label="Copy delivery URL" data-tooltip="Copy delivery URL"
           >
             {copied ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
             {copied ? "Copied" : "Copy URL"}
@@ -252,7 +252,7 @@ export default function MediaCard({
             onClick={handleDelete}
             disabled={pending}
             className="inline-flex items-center gap-1.5 text-[11px] text-ink/55 hover:text-red-600"
-            title="Delete"
+            aria-label="Delete" data-tooltip="Delete"
           >
             <Trash2 size={12} /> Delete
           </button>

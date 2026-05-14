@@ -285,6 +285,7 @@ button {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.04;
+  text-wrap: balance;
 }
 
 .heading-section {
@@ -292,6 +293,20 @@ button {
   letter-spacing: 0.10em;
   text-transform: uppercase;
   line-height: 1.18;
+  text-wrap: balance;
+}
+
+/* Global heading line-balance — keeps h2/h3 from leaving awkward
+   single-word last lines on narrow containers. Modern browsers
+   (Safari 17.4+, Chrome 114+, FF 121+) implement text-wrap: balance.
+   Older browsers fall through to default wrapping — no regression. */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+p {
+  /* Avoid orphans / single-word last lines in paragraphs without
+     causing a layout shift on browsers that don't support `pretty`. */
+  text-wrap: pretty;
 }
 
 .eyebrow {
@@ -325,6 +340,93 @@ button {
 /* Smooth scroll for anchor jumps */
 html {
   scroll-behavior: smooth;
+}
+
+/* ============================================================
+   STYLED TOOLTIPS (replaces ugly native title= attribute)
+   ============================================================
+   Pattern:
+     <button aria-label="Edit" data-tooltip="Edit"> <Icon/> </button>
+
+   The aria-label keeps screen readers happy; data-tooltip drives a
+   small styled bubble that appears on hover and keyboard focus.
+   Works with any element. No JS required. */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 6px);
+  transform: translateX(-50%) translateY(2px);
+  background: rgb(20 30 45 / 0.96);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 50;
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.45);
+}
+/* Show on hover OR keyboard focus — accessibility-friendly */
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after,
+[data-tooltip]:focus::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+/* Variant: tooltip below the element (useful for items near top edge) */
+[data-tooltip][data-tooltip-side="bottom"]::after {
+  bottom: auto;
+  top: calc(100% + 6px);
+  transform: translateX(-50%) translateY(-2px);
+}
+[data-tooltip][data-tooltip-side="bottom"]:hover::after,
+[data-tooltip][data-tooltip-side="bottom"]:focus-visible::after {
+  transform: translateX(-50%) translateY(0);
+}
+/* Don't render tooltips on touch-only devices — they'd never trigger
+   and the bubble flashing on first tap looks broken. */
+@media (hover: none) {
+  [data-tooltip]::after { display: none; }
+}
+
+/* ============================================================
+   AUTO-FIT TYPOGRAPHY
+   ============================================================
+   Apply on a container that has `container-type: inline-size`
+   (use the `text-fit-container` utility below). The child text
+   scales smoothly between min and max based on the parent's
+   width — long strings shrink instead of wrapping to many lines.
+
+   Browser support: Container queries Safari 16+, Chrome 105+,
+   Firefox 110+ (all widely deployed since 2023). */
+.text-fit-container {
+  container-type: inline-size;
+  container-name: fit;
+}
+/* Sizes tuned for card titles inside ~200-340px columns at iPad+. */
+.text-fit-xs {
+  font-size: clamp(0.7rem, 4.5cqi, 0.85rem);
+  line-height: 1.4;
+}
+.text-fit-sm {
+  font-size: clamp(0.85rem, 5cqi, 1rem);
+  line-height: 1.4;
+}
+.text-fit-md {
+  font-size: clamp(1rem, 6cqi, 1.5rem);
+  line-height: 1.3;
+}
+.text-fit-lg {
+  font-size: clamp(1.1rem, 8cqi, 2.25rem);
+  line-height: 1.2;
 }
 
 /* ============================================================

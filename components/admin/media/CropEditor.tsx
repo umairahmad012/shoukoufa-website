@@ -210,7 +210,7 @@ export default function CropEditor({
                 onSave(null);
               }}
               className="text-xs text-ink/65 hover:text-ink px-3 py-2"
-              title="Remove user crop — Cloudinary smart-crop takes over"
+              aria-label="Remove user crop — Cloudinary smart-crop takes over" data-tooltip="Remove user crop — Cloudinary smart-crop takes over"
             >
               Remove crop
             </button>

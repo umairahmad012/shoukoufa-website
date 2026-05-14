@@ -76,7 +76,7 @@ export default function VideoPicker({
               type="button"
               onClick={() => onChange(null)}
               className="absolute top-2 right-2 bg-white/90 hover:bg-white text-ink/70 hover:text-red-600 rounded-full p-1.5 shadow"
-              title="Remove"
+              aria-label="Remove" data-tooltip="Remove"
             >
               <X size={14} />
             </button>

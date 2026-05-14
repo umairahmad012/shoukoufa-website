@@ -266,7 +266,7 @@ export default function ReviewsManager({
                       }
                       className="text-xs inline-flex items-center gap-1"
                       style={{ color: "var(--primary)", fontWeight: 600 }}
-                      title="Promote to public website (still won't post to Google)"
+                      aria-label="Promote to public website (still won't post to Google)" data-tooltip="Promote to public website (still won't post to Google)"
                     >
                       <Check size={13} /> Approve to website
                     </button>
