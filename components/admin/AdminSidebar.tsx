@@ -32,6 +32,7 @@ import {
   ExternalLink,
   BarChart3,
   Search,
+  Layers,
 } from "lucide-react";
 import NextImage from "next/image";
 import { createClient } from "@/lib/supabase/client";
@@ -47,6 +48,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Site Editor",
     items: [
       { href: "/admin", label: "Dashboard", icon: LayoutTemplate },
+      { href: "/admin/builder/home", label: "Page Builder", icon: Layers, matchPrefix: true },
       { href: "/admin/brand", label: "Brand Identity", icon: Palette, matchPrefix: true },
       { href: "/admin/media", label: "Media Library", icon: ImageIcon, matchPrefix: true },
       { href: "/admin/reviews", label: "Reviews", icon: Star, matchPrefix: true },

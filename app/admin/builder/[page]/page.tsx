@@ -1,0 +1,73 @@
+/**
+ * Page Builder — admin view for a single page's block layout.
+ *
+ *   /admin/builder/home
+ *   /admin/builder/about
+ *   /admin/builder/buyers
+ *   ...
+ *
+ * Renders a vertical list of blocks for the page. Each row has reorder
+ * buttons, on/off toggle, block-type badge + content preview, and
+ * Edit / Duplicate / Delete actions. Plus an "Add Block" picker grouped
+ * by category.
+ */
+import { notFound, redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import AdminShell from "@/components/admin/AdminShell";
+import { getPageBlocks } from "@/lib/pageBlocks";
+import BuilderClient from "@/components/admin/builder/BuilderClient";
+import type { VideoLibraryItem } from "@/components/admin/media/VideoPicker";
+
+const PAGES: Array<{ key: string; label: string; livePath: string }> = [
+  { key: "home", label: "Homepage", livePath: "/" },
+  { key: "about", label: "About", livePath: "/about" },
+  { key: "buyers", label: "Buyers", livePath: "/buyers" },
+  { key: "sellers", label: "Sellers", livePath: "/sellers" },
+  { key: "invest", label: "Invest", livePath: "/invest" },
+  { key: "communities", label: "Communities (Index)", livePath: "/communities" },
+  { key: "closings", label: "Recent Closings", livePath: "/closings" },
+  { key: "reviews", label: "Reviews", livePath: "/reviews" },
+  { key: "partners", label: "Trusted Partners", livePath: "/partners" },
+  { key: "contact", label: "Contact", livePath: "/contact" },
+];
+
+type Params = { page: string };
+
+export const dynamic = "force-dynamic";
+
+export default async function PageBuilderRoute({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { page } = await params;
+  const pageMeta = PAGES.find((p) => p.key === page);
+  if (!pageMeta) notFound();
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/admin/login");
+
+  const blocks = await getPageBlocks(page, { includeDisabled: true });
+
+  // Media library for the image/video pickers inside the edit modal.
+  const { data: media } = await supabase
+    .from("media")
+    .select("id, kind, cloudinary_public_id, url, alt")
+    .order("uploaded_at", { ascending: false });
+
+  return (
+    <AdminShell user={{ email: user.email ?? "" }}>
+      <BuilderClient
+        pageKey={pageMeta.key}
+        pageLabel={pageMeta.label}
+        livePath={pageMeta.livePath}
+        pages={PAGES}
+        initialBlocks={blocks}
+        library={(media ?? []) as VideoLibraryItem[]}
+      />
+    </AdminShell>
+  );
+}
