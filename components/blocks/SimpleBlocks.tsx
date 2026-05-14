@@ -266,40 +266,70 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
       })
     : "";
 
+  // Theme drives the band color so this block can act as either a
+  // dramatic photo/navy CTA (default) OR a quiet text-only break
+  // section that maintains the page's photo↔text rhythm.
+  //   • theme="navy" (default) → dark navy band, white text
+  //   • theme="cream" → cream band, navy text (visually a "plain" break)
+  //   • theme="white" → white band, navy text
+  const theme = (w.theme ?? "navy") as "navy" | "cream" | "white" | "transparent";
+  const isDark = theme === "navy";
+  const sectionClass = isDark
+    ? "relative bg-navy text-white"
+    : theme === "white"
+      ? "relative bg-white text-ink"
+      : "relative bg-cream-soft text-ink";
+  const eyebrowClass = isDark ? "eyebrow-light" : "eyebrow";
+  const bodyClass = isDark ? "text-white/85" : "text-ink/75";
+  const dividerClass = isDark ? "bg-white/40" : "bg-navy/40";
+
   return (
-    <section className="relative bg-navy text-white py-24 md:py-32 gutter-x overflow-hidden">
-      {bg ? (
+    <section className={`${sectionClass} py-24 md:py-32 gutter-x overflow-hidden`}>
+      {/* Background photo only renders on dark themes — on cream/white
+          the band is intentionally a quiet plain section. */}
+      {bg && isDark ? (
         <div
           className="absolute inset-0 bg-cover bg-center opacity-[0.18]"
           style={{ backgroundImage: `url('${bg}')` }}
         />
       ) : null}
       <div className="relative max-w-3xl mx-auto text-center">
-        {data.eyebrow ? <p className="eyebrow-light mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? <p className={`${eyebrowClass} mb-8`}>{data.eyebrow}</p> : null}
         {data.heading ? (
           <h2
-            className="heading-section mb-10"
+            className={`heading-section mb-10 ${isDark ? "" : "text-ink"}`}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
           </h2>
         ) : null}
-        <div className="mx-auto mb-10 w-12 h-px bg-white/40" />
+        <div className={`mx-auto mb-10 w-12 h-px ${dividerClass}`} />
         {data.body ? (
-          <p className="text-base md:text-lg font-light leading-[1.9] text-white/85 max-w-xl mx-auto mb-14">
+          <p className={`text-base md:text-lg font-light leading-[1.9] ${bodyClass} max-w-xl mx-auto mb-14`}>
             {data.body}
           </p>
         ) : null}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
           {data.primary?.label && data.primary?.href ? (
-            <Link href={data.primary.href} className="btn-glass">
+            <Link
+              href={data.primary.href}
+              className={
+                isDark
+                  ? "btn-glass"
+                  : "inline-flex items-center px-9 py-4 bg-navy text-white text-[0.72rem] tracking-[0.28em] uppercase font-light hover:bg-navy-dark transition-all duration-500"
+              }
+            >
               {data.primary.label}
             </Link>
           ) : null}
           {data.secondary?.label && data.secondary?.href ? (
             <Link
               href={data.secondary.href}
-              className="px-9 py-4 border border-white/50 text-[0.72rem] tracking-[0.28em] uppercase font-light hover:bg-white hover:text-navy transition-all duration-500"
+              className={
+                isDark
+                  ? "px-9 py-4 border border-white/50 text-[0.72rem] tracking-[0.28em] uppercase font-light hover:bg-white hover:text-navy transition-all duration-500"
+                  : "px-9 py-4 border border-navy/40 text-ink text-[0.72rem] tracking-[0.28em] uppercase font-light hover:bg-navy hover:text-white transition-all duration-500"
+              }
             >
               {data.secondary.label}
             </Link>
