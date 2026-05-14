@@ -12,17 +12,16 @@
  * spacing) are NOT part of dataShape — they live in `data.wrapper` and
  * are rendered/edited by the renderer + admin shell, not the block itself.
  *
- * ─── BACKGROUND-ALTERNATION RULE (see WIRING.md §3.5) ───
- *   1. Sections alternate BG-bearing ↔ plain.
- *   2. Max 2 plain in a row; the 3rd must have a background.
- *   3. Never 2 BG-bearing sections back-to-back.
- *   4. If a block has image-bearing CONTAINERS INSIDE (three_cards with
- *      card.image, community_grid, closings_grid), the SECTION wrapper
- *      stays plain — never two photo layers stacked.
- *   Always-bg blocks: hero, dark_break.
- *   Always-plain blocks: three_cards (with images), community_grid,
- *     closings_grid, partners_directory, reviews_strip, reviews_full,
- *     practice_areas.
+ * ─── VISUAL RHYTHM RULE (see WIRING.md §3.5) ───
+ *   A section is PHOTO-DOMINANT if its wrapper has a bg image/video
+ *   OR it contains photo-bearing cards (three_cards w/ images,
+ *   community_grid, closings_grid, partners_directory). Otherwise
+ *   it's TEXT-DOMINANT.
+ *
+ *   1. Sections alternate PHOTO ↔ TEXT.
+ *   2. Max 2 text in a row; the 3rd must be a photo section.
+ *   3. NEVER two photo-dominant sections back-to-back — break with text.
+ *   4. If a block has photo-bearing cards, its wrapper must be plain.
  */
 import type { Field } from "./contentRegistry";
 

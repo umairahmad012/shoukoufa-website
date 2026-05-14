@@ -137,24 +137,35 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
               <div className="absolute inset-0 overlay-card" />
 
               {/* Frosted glass content panel anchored at the bottom.
-                  Larger padding + edge-offset (`inset-6 md:inset-10`-ish)
-                  for breathing room and symmetry with the photo border. */}
-              <div className="absolute left-6 right-6 bottom-6 md:left-10 md:right-10 md:bottom-10 glass-dark p-7 md:p-11 text-white">
+                  Padding + insets match the original PillarCards layout
+                  exactly so content always fits inside the card and the
+                  three panels are the same height regardless of how
+                  long any individual body string is. The body is
+                  line-clamped to keep cards symmetric. */}
+              <div className="absolute left-5 right-5 bottom-5 md:left-8 md:right-8 md:bottom-8 glass-dark p-6 md:p-9 text-white flex flex-col">
                 {c.title ? (
                   <h3
-                    className="text-xl md:text-3xl uppercase mb-5 md:mb-6"
+                    className="text-lg md:text-2xl uppercase mb-4 md:mb-5"
                     style={{ fontWeight: 400, letterSpacing: "0.08em" }}
                   >
                     {c.title}
                   </h3>
                 ) : null}
                 {c.body ? (
-                  <p className="text-sm md:text-base font-light leading-[1.85] md:leading-[1.9] text-white/85 mb-6 md:mb-8">
+                  <p
+                    className="text-sm md:text-[0.95rem] font-light leading-[1.8] md:leading-[1.85] text-white/85 mb-5 md:mb-7"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 4,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
                     {c.body}
                   </p>
                 ) : null}
                 {c.cta && c.href ? (
-                  <span className="inline-flex items-center gap-3 text-[0.62rem] md:text-[0.68rem] tracking-[0.30em] md:tracking-[0.32em] uppercase font-light text-white border-t border-white/25 pt-4 md:pt-5">
+                  <span className="inline-flex items-center gap-3 text-[0.62rem] md:text-[0.68rem] tracking-[0.30em] md:tracking-[0.32em] uppercase font-light text-white border-t border-white/25 pt-4 md:pt-5 mt-auto whitespace-nowrap">
                     {c.cta}
                     <span className="transition-transform duration-500 ease-editorial group-hover:translate-x-1.5 group-hover:-translate-y-1.5">
                       ↗

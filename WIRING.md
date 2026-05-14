@@ -98,27 +98,65 @@ toggle / add / delete / edit, and writes back through server actions in
 
 ---
 
-## 3.5 Section background alternation rule
+## 3.5 Visual rhythm rule — alternate photo & text sections
 
-**Visual rhythm rule** — followed by `scripts/normalizeSectionBackgrounds.ts`
-and every default-layout seed. Worth re-reading before adding new blocks.
+**THE rule** the whole site follows. Updated after the first pass got it
+wrong (only counted wrapper backgrounds; missed that a section full of
+photo-cards is visually a photo section too).
 
 ```
-1. Sections should ALTERNATE between BG-bearing and plain.
-   • BG-bearing  = wrapper has a background image or YouTube video
-   • plain       = wrapper has no media (theme color + content only)
+DEFINITION — a section is PHOTO-DOMINANT if EITHER:
+  (a) its wrapper has a backgroundImage / backgroundYouTubeUrl, OR
+  (b) it contains photo-bearing cards (three_cards with per-card
+      image, community_grid, closings_grid, partners_directory)
+Otherwise it's TEXT-DOMINANT.
 
-2. At most TWO plain sections may sit back-to-back.
-   The THIRD section in any sequence MUST carry a background.
-
-3. NEVER two BG-bearing sections back-to-back.
-   (Two photos stacked = visual fight. Always break with one plain.)
-
-4. If a block has IMAGE-BEARING CONTAINERS INSIDE
-   (three_cards with per-card images, community_grid, closings_grid),
-   the SECTION wrapper must be plain — never two photo layers.
-   The cards themselves carry the photographs.
+RULES:
+  1. Sections alternate PHOTO ↔ TEXT.
+  2. At most TWO text sections may sit back-to-back. The third in any
+     sequence must be a photo section.
+  3. NEVER two photo-dominant sections back-to-back, even if one is
+     wrapper-bg and the other is photo-cards. Always break with text.
+  4. If a block has photo-bearing cards, its WRAPPER must be plain
+     (no double photo layer).
 ```
+
+**Photo-dominant block types**: `hero`, `dark_break`, `three_cards`
+(when cards have images), `community_grid`, `closings_grid`,
+`partners_directory`, plus any block whose wrapper has bg/video set.
+
+**Always-text-dominant block types**: `meet_agent`, `paragraph_block`,
+`bullet_list`, `quote_pullquote`, `stats_strip` (numbers only),
+`process_steps`, `faq`, `cta_band` (when wrapper is plain),
+`practice_areas` (numbered glass-light cards, no photos),
+`reviews_strip` / `reviews_full` (glass-light cards, no photos),
+`valuation_form`, `contact_form`, `direct_contact`, `bottom_signoff`,
+`video_embed` *(technically photo if a video is embedded but the
+embed sits inside a content frame so visually it acts like a content
+section)*.
+
+**Worked example — homepage sequence**:
+
+```
+10  🖼️  hero                  ← photo
+20  📝  meet_agent             ← text (portrait inset, not a photo section)
+30  📝  quote_pullquote        ← text bridge ("What clients say most")
+40  🖼️  three_cards            ← photo (cards have images)
+45  📝  quote_pullquote        ← text bridge ("Why I'm in this work")
+50  🖼️  community_grid         ← photo (cards have images)
+60  📝  cta_band Invest        ← text (plain navy band, no wrapper bg)
+70  📝  cta_band Closings      ← text (plain navy band)
+80  🖼️  dark_break             ← photo ("Why I do this work" quote)
+90  📝  reviews_strip          ← text (glass-light review cards)
+100 📝  bottom_signoff         ← text
+```
+
+Sequence: 🖼️📝📝🖼️📝🖼️📝📝🖼️📝📝 — never 2 photo in a row, max 2 text in a row.
+
+When you add a new block via Admin → Page Builder → + Add Block, the
+admin doesn't enforce this for you — it's design discipline. If the
+rhythm gets off, look for two 🖼️ blocks back-to-back and either drop
+the wrapper bg on one, or insert a text block between them.
 
 **Block types that always carry a wrapper bg:**
 `hero`, `dark_break` — their whole identity is the photo.
