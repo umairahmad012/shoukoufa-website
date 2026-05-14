@@ -29,13 +29,13 @@ export default async function CommunitiesPage() {
       fallback:
         "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1920&auto=format&fit=crop&q=85",
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(c.darkBreak.backgroundImage, {
       fallback:
         "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&auto=format&fit=crop&q=85",
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
   ]);
 

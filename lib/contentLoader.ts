@@ -207,7 +207,7 @@ export async function resolveImageUrl(
       const crop = options.crop && options.crop !== "free" ? options.crop : undefined;
       return cldUrl(media.cloudinary_public_id, {
         crop,
-        width: options.width ?? 1920,
+        width: options.width ?? 2560,
         cropArea,
       });
     }
@@ -343,8 +343,8 @@ export async function getPortrait(): Promise<{ full: string; avatar: string }> {
     const { cldUrl } = await import("./cloudinary");
     if (media.cloudinary_public_id) {
       return {
-        full: cldUrl(media.cloudinary_public_id, { crop: "portrait", width: 1600 }),
-        avatar: cldUrl(media.cloudinary_public_id, { crop: "square", width: 240 }),
+        full: cldUrl(media.cloudinary_public_id, { crop: "portrait", width: 2000 }),
+        avatar: cldUrl(media.cloudinary_public_id, { crop: "square", width: 360 }),
       };
     }
     // Fallback: non-Cloudinary URL — same URL for both

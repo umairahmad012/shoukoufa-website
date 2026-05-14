@@ -43,12 +43,12 @@ export default async function Home() {
     resolveImageUrl(db1.backgroundImage, {
       fallback: DB1_FALLBACK_BG,
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(db2.backgroundImage, {
       fallback: DB2_FALLBACK_BG,
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
   ]);
 

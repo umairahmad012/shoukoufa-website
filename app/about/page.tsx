@@ -61,12 +61,12 @@ export default async function AboutPage() {
     resolveImageUrl(c.cta?.backgroundImage, {
       fallback: ctaFallbackBg,
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(darkBreak?.backgroundImage, {
       fallback: darkBreakFallbackBg,
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
   ]);
 

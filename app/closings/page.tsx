@@ -20,7 +20,7 @@ export default async function ClosingsPage() {
     fallback:
       "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&auto=format&fit=crop&q=85",
     crop: "wide",
-    width: 1920,
+    width: 2560,
   });
 
   return (

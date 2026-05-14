@@ -29,7 +29,7 @@ export default async function ContactPage() {
     fallback:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&auto=format&fit=crop&q=85",
     crop: "wide",
-    width: 1920,
+    width: 2560,
   });
   return (
     <>

@@ -27,13 +27,13 @@ export default async function ReviewsPage() {
       fallback:
         "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&auto=format&fit=crop&q=85",
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(c.cta.backgroundImage, {
       fallback:
         "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1920&auto=format&fit=crop&q=85",
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
   ]);
 

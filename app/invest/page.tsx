@@ -74,37 +74,37 @@ export default async function PathPage() {
       fallback:
         "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&auto=format&fit=crop&q=85",
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(c.cta?.backgroundImage, {
       fallback: ctaFallbackBg,
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(darkBreak?.backgroundImage, {
       fallback: darkBreakFallbackBg,
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(stepImagesContent?.step1, {
       fallback: stepImageFallbacks[0],
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(stepImagesContent?.step2, {
       fallback: stepImageFallbacks[1],
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(stepImagesContent?.step3, {
       fallback: stepImageFallbacks[2],
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
     resolveImageUrl(stepImagesContent?.step4, {
       fallback: stepImageFallbacks[3],
       crop: "wide",
-      width: 1920,
+      width: 2560,
     }),
   ]);
 

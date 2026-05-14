@@ -111,14 +111,17 @@ export function cldUrl(publicId: string, opts: CldOptions = {}): string {
   // aspect-ratio fill so the mask sits on the final framed pixel rect.
   if (opts.circle) finalSegment.push("r_max");
   // Quality + retina:
-  //  q_90      — explicit 90% quality (visually indistinguishable from
-  //              original on photos, ~2-3× smaller than uncompressed).
-  //              Higher than Cloudinary's default q_auto:best.
+  //  q_auto:best — Cloudinary picks the highest quality that still encodes
+  //                efficiently per image. Visually indistinguishable from
+  //                original on photos; sharper than fixed q_90 on detailed
+  //                images (faces, text, fine textures).
+  //  fl_progressive — progressive JPEG render so images decode top-down
+  //                   instead of one-shot at the end (no flash of low-res).
   //  dpr_auto  — when the browser sends Sec-CH-DPR (Chrome / Edge / Safari
   //              do, with the Accept-CH header set in next.config), Cloudinary
   //              serves 2× / 3× variants on retina screens. Falls back to 1×
   //              gracefully when the hint isn't sent.
-  finalSegment.push("q_90", "dpr_auto");
+  finalSegment.push("q_auto:best", "fl_progressive", "dpr_auto");
   segments.push(finalSegment);
 
   const transform = segments.map((s) => s.join(",")).join("/");
