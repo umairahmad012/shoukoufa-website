@@ -1,4 +1,42 @@
 {
+  "suburban_light": [
+    {
+      "id": "0bd3c201-5253-45a5-9b82-aeb59d44d76a",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_hvi90qhvi90qhvi9_nj96yq",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778718251/shoukoufa-website/Gemini_Generated_Image_hvi90qhvi90qhvi9_nj96yq.png",
+      "alt": ""
+    },
+    {
+      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
+      "alt": "Suburban neighborhood — bright, daylight"
+    },
+    {
+      "id": "17c7fc51-0300-4304-9979-99c7554b4073",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_j0eufqj0eufqj0eu_eavuxf",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775469/shoukoufa-website/Gemini_Generated_Image_j0eufqj0eufqj0eu_eavuxf.png",
+      "alt": "Suburban neighborhood — bright, daylight (Gemini_Generated_Image_j0eufqj0eufqj0eu)"
+    },
+    {
+      "id": "9ef22f8d-a1ba-438c-ae2c-c60f259a3d12",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_dsi7y8dsi7y8dsi7_tmcrcr",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775467/shoukoufa-website/Gemini_Generated_Image_dsi7y8dsi7y8dsi7_tmcrcr.png",
+      "alt": "Suburban neighborhood — bright, daylight (Gemini_Generated_Image_dsi7y8dsi7y8dsi7)"
+    },
+    {
+      "id": "526651d0-5d29-483d-9322-7b870c037934",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_cln91tcln91tcln9_fspnbt",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775466/shoukoufa-website/Gemini_Generated_Image_cln91tcln91tcln9_fspnbt.png",
+      "alt": "Suburban neighborhood — bright, daylight (Gemini_Generated_Image_cln91tcln91tcln9)"
+    },
+    {
+      "id": "15e24285-8f63-4eb2-98ac-c91bc7191626",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_z6i65ez6i65ez6i6_vj9i9p",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775471/shoukoufa-website/Gemini_Generated_Image_z6i65ez6i65ez6i6_vj9i9p.png",
+      "alt": "Suburban neighborhood — bright, daylight (Gemini_Generated_Image_z6i65ez6i65ez6i6)"
+    }
+  ],
   "exterior_dark": [
     {
       "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
@@ -7,64 +45,64 @@
       "alt": "Home exterior — moody, low-light"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "86e3daf6-f6d2-4816-8377-95c97f6688f4",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_4auqpe4auqpe4auq_bjm2jx",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775404/shoukoufa-website/Gemini_Generated_Image_4auqpe4auqpe4auq_bjm2jx.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_4auqpe4auqpe4auq)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "96e07ffb-a4bc-41a3-a847-a10e6eb3a201",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_9ip4lq9ip4lq9ip4_lk0j5v",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775406/shoukoufa-website/Gemini_Generated_Image_9ip4lq9ip4lq9ip4_lk0j5v.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_9ip4lq9ip4lq9ip4)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "b6ab9631-f931-4b11-98d4-e1ccbcae80ba",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_aswumiaswumiaswu_edvvkn",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775407/shoukoufa-website/Gemini_Generated_Image_aswumiaswumiaswu_edvvkn.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_aswumiaswumiaswu)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "7cf07925-49de-4a23-bc42-e65b6e3c06f9",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_df3qxmdf3qxmdf3q_hc6pyl",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775409/shoukoufa-website/Gemini_Generated_Image_df3qxmdf3qxmdf3q_hc6pyl.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_df3qxmdf3qxmdf3q)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "ed931d06-f117-479e-b489-dbcb347f10c3",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_duv4zwduv4zwduv4_lqyiyy",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775410/shoukoufa-website/Gemini_Generated_Image_duv4zwduv4zwduv4_lqyiyy.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_duv4zwduv4zwduv4)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "916a1a6e-723a-4ab1-b988-5f1adfb752c0",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_esg3izesg3izesg3_xeinmt",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775412/shoukoufa-website/Gemini_Generated_Image_esg3izesg3izesg3_xeinmt.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_esg3izesg3izesg3)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "4409699d-0809-4fea-b6da-5df1ce25d7d5",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_gc3nfwgc3nfwgc3n_t1fpsk",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775413/shoukoufa-website/Gemini_Generated_Image_gc3nfwgc3nfwgc3n_t1fpsk.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_gc3nfwgc3nfwgc3n)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "1b24b8ab-613d-4ae7-8024-d17f28a02076",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_npotlbnpotlbnpot_rhs00b",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775415/shoukoufa-website/Gemini_Generated_Image_npotlbnpotlbnpot_rhs00b.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_npotlbnpotlbnpot)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "7dba68cd-3c61-410d-ada2-b121eebd885a",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_pwh3twpwh3twpwh3_j4zdwk",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775416/shoukoufa-website/Gemini_Generated_Image_pwh3twpwh3twpwh3_j4zdwk.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_pwh3twpwh3twpwh3)"
     },
     {
-      "id": "95e6efe0-575c-4b74-b55f-f679244883b2",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772507/shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_onsp1y.png",
-      "alt": "Home exterior — moody, low-light"
+      "id": "5a29d327-cd53-4a13-8ca0-fa81653f5563",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_ymegmpymegmpymeg_yri5ac",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775418/shoukoufa-website/Gemini_Generated_Image_ymegmpymegmpymeg_yri5ac.png",
+      "alt": "Home exterior — moody, low-light (Gemini_Generated_Image_ymegmpymegmpymeg)"
     }
   ],
   "exterior_light": [
@@ -75,58 +113,58 @@
       "alt": "Home exterior — bright, daylight"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "12982064-ae3a-4243-83f1-0638bc1dc7ff",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_fp3enofp3enofp3e_qzsafp",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775419/shoukoufa-website/Gemini_Generated_Image_fp3enofp3enofp3e_qzsafp.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_fp3enofp3enofp3e)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "80870705-7854-4f4d-991f-6f26942fe0be",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_io60ydio60ydio60_tdy2c5",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775421/shoukoufa-website/Gemini_Generated_Image_io60ydio60ydio60_tdy2c5.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_io60ydio60ydio60)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "34675011-61bd-4f1f-b2b8-03630fc6e174",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_j7jh1qj7jh1qj7jh_bznc0r",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775422/shoukoufa-website/Gemini_Generated_Image_j7jh1qj7jh1qj7jh_bznc0r.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_j7jh1qj7jh1qj7jh)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "a1987f41-1a64-4bf4-af10-6eda29dc1449",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_kg7blwkg7blwkg7b_jt3hab",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775424/shoukoufa-website/Gemini_Generated_Image_kg7blwkg7blwkg7b_jt3hab.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_kg7blwkg7blwkg7b)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "0dc3d298-13cf-46f9-97ff-9c3e7ebce3cb",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_me0zvtme0zvtme0z_goo4br",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775426/shoukoufa-website/Gemini_Generated_Image_me0zvtme0zvtme0z_goo4br.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_me0zvtme0zvtme0z)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "da7d6f88-bc7b-43a8-882d-51a69d7ee823",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_mwf53omwf53omwf5_itkehe",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775428/shoukoufa-website/Gemini_Generated_Image_mwf53omwf53omwf5_itkehe.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_mwf53omwf53omwf5)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "1f172bad-dddf-41be-b3e3-242ad6e00564",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_oibh09oibh09oibh_xmidas",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775430/shoukoufa-website/Gemini_Generated_Image_oibh09oibh09oibh_xmidas.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_oibh09oibh09oibh)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "60c0c6dd-16a3-4a78-8e4d-254667b01830",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_q79v04q79v04q79v_q8tssb",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775431/shoukoufa-website/Gemini_Generated_Image_q79v04q79v04q79v_q8tssb.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_q79v04q79v04q79v)"
     },
     {
-      "id": "0dc05177-efc8-445f-acdf-939a330cea5a",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772510/shoukoufa-website/Gemini_Generated_Image_end3jcend3jcend3_r5pb63.png",
-      "alt": "Home exterior — bright, daylight"
+      "id": "05c4eb1f-af45-49e0-a7f7-6c3e3951b2f5",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_uvsq4vuvsq4vuvsq_rxgeum",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775433/shoukoufa-website/Gemini_Generated_Image_uvsq4vuvsq4vuvsq_rxgeum.png",
+      "alt": "Home exterior — bright, daylight (Gemini_Generated_Image_uvsq4vuvsq4vuvsq)"
     }
   ],
   "interior_dark": [
@@ -213,6 +251,30 @@
       "public_id": "shoukoufa-website/B._Dark_Interior_Pool4_ynlhsx",
       "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772535/shoukoufa-website/B._Dark_Interior_Pool4_ynlhsx.png",
       "alt": "Home interior — moody, low-light (B Dark Interior + Pool4)"
+    },
+    {
+      "id": "55da9e93-3512-4d6a-add1-9ab170b1c7ac",
+      "public_id": "shoukoufa-website/B._Dark_Interior_Pool1_wgmy7z",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775436/shoukoufa-website/B._Dark_Interior_Pool1_wgmy7z.png",
+      "alt": "Home interior — moody, low-light (B._Dark_Interior_+_Pool1)"
+    },
+    {
+      "id": "0f55f218-5c22-4632-8d34-4af95affd4f4",
+      "public_id": "shoukoufa-website/B._Dark_Interior_Pool2_r8xltv",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775438/shoukoufa-website/B._Dark_Interior_Pool2_r8xltv.png",
+      "alt": "Home interior — moody, low-light (B._Dark_Interior_+_Pool2)"
+    },
+    {
+      "id": "9b96b70c-5c27-4b04-ad48-baa416777183",
+      "public_id": "shoukoufa-website/B._Dark_Interior_Pool3_gzylnd",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775440/shoukoufa-website/B._Dark_Interior_Pool3_gzylnd.png",
+      "alt": "Home interior — moody, low-light (B._Dark_Interior_+_Pool3)"
+    },
+    {
+      "id": "b4591537-1052-4158-a987-99637b137a1e",
+      "public_id": "shoukoufa-website/B._Dark_Interior_Pool4_ucp66f",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775441/shoukoufa-website/B._Dark_Interior_Pool4_ucp66f.png",
+      "alt": "Home interior — moody, low-light (B._Dark_Interior_+_Pool4)"
     }
   ],
   "interior_light": [
@@ -275,6 +337,36 @@
       "public_id": "shoukoufa-website/Light_interior_Kitchen5_ez3kei",
       "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772550/shoukoufa-website/Light_interior_Kitchen5_ez3kei.png",
       "alt": "Home interior — bright, daylight (Light interior + Kitchen5)"
+    },
+    {
+      "id": "7a3d7633-f73c-473e-a0d6-8c281bf76c21",
+      "public_id": "shoukoufa-website/Light_interior_Kitchen1_p3tylt",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775444/shoukoufa-website/Light_interior_Kitchen1_p3tylt.png",
+      "alt": "Home interior — bright, daylight (Light_interior_+_Kitchen1)"
+    },
+    {
+      "id": "bdfb4637-34a2-40da-ab29-0e0e2f05be10",
+      "public_id": "shoukoufa-website/Light_interior_Kitchen2_tagcpq",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775446/shoukoufa-website/Light_interior_Kitchen2_tagcpq.png",
+      "alt": "Home interior — bright, daylight (Light_interior_+_Kitchen2)"
+    },
+    {
+      "id": "0b11a6b7-f8ae-4e72-94e1-b67af642b5df",
+      "public_id": "shoukoufa-website/Light_interior_Kitchen3_ghr68b",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775447/shoukoufa-website/Light_interior_Kitchen3_ghr68b.png",
+      "alt": "Home interior — bright, daylight (Light_interior_+_Kitchen3)"
+    },
+    {
+      "id": "e78da7c2-f658-4069-b52c-d787f8420cf8",
+      "public_id": "shoukoufa-website/Light_interior_Kitchen4_zshdqx",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775449/shoukoufa-website/Light_interior_Kitchen4_zshdqx.png",
+      "alt": "Home interior — bright, daylight (Light_interior_+_Kitchen4)"
+    },
+    {
+      "id": "65e511d2-f71d-4a63-8fbf-3dd4ffc742eb",
+      "public_id": "shoukoufa-website/Light_interior_Kitchen5_nwd8tb",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775450/shoukoufa-website/Light_interior_Kitchen5_nwd8tb.png",
+      "alt": "Home interior — bright, daylight (Light_interior_+_Kitchen5)"
     }
   ],
   "urban_dark": [
@@ -285,28 +377,28 @@
       "alt": "Urban cityscape — moody, low-light"
     },
     {
-      "id": "3f5e0bf0-2bc4-4a48-a563-771e03a42607",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772552/shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu.png",
-      "alt": "Urban cityscape — moody, low-light"
+      "id": "3c33ea20-9f6f-44fb-b312-ebac946e731a",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_hj370thj370thj37_j6pcla",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775452/shoukoufa-website/Gemini_Generated_Image_hj370thj370thj37_j6pcla.png",
+      "alt": "Urban cityscape — moody, low-light (Gemini_Generated_Image_hj370thj370thj37)"
     },
     {
-      "id": "3f5e0bf0-2bc4-4a48-a563-771e03a42607",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772552/shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu.png",
-      "alt": "Urban cityscape — moody, low-light"
+      "id": "58705a75-9723-4869-93be-fd29fbd926c5",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_k62y0kk62y0kk62y_ut2kvu",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775454/shoukoufa-website/Gemini_Generated_Image_k62y0kk62y0kk62y_ut2kvu.png",
+      "alt": "Urban cityscape — moody, low-light (Gemini_Generated_Image_k62y0kk62y0kk62y)"
     },
     {
-      "id": "3f5e0bf0-2bc4-4a48-a563-771e03a42607",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772552/shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu.png",
-      "alt": "Urban cityscape — moody, low-light"
+      "id": "499cfad1-7988-4de7-a073-91ee6f45be39",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_mjpbe6mjpbe6mjpb_ujexox",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775456/shoukoufa-website/Gemini_Generated_Image_mjpbe6mjpbe6mjpb_ujexox.png",
+      "alt": "Urban cityscape — moody, low-light (Gemini_Generated_Image_mjpbe6mjpbe6mjpb)"
     },
     {
-      "id": "3f5e0bf0-2bc4-4a48-a563-771e03a42607",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772552/shoukoufa-website/Gemini_Generated_Image_cdfzocdfzocdfzoc_zzsdnu.png",
-      "alt": "Urban cityscape — moody, low-light"
+      "id": "70263a32-c078-4073-a6d6-72142815e0e8",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_xga6s3xga6s3xga6_f8wzt9",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775458/shoukoufa-website/Gemini_Generated_Image_xga6s3xga6s3xga6_f8wzt9.png",
+      "alt": "Urban cityscape — moody, low-light (Gemini_Generated_Image_xga6s3xga6s3xga6)"
     }
   ],
   "urban_light": [
@@ -317,22 +409,22 @@
       "alt": "Urban cityscape — bright, daylight"
     },
     {
-      "id": "41943be1-8f07-408c-9ce6-a47368b00706",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_l1i7stl1i7stl1i7_kwgavz",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772554/shoukoufa-website/Gemini_Generated_Image_l1i7stl1i7stl1i7_kwgavz.png",
-      "alt": "Urban cityscape — bright, daylight"
+      "id": "44f1ebf5-66ae-48d5-8e59-f48c8e7534c6",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_of80tlof80tlof80_pnb64f",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775461/shoukoufa-website/Gemini_Generated_Image_of80tlof80tlof80_pnb64f.png",
+      "alt": "Urban cityscape — bright, daylight (Gemini_Generated_Image_of80tlof80tlof80)"
     },
     {
-      "id": "41943be1-8f07-408c-9ce6-a47368b00706",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_l1i7stl1i7stl1i7_kwgavz",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772554/shoukoufa-website/Gemini_Generated_Image_l1i7stl1i7stl1i7_kwgavz.png",
-      "alt": "Urban cityscape — bright, daylight"
+      "id": "caadc467-ea4d-42b5-9071-51215122ff17",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_uw1putuw1putuw1p_peva8t",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775462/shoukoufa-website/Gemini_Generated_Image_uw1putuw1putuw1p_peva8t.png",
+      "alt": "Urban cityscape — bright, daylight (Gemini_Generated_Image_uw1putuw1putuw1p)"
     },
     {
-      "id": "41943be1-8f07-408c-9ce6-a47368b00706",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_l1i7stl1i7stl1i7_kwgavz",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772554/shoukoufa-website/Gemini_Generated_Image_l1i7stl1i7stl1i7_kwgavz.png",
-      "alt": "Urban cityscape — bright, daylight"
+      "id": "7d45cb01-8644-43ff-a5af-6450808b8ec1",
+      "public_id": "shoukoufa-website/Gemini_Generated_Image_vzfs99vzfs99vzfs_beaab3",
+      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778775464/shoukoufa-website/Gemini_Generated_Image_vzfs99vzfs99vzfs_beaab3.png",
+      "alt": "Urban cityscape — bright, daylight (Gemini_Generated_Image_vzfs99vzfs99vzfs)"
     }
   ],
   "suburban_dark": [
@@ -341,44 +433,6 @@
       "public_id": "shoukoufa-website/Gemini_Generated_Image_frh8cxfrh8cxfrh8_ibksgx",
       "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772556/shoukoufa-website/Gemini_Generated_Image_frh8cxfrh8cxfrh8_ibksgx.png",
       "alt": "Suburban neighborhood — moody, low-light"
-    }
-  ],
-  "suburban_light": [
-    {
-      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
-      "alt": "Suburban neighborhood — bright, daylight"
-    },
-    {
-      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
-      "alt": "Suburban neighborhood — bright, daylight"
-    },
-    {
-      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
-      "alt": "Suburban neighborhood — bright, daylight"
-    },
-    {
-      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
-      "alt": "Suburban neighborhood — bright, daylight"
-    },
-    {
-      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
-      "alt": "Suburban neighborhood — bright, daylight"
-    },
-    {
-      "id": "2d9a5fd2-2370-44f5-a40d-5006b851153b",
-      "public_id": "shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc",
-      "url": "https://res.cloudinary.com/devkkpytu/image/upload/v1778772558/shoukoufa-website/Gemini_Generated_Image_2g305d2g305d2g30_rx3ggc.png",
-      "alt": "Suburban neighborhood — bright, daylight"
     }
   ]
 }

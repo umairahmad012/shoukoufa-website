@@ -123,10 +123,15 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
               {...(c.href ? { href: c.href } : {})}
               className="group relative block aspect-[3/4.2] overflow-hidden bg-navy-dark"
             >
-              {/* Photo background */}
+              {/* Photo background. Position shifted up so the subject
+                  stays visible above the glass panel anchored at the
+                  bottom. */}
               <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.4s] ease-editorial group-hover:scale-[1.05]"
-                style={{ backgroundImage: `url('${c._img}')` }}
+                className="absolute inset-0 bg-cover transition-transform duration-[1.4s] ease-editorial group-hover:scale-[1.05]"
+                style={{
+                  backgroundImage: `url('${c._img}')`,
+                  backgroundPosition: "center 30%",
+                }}
               />
               {/* Subtle dim so text on glass stays legible against any photo */}
               <div className="absolute inset-0 overlay-card" />

@@ -50,10 +50,16 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
             href={`/communities/${c.slug}`}
             className="group relative aspect-[4/3.2] block overflow-hidden bg-navy-dark"
           >
-            {/* Photo background */}
+            {/* Photo background.
+                bg-position is shifted to the top 30% so the subject of
+                the photo (sky/architecture) stays visible above the
+                glass panel that anchors at the bottom of the card. */}
             <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.6s] ease-editorial group-hover:scale-[1.05]"
-              style={{ backgroundImage: `url('${c.image}')` }}
+              className="absolute inset-0 bg-cover transition-transform duration-[1.6s] ease-editorial group-hover:scale-[1.05]"
+              style={{
+                backgroundImage: `url('${c.image}')`,
+                backgroundPosition: "center 25%",
+              }}
             />
             <div className="absolute inset-0 overlay-card" />
 

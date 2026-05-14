@@ -187,27 +187,40 @@ async function main() {
       const sizeMb = statSync(filePath).size / 1024 / 1024;
       process.stdout.write(`  • ${file} (${sizeMb.toFixed(1)} MB) ... `);
 
-      // Predict the Cloudinary public_id the preset will assign so we can
-      // skip if we already uploaded this file. Preset uses
-      //   folder: shoukoufa-website
-      //   use_filename: true
-      //   unique_filename: true   ← appends a random suffix
-      // ⇒ public_id is unpredictable on re-uploads; rely on an *alt-text*
-      //    fingerprint instead: skip if a media row with the same alt
-      //    already exists.
-      const alt = makeAlt(folder.category, folder.theme, file.replace(/\.[^.]+$/, ""));
+      // Existence check: match by the filename base inside
+      // cloudinary_public_id. The preset is `unique_filename: true` so
+      // Cloudinary appends a random suffix, but the original base name
+      // is preserved at the start of public_id. e.g. file
+      // `Gemini_Generated_Image_2618rb2618rb2618.png` becomes
+      // `shoukoufa-website/Gemini_Generated_Image_2618rb2618rb2618_<suffix>`.
+      // (The earlier version matched by `alt` which collided for the
+      // Gemini files — only one image per bucket actually saved.)
+      const fileBase = file.replace(/\.[^.]+$/, "").replace(/\s+/g, "_");
+      const escaped = fileBase.replace(/[.+]/g, (m) => `\\${m}`);
       const { data: existing } = await supabase
         .from("media")
-        .select("id, cloudinary_public_id, url")
-        .eq("alt", alt)
+        .select("id, cloudinary_public_id, url, alt")
+        .ilike("cloudinary_public_id", `%${escaped}%`)
         .maybeSingle();
+      // Build a fresh, unique alt for THIS file (includes original
+      // file name so each row has its own identity, not a bucket-wide
+      // generic string).
+      const alt = `${
+        folder.category === "exterior"
+          ? "Home exterior"
+          : folder.category === "interior"
+            ? "Home interior"
+            : folder.category === "urban"
+              ? "Urban cityscape"
+              : "Suburban neighborhood"
+      } — ${folder.theme === "dark" ? "moody, low-light" : "bright, daylight"} (${fileBase})`;
       if (existing) {
         console.log(`already uploaded`);
         index[key].push({
           id: existing.id as string,
           public_id: existing.cloudinary_public_id as string,
           url: existing.url as string,
-          alt,
+          alt: (existing.alt as string) ?? alt,
         });
         continue;
       }
