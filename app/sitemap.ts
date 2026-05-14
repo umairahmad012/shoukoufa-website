@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { communities } from "@/lib/communities";
 import { getPublishedCountySlugs } from "@/lib/countyLandingLoader";
+import { getPublishedCustomPages } from "@/lib/customPages";
 import { siteOrigin } from "@/lib/qrcode";
 
 // Always render fresh — county landing pages are toggled from admin and
@@ -30,7 +31,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Pull every published county landing page so search engines pick them up
   // the moment the admin toggles one on.
-  const countySlugs = await getPublishedCountySlugs();
+  const [countySlugs, customPages] = await Promise.all([
+    getPublishedCountySlugs(),
+    getPublishedCustomPages(),
+  ]);
 
   return [
     ...pages.map((path) => ({
@@ -51,6 +55,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       // County pages are high-intent SEO targets — give them strong priority.
       priority: 0.85,
+    })),
+    ...customPages.map((p) => ({
+      url: `${SITE}/${p.slug}`,
+      lastModified: new Date(p.updated_at),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
   ];
 }

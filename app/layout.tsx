@@ -8,6 +8,7 @@ import BrandThemeStyle from "@/components/BrandThemeStyle";
 import { getPortrait, getFeaturedImage } from "@/lib/contentLoader";
 import { getAnalyticsMeasurementId } from "@/lib/integrationStore";
 import { siteOrigin } from "@/lib/qrcode";
+import { getNavPages } from "@/lib/customPages";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -59,10 +60,15 @@ export default async function RootLayout({
   // don't each re-fetch. When admin pastes a GA Measurement ID via
   // /admin/integrations/analytics, this becomes a string like "G-XXXX...";
   // when blank or disabled, GA scripts simply don't render.
-  const [portrait, gaMeasurementId] = await Promise.all([
+  const [portrait, gaMeasurementId, navPages] = await Promise.all([
     getPortrait(),
     getAnalyticsMeasurementId(),
+    getNavPages(),
   ]);
+  const extraNavItems = navPages.map((p) => ({
+    label: p.title,
+    href: `/${p.slug}`,
+  }));
 
   return (
     <html lang="en" className={montserrat.variable}>
@@ -90,7 +96,7 @@ export default async function RootLayout({
         {/* Reads saved brand theme and overrides --brand-* CSS variables
             so navy/cream switches re-skin the entire site. */}
         <BrandThemeStyle />
-        <Header portraitAvatar={portrait.avatar} />
+        <Header portraitAvatar={portrait.avatar} extraNavItems={extraNavItems} />
         <main>{children}</main>
         <Footer portraitAvatar={portrait.avatar} />
       </body>

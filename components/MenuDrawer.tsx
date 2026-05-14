@@ -9,11 +9,25 @@ export default function MenuDrawer({
   open,
   onClose,
   portraitAvatar,
+  extraNavItems,
 }: {
   open: boolean;
   onClose: () => void;
   portraitAvatar?: string;
+  extraNavItems?: Array<{ label: string; href: string }>;
 }) {
+  // Splice custom pages in just before the Contact item so the
+  // dropdowns (Communities) and core flow remain stable.
+  const mergedNav = (() => {
+    if (!extraNavItems || extraNavItems.length === 0) return nav;
+    const idx = nav.findIndex((n) => n.href === "/contact");
+    const safeIdx = idx === -1 ? nav.length : idx;
+    return [
+      ...nav.slice(0, safeIdx),
+      ...extraNavItems,
+      ...nav.slice(safeIdx),
+    ];
+  })();
   const avatar = portraitAvatar || site.portrait.avatar;
   useEffect(() => {
     function onEsc(e: KeyboardEvent) {
@@ -80,7 +94,7 @@ export default function MenuDrawer({
 
         {/* Nav */}
         <nav className="px-10 md:px-14 pb-12 overflow-y-auto" style={{ maxHeight: "calc(100vh - 240px)" }}>
-          {nav.map((item) => (
+          {mergedNav.map((item) => (
             <div key={item.href} className="border-b border-white/10 last:border-0">
               <Link
                 href={item.href}

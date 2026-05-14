@@ -7,10 +7,14 @@ import { Menu } from "lucide-react";
 import Logo from "./Logo";
 import MenuDrawer from "./MenuDrawer";
 
+export type ExtraNavItem = { label: string; href: string };
+
 export default function Header({
   portraitAvatar,
+  extraNavItems,
 }: {
   portraitAvatar?: string;
+  extraNavItems?: ExtraNavItem[];
 }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -91,6 +95,7 @@ export default function Header({
         open={open}
         onClose={() => setOpen(false)}
         portraitAvatar={portraitAvatar}
+        extraNavItems={extraNavItems}
       />
     </>
   );
