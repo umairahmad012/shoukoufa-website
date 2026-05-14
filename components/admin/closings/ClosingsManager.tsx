@@ -20,6 +20,7 @@ import {
   type ClosingInput,
 } from "@/app/admin/closings/actions";
 import ImagePicker, { type LibraryItem } from "@/components/admin/media/ImagePicker";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import type { CropArea } from "@/components/admin/media/CropEditor";
 import { cldUrl } from "@/lib/cloudinary";
 import { DEFAULT_CLOSING_PHOTO } from "@/lib/imageDefaults";
@@ -45,6 +46,7 @@ export default function ClosingsManager({
   library: LibraryItem[];
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [items, setItems] = useState<ClosingRow[]>(initial);
   const [editing, setEditing] = useState<ClosingRow | null>(null);
   const [adding, setAdding] = useState(false);
@@ -62,8 +64,14 @@ export default function ClosingsManager({
     });
   }
 
-  function handleDelete(id: string) {
-    if (!confirm("Delete this closing?")) return;
+  async function handleDelete(id: string) {
+    const ok = await confirm({
+      title: "Delete this closing?",
+      body: "It will be removed from /closings and from the homepage gallery.",
+      confirmLabel: "Delete closing",
+      danger: true,
+    });
+    if (!ok) return;
     startTransition(async () => {
       await deleteClosing(id);
       setItems((prev) => prev.filter((x) => x.id !== id));

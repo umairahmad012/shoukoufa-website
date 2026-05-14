@@ -188,9 +188,13 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
                   </p>
                 ) : null}
                 {c.cta && c.href ? (
-                  <span className="inline-flex items-center gap-3 text-[0.62rem] md:text-[0.68rem] tracking-[0.30em] md:tracking-[0.32em] uppercase font-light text-white border-t border-white/25 pt-4 md:pt-5 mt-auto whitespace-nowrap">
-                    {c.cta}
-                    <span className="transition-transform duration-500 ease-editorial group-hover:translate-x-1.5 group-hover:-translate-y-1.5">
+                  // Letter-spacing dialed back so long uppercase CTAs
+                  // like "BUYING WITH SHOUKOUFA" fit inside the 219px
+                  // glass panel at every viewport. `truncate` guards
+                  // against runaway labels too long for the container.
+                  <span className="inline-flex items-center gap-2 md:gap-3 text-[0.58rem] md:text-[0.65rem] tracking-[0.2em] md:tracking-[0.24em] uppercase font-light text-white border-t border-white/25 pt-4 md:pt-5 mt-auto min-w-0 max-w-full">
+                    <span className="truncate">{c.cta}</span>
+                    <span className="transition-transform duration-500 ease-editorial group-hover:translate-x-1.5 group-hover:-translate-y-1.5 flex-shrink-0">
                       ↗
                     </span>
                   </span>

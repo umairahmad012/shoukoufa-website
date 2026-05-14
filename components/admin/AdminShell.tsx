@@ -21,6 +21,7 @@
 import { useState } from "react";
 import { Menu as MenuIcon } from "lucide-react";
 import AdminSidebar from "./AdminSidebar";
+import { ConfirmProvider } from "./ConfirmDialog";
 
 export default function AdminShell({
   user,
@@ -32,6 +33,7 @@ export default function AdminShell({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
+    <ConfirmProvider>
     <div
       className="min-h-screen flex"
       style={{ background: "var(--background)", color: "var(--foreground)" }}
@@ -89,5 +91,6 @@ export default function AdminShell({
         </main>
       </div>
     </div>
+    </ConfirmProvider>
   );
 }

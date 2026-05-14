@@ -87,16 +87,22 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
                 </span>
               </div>
 
+              {/* Community name. At iPad portrait the card is ~187px
+                  wide; the previous md:text-4xl (36px) clipped names
+                  like "ALEXANDRIA" by 68px. Now we step from 2xl at
+                  iPad to 4xl only at lg+. */}
               <h3
-                className="text-2xl md:text-4xl uppercase tracking-wide mb-4 md:mb-6"
+                className="text-2xl lg:text-4xl uppercase tracking-wide mb-4 md:mb-6 break-words"
                 style={{ fontWeight: 200, letterSpacing: "0.05em" }}
               >
                 {c.name}
               </h3>
 
+              {/* Stats strip. Letter-spacing dialed back at md so the
+                  "MEDIAN" label doesn't clip in narrow iPad columns. */}
               <div className="grid grid-cols-3 gap-2 md:gap-4 pt-4 md:pt-5 border-t border-white/20">
                 <div>
-                  <p className="text-[0.52rem] md:text-[0.6rem] tracking-[0.24em] md:tracking-[0.28em] uppercase text-white/55 mb-1 md:mb-1.5">
+                  <p className="text-[0.52rem] md:text-[0.58rem] tracking-[0.18em] md:tracking-[0.22em] uppercase text-white/55 mb-1 md:mb-1.5">
                     Median
                   </p>
                   <p className="text-sm md:text-base font-light text-white">
@@ -104,7 +110,7 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
                   </p>
                 </div>
                 <div>
-                  <p className="text-[0.52rem] md:text-[0.6rem] tracking-[0.24em] md:tracking-[0.28em] uppercase text-white/55 mb-1 md:mb-1.5">
+                  <p className="text-[0.52rem] md:text-[0.58rem] tracking-[0.18em] md:tracking-[0.22em] uppercase text-white/55 mb-1 md:mb-1.5">
                     YoY
                   </p>
                   <p
@@ -120,7 +126,7 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
                   </p>
                 </div>
                 <div>
-                  <p className="text-[0.52rem] md:text-[0.6rem] tracking-[0.24em] md:tracking-[0.28em] uppercase text-white/55 mb-1 md:mb-1.5">
+                  <p className="text-[0.52rem] md:text-[0.58rem] tracking-[0.18em] md:tracking-[0.22em] uppercase text-white/55 mb-1 md:mb-1.5">
                     DOM
                   </p>
                   <p className="text-sm md:text-base font-light text-white">

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, Save, RotateCcw, Check } from "lucide-react";
 import type { SectionDef } from "@/lib/contentRegistry";
 import { FieldRenderer, MediaLibraryProvider } from "./Fields";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import type { VideoLibraryItem } from "@/components/admin/media/VideoPicker";
 import { saveSection } from "@/app/admin/content/actions";
 
@@ -23,6 +24,7 @@ export default function SectionEditor({
   library: VideoLibraryItem[];
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [value, setValue] = useState<Record<string, unknown>>(initialValue);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -41,13 +43,13 @@ export default function SectionEditor({
     });
   }
 
-  function handleResetToDefault() {
-    if (
-      !confirm(
-        "Reset this section to its original copy? Your current edits will be saved to history but replaced.",
-      )
-    )
-      return;
+  async function handleResetToDefault() {
+    const ok = await confirm({
+      title: "Reset this section to default?",
+      body: "Your current edits will be replaced with the original starting copy. This can't be undone.",
+      confirmLabel: "Reset",
+    });
+    if (!ok) return;
     setValue(defaultValue);
   }
 

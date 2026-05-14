@@ -41,6 +41,7 @@ import {
   type BlockWrapper,
 } from "@/lib/blockRegistry";
 import { FieldRenderer, MediaLibraryProvider } from "@/components/admin/content/Fields";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import type { PageBlockRow } from "@/lib/pageBlocks";
 import type { VideoLibraryItem } from "@/components/admin/media/VideoPicker";
 
@@ -62,6 +63,7 @@ export default function BuilderClient({
   library: VideoLibraryItem[];
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [blocks, setBlocks] = useState<PageBlockRow[]>(initialBlocks);
   const [showPicker, setShowPicker] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -94,8 +96,14 @@ export default function BuilderClient({
     });
   }
 
-  function handleDelete(id: string) {
-    if (!confirm("Delete this block? This can't be undone.")) return;
+  async function handleDelete(id: string) {
+    const ok = await confirm({
+      title: "Delete this block?",
+      body: "This can't be undone. The block and its content will be removed from this page.",
+      confirmLabel: "Delete block",
+      danger: true,
+    });
+    if (!ok) return;
     setBlocks((b) => b.filter((row) => row.id !== id));
     startTransition(async () => {
       const res = await deleteBlock({ id, pageKey });

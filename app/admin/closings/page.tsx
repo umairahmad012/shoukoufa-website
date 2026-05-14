@@ -52,7 +52,9 @@ export default async function ClosingsAdminPage() {
         </h1>
         <p className="text-sm text-ink/65 max-w-2xl mb-8">
           Add closed sales one at a time. Each shows on the public Closings
-          page and the homepage gallery. Reorder with the arrows on each card.
+          page and the homepage gallery. The newest closing appears first by
+          default — to change the order, edit a card and set its display
+          order to a smaller number than the others.
         </p>
 
         <ClosingsManager

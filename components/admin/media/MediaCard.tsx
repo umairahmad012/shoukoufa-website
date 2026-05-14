@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { cldUrl, youTubeThumbnail, type CropPreset } from "@/lib/cloudinary";
 import { updateMediaAlt, deleteMedia } from "@/app/admin/media/actions";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import { cn } from "@/lib/cn";
 
 export type MediaRow = {
@@ -45,6 +46,7 @@ export default function MediaCard({
   onToggleSelected?: (id: string) => void;
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [pending, startTransition] = useTransition();
   const [editingAlt, setEditingAlt] = useState(false);
   const [alt, setAlt] = useState(media.alt ?? "");
@@ -83,10 +85,14 @@ export default function MediaCard({
     });
   }
 
-  function handleDelete() {
-    if (!confirm("Delete this media item from the library? Any pages still using it will fall back to defaults.")) {
-      return;
-    }
+  async function handleDelete() {
+    const ok = await confirm({
+      title: "Delete this media item?",
+      body: "It will be removed from the Media Library. Any pages still using it will fall back to defaults.",
+      confirmLabel: "Delete media",
+      danger: true,
+    });
+    if (!ok) return;
     startTransition(async () => {
       await deleteMedia(media.id);
       router.refresh();

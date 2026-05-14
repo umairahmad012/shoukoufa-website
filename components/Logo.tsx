@@ -45,14 +45,21 @@ export default function Logo({
       </span>
 
       <span className="flex flex-col min-w-0">
+        {/* Wordmark — sized up only at lg (1024+). At iPad portrait (md:768)
+            the big size + wide tracking overflows into the Contact button,
+            so we keep the sm size all the way through md and only let it
+            grow at lg. */}
         <span
-          className="text-[1.05rem] sm:text-[1.3rem] md:text-[1.8rem] font-thin tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.18em] uppercase whitespace-nowrap"
+          className="text-[1.05rem] sm:text-[1.2rem] lg:text-[1.6rem] xl:text-[1.8rem] font-thin tracking-[0.12em] sm:tracking-[0.14em] lg:tracking-[0.18em] uppercase whitespace-nowrap"
           style={{ fontWeight: 200 }}
         >
           {displayName}
         </span>
+        {/* Subline ("Real Estate Specialist") — only shows at lg+. At iPad
+            it crowds the Contact button even when the wordmark is sized
+            down, so we just don't show it. */}
         <span
-          className="text-[0.5rem] sm:text-[0.55rem] md:text-[0.68rem] font-light tracking-[0.32em] sm:tracking-[0.36em] md:tracking-[0.42em] uppercase opacity-90 mt-1 md:mt-1.5 self-end whitespace-nowrap hidden md:inline"
+          className="text-[0.55rem] xl:text-[0.68rem] font-light tracking-[0.32em] xl:tracking-[0.4em] uppercase opacity-90 mt-1 lg:mt-1.5 self-end whitespace-nowrap hidden lg:inline"
           style={{ fontWeight: 300 }}
         >
           {displayRole}

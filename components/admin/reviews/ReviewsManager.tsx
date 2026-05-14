@@ -27,6 +27,7 @@ import {
   type ReviewInput,
   type ReviewSource,
 } from "@/app/admin/reviews/actions";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import { cn } from "@/lib/cn";
 
 export type ReviewRow = {
@@ -79,6 +80,7 @@ export default function ReviewsManager({
   internalFeedback?: SubmissionRow[];
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [items, setItems] = useState<ReviewRow[]>(initial);
   const [editing, setEditing] = useState<ReviewRow | null>(null);
   const [adding, setAdding] = useState(false);
@@ -96,8 +98,14 @@ export default function ReviewsManager({
     });
   }
 
-  function handleDelete(id: string) {
-    if (!confirm("Delete this review?")) return;
+  async function handleDelete(id: string) {
+    const ok = await confirm({
+      title: "Delete this review?",
+      body: "It will disappear from /reviews and the homepage strip.",
+      confirmLabel: "Delete review",
+      danger: true,
+    });
+    if (!ok) return;
     startTransition(async () => {
       await deleteReview(id);
       setItems((prev) => prev.filter((x) => x.id !== id));

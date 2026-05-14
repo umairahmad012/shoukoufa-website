@@ -149,9 +149,7 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
                     key={i}
                     href={cta.href}
                     className={
-                      cta.style === "outline"
-                        ? "px-9 py-4 border border-white/60 text-white text-[0.72rem] tracking-[0.28em] uppercase font-light hover:bg-white hover:text-navy transition-all duration-500 ease-editorial text-center"
-                        : "btn-glass"
+                      cta.style === "outline" ? "btn-glass-outline" : "btn-glass"
                     }
                   >
                     {cta.label}

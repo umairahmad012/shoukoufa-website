@@ -13,6 +13,7 @@ import {
 import ImagePicker, {
   type LibraryItem,
 } from "@/components/admin/media/ImagePicker";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import {
   OPEN_HOUSE_FEATURES,
   TOTAL_FLYER_PILLS,
@@ -31,6 +32,7 @@ export default function OpenHouseForm({
   library: LibraryItem[];
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [v, setV] = useState<OpenHouseInput>(initial);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -119,10 +121,15 @@ export default function OpenHouseForm({
     });
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     if (!existingId) return;
-    if (!confirm(`Delete this open house? This also removes its RSVP form.`))
-      return;
+    const ok = await confirm({
+      title: "Delete this open house?",
+      body: "This also removes its RSVP form and any collected RSVPs.",
+      confirmLabel: "Delete open house",
+      danger: true,
+    });
+    if (!ok) return;
     startTransition(async () => {
       const res = await deleteOpenHouse(existingId);
       if (!res.ok) {

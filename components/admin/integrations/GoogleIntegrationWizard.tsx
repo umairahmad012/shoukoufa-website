@@ -21,6 +21,7 @@ import {
   Trash2,
   AlertCircle,
 } from "lucide-react";
+import { useConfirm } from "@/components/admin/ConfirmDialog";
 import {
   testGoogleConnection,
   saveGoogleIntegration,
@@ -50,6 +51,7 @@ export default function GoogleIntegrationWizard({
   existing: ExistingConfig | null;
 }) {
   const router = useRouter();
+  const confirm = useConfirm();
   const [pending, startTransition] = useTransition();
   const [apiKey, setApiKey] = useState(existing?.apiKey ?? "");
   const [placeId, setPlaceId] = useState(existing?.placeId ?? "");
@@ -110,14 +112,13 @@ export default function GoogleIntegrationWizard({
     });
   }
 
-  function handleDisconnect() {
-    if (
-      !confirm(
-        "Disconnect Google Reviews? Already-imported reviews stay in the database. You can reconnect anytime by pasting the API key again.",
-      )
-    ) {
-      return;
-    }
+  async function handleDisconnect() {
+    const ok = await confirm({
+      title: "Disconnect Google Reviews?",
+      body: "Already-imported reviews stay in the database. You can reconnect anytime by pasting the API key again.",
+      confirmLabel: "Disconnect",
+    });
+    if (!ok) return;
     startTransition(async () => {
       const res = await disconnectGoogle();
       if (!res.ok) {
