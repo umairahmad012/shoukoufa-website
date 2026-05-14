@@ -14,7 +14,7 @@
  *   />
  */
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Image as ImageIcon, X, Check, Upload, Crop as CropIcon } from "lucide-react";
 import {
@@ -65,6 +65,21 @@ export default function ImagePicker({
 }) {
   const router = useRouter();
   const [browsing, setBrowsing] = useState(false);
+
+  // Escape to close + body-scroll lock for the browse modal
+  useEffect(() => {
+    if (!browsing) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setBrowsing(false);
+    }
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [browsing]);
   const [editingCrop, setEditingCrop] = useState(false);
   const [, startTransition] = useTransition();
   const [uploading, setUploading] = useState(false);
@@ -225,18 +240,26 @@ export default function ImagePicker({
       {/* Browse modal */}
       {browsing && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="picker-modal-title"
           className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-6"
           onClick={(e) => e.target === e.currentTarget && setBrowsing(false)}
         >
           <div className="bg-white rounded-md max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col">
             <div className="px-5 py-4 border-b border-black/10 flex items-center justify-between">
-              <h3 className="text-sm" style={{ fontWeight: 500 }}>
+              <h3
+                id="picker-modal-title"
+                className="text-sm"
+                style={{ fontWeight: 500 }}
+              >
                 Pick from Media Library
               </h3>
               <button
                 type="button"
                 onClick={() => setBrowsing(false)}
-                className="text-ink/55 hover:text-ink"
+                aria-label="Close media library"
+                className="text-ink/55 hover:text-ink inline-flex items-center justify-center min-w-[44px] min-h-[44px]"
               >
                 <X size={18} />
               </button>

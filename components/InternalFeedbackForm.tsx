@@ -95,7 +95,7 @@ export default function InternalFeedbackForm() {
               key={n}
               type="button"
               onClick={() => setRating(n)}
-              className="text-amber-500 transition-transform hover:scale-110"
+              className="text-amber-500 transition-transform hover:scale-110 inline-flex items-center justify-center min-w-[44px] min-h-[44px]"
               aria-label={`${n} star${n === 1 ? "" : "s"}`}
             >
               <Star

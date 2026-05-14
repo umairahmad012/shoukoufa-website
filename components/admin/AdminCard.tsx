@@ -120,29 +120,9 @@ export default function AdminCard({
           }}
         />
 
-        {/* Top reveal chip — drops down on hover */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-[6] flex justify-center pt-3 -translate-y-full opacity-0 transition-all duration-500 ease-[cubic-bezier(0.6,0.6,0,1)] group-hover/animated-card:translate-y-0 group-hover/animated-card:opacity-100"
-        >
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] backdrop-blur-sm"
-            style={{
-              borderColor: `color-mix(in srgb, ${accentVar} 35%, transparent)`,
-              background: `color-mix(in srgb, var(--card) 70%, transparent)`,
-              color: accentVar,
-              fontWeight: 600,
-            }}
-          >
-            <span
-              className="h-1 w-1 rounded-full animate-pulse"
-              style={{ background: accentVar }}
-            />
-            Tap to manage
-          </span>
-        </div>
-
-        {/* Icon — scales + lifts on hover */}
+        {/* Icon — scales + lifts on hover.
+            Note: the "Tap to manage" hover chip was removed here as it
+            was redundant with the bottom "Tap to open → Open →" swap. */}
         <div
           aria-hidden
           className="absolute left-5 top-5 z-[5] flex h-12 w-12 items-center justify-center rounded-lg transition-all duration-500 ease-[cubic-bezier(0.6,0.6,0,1)] group-hover/animated-card:scale-110 group-hover/animated-card:-translate-y-0.5 group-hover/animated-card:shadow-md"

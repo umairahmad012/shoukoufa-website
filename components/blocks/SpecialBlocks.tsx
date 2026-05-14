@@ -419,12 +419,22 @@ export async function PartnersDirectoryBlock({
                   ) : null}
                   {p.phone ? (
                     <p className="text-sm text-ink/85">
-                      <a href={`tel:${p.phone}`}>{p.phone}</a>
+                      <a
+                        href={`tel:${p.phone}`}
+                        className="inline-flex items-center min-h-[44px]"
+                      >
+                        {p.phone}
+                      </a>
                     </p>
                   ) : null}
                   {p.email ? (
                     <p className="text-sm text-ink/85">
-                      <a href={`mailto:${p.email}`}>{p.email}</a>
+                      <a
+                        href={`mailto:${p.email}`}
+                        className="inline-flex items-center min-h-[44px]"
+                      >
+                        {p.email}
+                      </a>
                     </p>
                   ) : null}
                 </div>
@@ -483,12 +493,18 @@ export async function DirectContactBlock({ data }: { data: DirectContactData }) 
       </div>
       <div className="text-center space-y-3 text-lg font-light text-ink/85">
         <p>
-          <a href={settings.phoneHref} className="hover:opacity-70">
+          <a
+            href={settings.phoneHref}
+            className="inline-flex items-center min-h-[44px] hover:opacity-70"
+          >
             {settings.phone}
           </a>
         </p>
         <p>
-          <a href={settings.emailHref} className="hover:opacity-70">
+          <a
+            href={settings.emailHref}
+            className="inline-flex items-center min-h-[44px] hover:opacity-70"
+          >
             {settings.email}
           </a>
         </p>

@@ -65,12 +65,12 @@ export default function ContactForm() {
         />
       </div>
 
-      <label className="flex items-start gap-4 text-xs font-light text-ink-muted leading-[1.7] pt-2">
+      <label className="flex items-start gap-4 text-xs font-light text-ink-muted leading-[1.7] pt-2 min-h-[44px] cursor-pointer">
         <input
           type="checkbox"
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
-          className="mt-1 flex-shrink-0"
+          className="w-5 h-5 mt-0.5 flex-shrink-0 cursor-pointer accent-navy"
         />
         <span>
           I agree to be contacted by Shoukoufa Aboubakri via call, email, and text.

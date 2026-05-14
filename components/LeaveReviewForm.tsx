@@ -71,7 +71,8 @@ export default function LeaveReviewForm() {
               onMouseEnter={() => setHovered(n)}
               onMouseLeave={() => setHovered(0)}
               onClick={() => setRating(n)}
-              className="text-amber-500"
+              aria-label={`${n} star${n === 1 ? "" : "s"}`}
+              className="text-amber-500 inline-flex items-center justify-center min-w-[44px] min-h-[44px]"
             >
               <Star
                 size={28}

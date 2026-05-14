@@ -11,7 +11,7 @@
  *     plus a universal wrapper sub-form (background image, YouTube video,
  *     overlay, spacing, theme)
  */
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -216,12 +216,15 @@ export default function BuilderClient({
                 block.enabled ? "" : "opacity-50"
               }`}
             >
-              {/* Reorder buttons */}
+              {/* Reorder buttons — bumped to 44px hit area on phone so
+                  fat-finger taps don't miss. disabled cursor is
+                  not-allowed so first/last block's arrow signals
+                  it can't move further. */}
               <div className="flex flex-col gap-1">
                 <button
                   onClick={() => handleMove(block.id, -1)}
                   disabled={i === 0 || pending}
-                  className="p-1 rounded hover:bg-ink/5 disabled:opacity-30"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[36px] sm:min-h-[28px] rounded hover:bg-ink/5 disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Move up"
                   data-tooltip="Move up"
                 >
@@ -230,7 +233,7 @@ export default function BuilderClient({
                 <button
                   onClick={() => handleMove(block.id, 1)}
                   disabled={i === blocks.length - 1 || pending}
-                  className="p-1 rounded hover:bg-ink/5 disabled:opacity-30"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[36px] sm:min-h-[28px] rounded hover:bg-ink/5 disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="Move down"
                   data-tooltip="Move down"
                 >
@@ -256,12 +259,14 @@ export default function BuilderClient({
                 <p className="text-sm text-ink/85 truncate">{preview}</p>
               </div>
 
-              {/* Actions */}
+              {/* Actions — 44×44 hit area on phone (visual size unchanged
+                  on desktop). Delete is persistently red-tinted so it
+                  reads as destructive at rest, not just on hover. */}
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => handleToggle(block.id, !block.enabled)}
                   disabled={pending}
-                  className="p-2 rounded hover:bg-ink/5"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:p-2 rounded hover:bg-ink/5"
                   aria-label={block.enabled ? "Hide" : "Show"}
                   data-tooltip={block.enabled ? "Hide" : "Show"}
                 >
@@ -270,7 +275,7 @@ export default function BuilderClient({
                 <button
                   onClick={() => setEditingId(block.id)}
                   disabled={pending}
-                  className="p-2 rounded hover:bg-ink/5"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:p-2 rounded hover:bg-ink/5"
                   aria-label="Edit content" data-tooltip="Edit content"
                 >
                   <Settings2 size={16} />
@@ -278,7 +283,7 @@ export default function BuilderClient({
                 <button
                   onClick={() => handleDuplicate(block.id)}
                   disabled={pending}
-                  className="p-2 rounded hover:bg-ink/5"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:p-2 rounded hover:bg-ink/5"
                   aria-label="Duplicate" data-tooltip="Duplicate"
                 >
                   <Copy size={16} />
@@ -286,7 +291,7 @@ export default function BuilderClient({
                 <button
                   onClick={() => handleDelete(block.id)}
                   disabled={pending}
-                  className="p-2 rounded hover:bg-red-50 hover:text-red-700"
+                  className="inline-flex items-center justify-center min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:p-2 rounded text-red-600/80 hover:bg-red-50 hover:text-red-700"
                   aria-label="Delete" data-tooltip="Delete"
                 >
                   <Trash2 size={16} />
@@ -355,8 +360,24 @@ function BlockPicker({
   onClose: () => void;
 }) {
   const groups = blockDefsByCategory();
+  // Escape to close + body-scroll lock
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="addblock-modal-title"
       className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center p-4 overflow-y-auto"
       onClick={onClose}
     >
@@ -366,6 +387,7 @@ function BlockPicker({
       >
         <div className="px-6 py-5 border-b border-ink/10">
           <h2
+            id="addblock-modal-title"
             className="text-lg text-ink"
             style={{ fontWeight: 600 }}
           >
@@ -430,6 +452,19 @@ function BlockEditor({
   onSave: (id: string, data: Record<string, unknown>) => void;
   onClose: () => void;
 }) {
+  // Escape to close + body-scroll lock
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
   const def = findBlockDef(block.block_type);
   const [data, setData] = useState<Record<string, unknown>>({ ...block.data });
   const wrapper = (data.wrapper as BlockWrapper | undefined) ?? {};
@@ -459,6 +494,9 @@ function BlockEditor({
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="editblock-modal-title"
       className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center p-4 overflow-y-auto"
       onClick={onClose}
     >
@@ -474,7 +512,11 @@ function BlockEditor({
             >
               {def.label}
             </p>
-            <h2 className="text-lg text-ink" style={{ fontWeight: 600 }}>
+            <h2
+              id="editblock-modal-title"
+              className="text-lg text-ink"
+              style={{ fontWeight: 600 }}
+            >
               Edit Block
             </h2>
             <p className="text-sm text-ink/65 mt-1">{def.description}</p>

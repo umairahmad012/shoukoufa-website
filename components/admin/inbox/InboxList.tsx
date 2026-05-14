@@ -44,8 +44,18 @@ export default function InboxList({ initial }: { initial: LeadRow[] }) {
 
   if (items.length === 0) {
     return (
-      <div className="admin-card p-10 text-center">
-        <p className="text-sm text-ink/65">No leads in this view.</p>
+      <div className="admin-card p-10 md:p-14 text-center max-w-xl mx-auto">
+        <p
+          className="text-base text-ink mb-2"
+          style={{ fontWeight: 500 }}
+        >
+          Nothing here yet.
+        </p>
+        <p className="text-sm text-ink/65 leading-relaxed">
+          New leads land here automatically whenever a visitor submits the
+          public-site Contact form or the Home Valuation request. Filter
+          tabs above let you triage by status once they start coming in.
+        </p>
       </div>
     );
   }

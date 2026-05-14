@@ -163,18 +163,21 @@ export default function ClosingsManager({
                       {c.city}
                       {c.state ? `, ${c.state}` : ""}
                     </p>
+                    {/* Edit (navy) is visually distinct from Delete (red)
+                        at rest, not just on hover — they were near-identical
+                        before. */}
                     <div className="mt-auto pt-3 flex items-center justify-between">
                       <button
                         type="button"
                         onClick={() => setEditing(c)}
-                        className="text-xs text-navy hover:underline"
+                        className="text-xs text-navy hover:underline inline-flex items-center min-h-[36px] px-2 -mx-2"
                       >
                         Edit
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDelete(c.id)}
-                        className="text-xs text-ink/55 hover:text-red-600 inline-flex items-center gap-1"
+                        className="text-xs text-red-600/85 hover:text-red-700 inline-flex items-center gap-1 min-h-[36px] px-2 -mx-2"
                       >
                         <Trash2 size={12} /> Delete
                       </button>

@@ -40,7 +40,14 @@ import { useAdminLayout } from "@/components/admin/AdminLayoutProvider";
 
 type NavGroup = {
   label: string;
-  items: { href: string; label: string; icon: typeof LayoutTemplate; matchPrefix?: boolean }[];
+  items: {
+    href: string;
+    label: string;
+    icon: typeof LayoutTemplate;
+    matchPrefix?: boolean;
+    /** Show a "Beta" pill — indicates this feature is partial/in-progress. */
+    beta?: boolean;
+  }[];
 };
 
 const NAV_GROUPS: NavGroup[] = [
@@ -59,8 +66,8 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Growth",
     items: [
-      { href: "/admin/analytics", label: "Analytics", icon: BarChart3, matchPrefix: true },
-      { href: "/admin/seo", label: "SEO", icon: Search, matchPrefix: true },
+      { href: "/admin/analytics", label: "Analytics", icon: BarChart3, matchPrefix: true, beta: true },
+      { href: "/admin/seo", label: "SEO", icon: Search, matchPrefix: true, beta: true },
     ],
   },
   {
@@ -190,7 +197,19 @@ export default function AdminSidebar({
                     }
                   >
                     <Icon size={15} strokeWidth={1.75} />
-                    {item.label}
+                    <span className="flex-1">{item.label}</span>
+                    {item.beta ? (
+                      <span
+                        className="text-[8.5px] tracking-[0.18em] uppercase px-1.5 py-0.5 rounded ml-auto"
+                        style={{
+                          background: "color-mix(in srgb, var(--primary) 14%, transparent)",
+                          color: "var(--primary)",
+                          fontWeight: 700,
+                        }}
+                      >
+                        Beta
+                      </span>
+                    ) : null}
                   </Link>
                 );
               })}
