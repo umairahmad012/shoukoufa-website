@@ -43,6 +43,7 @@ export default async function NewOpenHousePage() {
     third_image_crop: null,
     features: [],
     description: "",
+    brand_color: null,
     is_published: true,
   };
 

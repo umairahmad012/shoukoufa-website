@@ -155,20 +155,20 @@ export default function Footer({
           </div>
         </div>
 
-        {/* Right — Newsletter */}
+        {/* Right — Newsletter (headline + blurb admin-editable via
+            /admin/settings → Footer Copy) */}
         <div>
           <p className="eyebrow-light mb-6">Stay in Touch</p>
           <h3
             className="text-2xl md:text-3xl uppercase mb-6"
             style={{ fontWeight: 200, letterSpacing: "0.06em" }}
           >
-            Newsletter
+            {settings?.footer.newsletterHeadline || "Newsletter"}
           </h3>
           <div className="mb-8 w-12 h-px bg-white/40" />
           <p className="text-base font-light leading-[1.85] text-white/85 mb-8 max-w-md">
-            Quarterly market reports for the DMV — Virginia, Maryland &amp; D.C.
-            New listings, sold prices, and what it means for your zip code. No
-            spam, ever.
+            {settings?.footer.newsletterBlurb ||
+              "Quarterly market reports for the DMV — Virginia, Maryland & D.C. New listings, sold prices, and what it means for your zip code. No spam, ever."}
           </p>
 
           <form className="max-w-md">
@@ -179,7 +179,8 @@ export default function Footer({
             />
             <button
               type="submit"
-              className="mt-7 px-9 py-3 border border-white/70 text-[0.7rem] tracking-[0.32em] uppercase font-light hover:bg-white hover:text-navy transition-all duration-500 ease-editorial"
+              className="mt-7 px-9 py-4 min-h-[48px] border border-white/70 text-[0.75rem] tracking-[0.28em] uppercase hover:bg-white hover:text-navy transition-all duration-500 ease-editorial"
+              style={{ fontWeight: 400 }}
             >
               Subscribe
             </button>
@@ -220,21 +221,27 @@ export default function Footer({
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-[0.6rem] tracking-[0.22em] uppercase text-white/50 leading-[1.7]"
           style={{ fontWeight: 300 }}
         >
-          {/* Left — copyright + privacy link */}
+          {/* Left — copyright + privacy link.
+              Copyright copy: admin-editable via /admin/settings →
+              Footer Copy. If empty, auto-build a sensible default
+              from the realtor name + license states. */}
           <div className="flex flex-wrap items-center gap-3 md:gap-5">
             <span>
-              © {new Date().getFullYear()} {site.name}
-              {[
-                site.licenses.va ? "VA" : null,
-                site.licenses.md ? "MD" : null,
-                site.licenses.dc ? "DC" : null,
-              ]
-                .filter(Boolean)
-                .reduce<string | null>((acc, s, i, arr) => {
-                  if (i === 0) return ` · Licensed in ${s}`;
-                  if (i === arr.length - 1) return `${acc} & ${s}`;
-                  return `${acc}, ${s}`;
-                }, null)}
+              {settings?.footer.copyright?.trim() ||
+                (() => {
+                  const states = [
+                    site.licenses.va ? "VA" : null,
+                    site.licenses.md ? "MD" : null,
+                    site.licenses.dc ? "DC" : null,
+                  ].filter(Boolean) as string[];
+                  const stateList =
+                    states.length === 0
+                      ? ""
+                      : states.length === 1
+                        ? ` · Licensed in ${states[0]}`
+                        : ` · Licensed in ${states.slice(0, -1).join(", ")} & ${states[states.length - 1]}`;
+                  return `© ${new Date().getFullYear()} ${site.name}${stateList}`;
+                })()}
             </span>
             <span className="opacity-60 hidden sm:inline">·</span>
             <Link
@@ -261,20 +268,27 @@ export default function Footer({
 
             <span className="opacity-40 mx-1">|</span>
 
-            {/* Brand Bonjour credit — small logo before name */}
-            <a
-              href="https://brandbonjour.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 hover:text-white transition-colors"
-            >
-              <img
-                src="/images/Brand%20Bonjour%20Logo.png.png"
-                alt="Brand Bonjour"
-                className="h-7 md:h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
-              />
-              <span>Copyrights reserved by Brand Bonjour</span>
-            </a>
+            {/* Design credit — text admin-editable; the logo + link
+                stay constant (or admin can blank the credit string to
+                hide it entirely). */}
+            {settings?.footer.credit === "" ? null : (
+              <a
+                href="https://brandbonjour.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 hover:text-white transition-colors"
+              >
+                <img
+                  src="/images/Brand%20Bonjour%20Logo.png.png"
+                  alt="Brand Bonjour"
+                  className="h-7 md:h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+                />
+                <span>
+                  {settings?.footer.credit ||
+                    "Copyrights reserved by Brand Bonjour"}
+                </span>
+              </a>
+            )}
           </div>
         </div>
       </div>

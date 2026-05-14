@@ -312,11 +312,12 @@ export default function OpenHouseForm({
             </div>
           </div>
 
-          <label className="inline-flex items-center gap-2 pt-2">
+          <label className="inline-flex items-center gap-2 pt-2 cursor-pointer">
             <input
               type="checkbox"
               checked={v.is_published}
               onChange={(e) => set("is_published", e.target.checked)}
+              className="w-4 h-4 accent-navy cursor-pointer"
             />
             <span className="text-sm text-ink/75">
               {v.is_published
@@ -324,6 +325,47 @@ export default function OpenHouseForm({
                 : "Draft — page returns 404 publicly"}
             </span>
           </label>
+
+          {/* Per-listing brand color override.
+              Leave blank to use the global Brand Theme color. Useful for
+              co-marketing flyers where this one listing is themed
+              differently (e.g. a luxury listing in maroon while the
+              brand stays navy). */}
+          <div className="pt-3 border-t border-ink/10">
+            <label className="admin-label">Flyer Brand Color (optional)</label>
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                value={v.brand_color || "#142840"}
+                onChange={(e) => set("brand_color", e.target.value)}
+                className="h-10 w-14 rounded border border-ink/15 cursor-pointer"
+                aria-label="Flyer brand color"
+              />
+              <input
+                type="text"
+                className="admin-input flex-1"
+                value={v.brand_color ?? ""}
+                onChange={(e) =>
+                  set("brand_color", e.target.value.trim() || null)
+                }
+                placeholder="#142840"
+              />
+              {v.brand_color ? (
+                <button
+                  type="button"
+                  onClick={() => set("brand_color", null)}
+                  className="text-xs text-ink/55 hover:text-ink underline"
+                >
+                  Clear
+                </button>
+              ) : null}
+            </div>
+            <p className="text-[11px] text-ink/50 mt-1.5">
+              Leave blank to use the site-wide Brand Theme color. When set,
+              the flyer&rsquo;s navy bands re-skin to this hex value on this
+              listing only.
+            </p>
+          </div>
         </div>
 
         {/* Property specs */}

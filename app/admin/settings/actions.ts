@@ -23,6 +23,11 @@ type SettingsPatch = {
   youtube_url?: string;
   linkedin_url?: string;
   fixed_nav?: NavEntry[];
+  // Footer copy (admin-editable at /admin/settings → Footer Copy)
+  footer_copyright?: string;
+  footer_credit?: string;
+  footer_newsletter_headline?: string;
+  footer_newsletter_blurb?: string;
 };
 
 export async function updateSiteSettings(

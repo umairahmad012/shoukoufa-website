@@ -51,7 +51,22 @@ export type SiteSettings = {
   portrait: { avatar: string; full: string };
   /** Resolved broker logo URL (Cloudinary if admin uploaded one; static fallback otherwise). */
   brokerLogo: string;
+  /** Admin-editable footer copy. Empty string = use the built-in default. */
+  footer: {
+    copyright: string;
+    credit: string;
+    newsletterHeadline: string;
+    newsletterBlurb: string;
+  };
   fixedNav: NavEntry[];
+};
+
+const DEFAULT_FOOTER_COPY = {
+  copyright: "",
+  credit: "Site by Brand Bonjour",
+  newsletterHeadline: "Newsletter",
+  newsletterBlurb:
+    "Quarterly market reports for the DMV — Virginia, Maryland & D.C. New listings, sold prices, and what it means for your zip code. No spam, ever.",
 };
 
 /** Default fixed-nav order matching the hardcoded `nav` array shape. */
@@ -147,6 +162,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     social: { ...staticSite.social },
     portrait: { ...staticSite.portrait },
     brokerLogo: "/images/Remax%20Galaxy.png",
+    footer: { ...DEFAULT_FOOTER_COPY },
     fixedNav: DEFAULT_FIXED_NAV,
   };
 
@@ -212,6 +228,16 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     },
     portrait,
     brokerLogo,
+    footer: {
+      copyright: (row?.footer_copyright as string) || fallback.footer.copyright,
+      credit: (row?.footer_credit as string) || fallback.footer.credit,
+      newsletterHeadline:
+        (row?.footer_newsletter_headline as string) ||
+        fallback.footer.newsletterHeadline,
+      newsletterBlurb:
+        (row?.footer_newsletter_blurb as string) ||
+        fallback.footer.newsletterBlurb,
+    },
     fixedNav: Array.isArray(row?.fixed_nav)
       ? (row!.fixed_nav as NavEntry[])
       : fallback.fixedNav,

@@ -7,6 +7,7 @@ import {
   TOTAL_FLYER_PILLS,
 } from "@/lib/openHouseFeatures";
 import { getSiteSettings } from "@/lib/siteSettings";
+import { hexToRgbTriplet } from "@/lib/brandTheme";
 import * as LucideIcons from "lucide-react";
 import PrintFlyerActions from "@/components/openhouse/PrintFlyerActions";
 import { qrDataUrl, siteOrigin } from "@/lib/qrcode";
@@ -161,9 +162,23 @@ export default async function OpenHousePage({
         }
       `}</style>
 
+      {/* Per-listing brand-color override. When the admin sets a hex
+          on this open house, we re-bind the `--brand-primary-rgb`
+          CSS variable INSIDE the flyer container only — so the navy
+          header / footer bands and any utility that reads it (e.g.
+          bg-navy via Tailwind's brand cascade) re-skin for this
+          listing without touching the global Brand Theme. */}
+      {oh.brandColor ? (
+        <style>{`
+          .flyer.flyer-brand-override {
+            --brand-primary-rgb: ${hexToRgbTriplet(oh.brandColor)};
+          }
+        `}</style>
+      ) : null}
+
       <main className="bg-cream-soft pt-28 md:pt-32 pb-12 md:pb-16 px-4 print:p-0 print:bg-white">
         <article
-          className="flyer mx-auto bg-white text-ink shadow-[0_30px_80px_-30px_rgba(20,40,64,0.25)] flex flex-col overflow-hidden"
+          className={`flyer mx-auto bg-white text-ink shadow-[0_30px_80px_-30px_rgba(20,40,64,0.25)] flex flex-col overflow-hidden${oh.brandColor ? " flyer-brand-override" : ""}`}
           style={{ fontFamily: "var(--font-montserrat), system-ui, sans-serif" }}
         >
           {/* HEADER BAND — broker logo (from brand identity) + OPEN HOUSE INVITATION */}

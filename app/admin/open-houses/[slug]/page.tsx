@@ -41,7 +41,8 @@ export default async function EditOpenHousePage({
        open_date, open_time_label, open_date_2, open_time_label_2,
        bedrooms, bathrooms, garage_spaces, mls_id,
        hero_image_id, hero_image_crop, second_image_id, second_image_crop,
-       third_image_id, third_image_crop, features, description, is_published`,
+       third_image_id, third_image_crop, features, description, is_published,
+       brand_color`,
     )
     .eq("slug", slug)
     .maybeSingle();
@@ -76,6 +77,7 @@ export default async function EditOpenHousePage({
     third_image_crop: asCropArea(row.third_image_crop),
     features: Array.isArray(row.features) ? (row.features as string[]) : [],
     description: row.description ?? "",
+    brand_color: (row.brand_color as string | null) ?? null,
     is_published: row.is_published ?? true,
   };
 

@@ -41,6 +41,13 @@ export type OpenHouseInput = {
   features: string[];
   description: string;
 
+  /**
+   * Optional hex color (e.g. "#1a3a5f"). When set, the flyer's navy
+   * bands re-skin to this color instead of the global Brand Theme.
+   * Empty string / null = use the global theme.
+   */
+  brand_color: string | null;
+
   is_published: boolean;
 };
 

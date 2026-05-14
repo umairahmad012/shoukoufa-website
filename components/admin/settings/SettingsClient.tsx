@@ -16,7 +16,7 @@ import { Save, ArrowUp, ArrowDown, Eye, EyeOff } from "lucide-react";
 import type { SiteSettings, NavEntry, PageMetaRow } from "@/lib/siteSettings";
 import { updateSiteSettings, updatePageMeta } from "@/app/admin/settings/actions";
 
-type Tab = "contact" | "social" | "nav" | "meta";
+type Tab = "contact" | "social" | "nav" | "meta" | "footer";
 
 export default function SettingsClient({
   initialSettings,
@@ -63,6 +63,9 @@ export default function SettingsClient({
         <TabButton active={tab === "meta"} onClick={() => setTab("meta")}>
           Page Metadata
         </TabButton>
+        <TabButton active={tab === "footer"} onClick={() => setTab("footer")}>
+          Footer Copy
+        </TabButton>
       </div>
 
       {tab === "contact" && (
@@ -76,6 +79,9 @@ export default function SettingsClient({
       )}
       {tab === "meta" && (
         <MetaTab pageMeta={pageMeta} setPageMeta={setPageMeta} />
+      )}
+      {tab === "footer" && (
+        <FooterTab settings={settings} setSettings={setSettings} />
       )}
     </div>
   );
@@ -536,6 +542,97 @@ function Section({
         {title}
       </h2>
       <div className="space-y-4">{children}</div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────── FOOTER TAB
+
+function FooterTab({
+  settings,
+  setSettings,
+}: {
+  settings: SiteSettings;
+  setSettings: (s: SiteSettings) => void;
+}) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  function set<K extends keyof SiteSettings["footer"]>(
+    key: K,
+    val: SiteSettings["footer"][K],
+  ) {
+    setSettings({
+      ...settings,
+      footer: { ...settings.footer, [key]: val },
+    });
+  }
+
+  function save() {
+    setError(null);
+    startTransition(async () => {
+      const res = await updateSiteSettings({
+        footer_copyright: settings.footer.copyright,
+        footer_credit: settings.footer.credit,
+        footer_newsletter_headline: settings.footer.newsletterHeadline,
+        footer_newsletter_blurb: settings.footer.newsletterBlurb,
+      });
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      setSavedAt(new Date());
+      router.refresh();
+    });
+  }
+
+  return (
+    <div className="space-y-8">
+      <Section title="Bottom bar">
+        <Field
+          label="Copyright line"
+          value={settings.footer.copyright}
+          onChange={(v) => set("copyright", v)}
+          placeholder="Leave blank to auto-build from realtor name + license states"
+          help='Example: "© 2026 Shoukoufa Aboubakri · Licensed in VA, MD & DC". Empty falls back to an auto-built line.'
+        />
+        <Field
+          label="Design credit"
+          value={settings.footer.credit}
+          onChange={(v) => set("credit", v)}
+          placeholder='"Copyrights reserved by Brand Bonjour"'
+          help="Shown next to the small logo at the bottom right. Set to a single space character to hide it entirely."
+        />
+      </Section>
+      <Section title="Newsletter block">
+        <Field
+          label="Headline"
+          value={settings.footer.newsletterHeadline}
+          onChange={(v) => set("newsletterHeadline", v)}
+          placeholder="Newsletter"
+        />
+        <div>
+          <label className="admin-label">Blurb</label>
+          <textarea
+            rows={4}
+            className="admin-input w-full"
+            value={settings.footer.newsletterBlurb}
+            onChange={(e) => set("newsletterBlurb", e.target.value)}
+          />
+          <p className="text-[11px] text-ink/50 mt-1.5">
+            Short paragraph shown above the email field. ~2 lines is the sweet
+            spot — gets cropped on phone if longer.
+          </p>
+        </div>
+      </Section>
+      <SaveBar
+        pending={pending}
+        onSave={save}
+        savedAt={savedAt}
+        error={error}
+      />
     </div>
   );
 }

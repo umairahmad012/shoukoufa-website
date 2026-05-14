@@ -69,6 +69,12 @@ export type OpenHouse = {
   description: string;
   formId: string | null;
   isPublished: boolean;
+  /**
+   * Optional per-listing brand color override (hex string, e.g. "#1a3a5f").
+   * When set, the flyer's navy bands re-skin to this color instead of the
+   * global Brand Theme primary. NULL = use the global theme.
+   */
+  brandColor: string | null;
   hero: string;
   second: string;
   third: string;
@@ -94,6 +100,7 @@ type DbRow = {
   description: string | null;
   form_id: string | null;
   is_published: boolean;
+  brand_color: string | null;
   hero_image_crop: unknown;
   second_image_crop: unknown;
   third_image_crop: unknown;
@@ -122,7 +129,7 @@ function buildUrl(
 const SELECT = `id, slug, heading, address, city, state_full, postal_code,
   open_date, open_time_label, open_date_2, open_time_label_2,
   bedrooms, bathrooms, garage_spaces, mls_id,
-  features, description, form_id, is_published,
+  features, description, form_id, is_published, brand_color,
   hero_image_crop, second_image_crop, third_image_crop,
   hero_media:hero_image_id ( cloudinary_public_id, url ),
   second_media:second_image_id ( cloudinary_public_id, url ),
@@ -162,6 +169,7 @@ function rowToOpenHouse(row: DbRow): OpenHouse {
     description: row.description ?? "",
     formId: row.form_id,
     isPublished: row.is_published,
+    brandColor: row.brand_color,
     hero: buildUrl(row.hero_media, row.hero_image_crop, 2000, DEFAULT_COMMUNITY_PHOTO),
     second: buildUrl(row.second_media, row.second_image_crop, 1200, DEFAULT_COMMUNITY_PHOTO),
     third: buildUrl(row.third_media, row.third_image_crop, 1200, DEFAULT_COMMUNITY_PHOTO),
