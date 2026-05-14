@@ -539,3 +539,81 @@ button:hover svg,
 .section-y { padding-top: var(--section-y); padding-bottom: var(--section-y); }
 .section-y-lg { padding-top: var(--section-y-lg); padding-bottom: var(--section-y-lg); }
 .gutter-x { padding-left: var(--gutter-x); padding-right: var(--gutter-x); }
+
+/* ============================================================
+   SECTION TEXT-COLOR OVERRIDES
+   ============================================================
+   The block builder's wrapper.textColor field lets an admin force
+   light or dark text on any section — used when the auto choice
+   doesn't fit (e.g. they uploaded a dark photo to a cream section
+   and the ink text became unreadable).
+
+   BlockShell adds .section-text-light or .section-text-dark to the
+   section element. The rules below override common Tailwind text
+   utilities used inside block components so the body, headings,
+   eyebrows, and quotes all flip together. Use *both* attribute
+   selectors AND descendant class selectors for high specificity
+   (Tailwind classes are class-level, our overrides match the
+   parent class so they win when adjacent in the cascade).
+
+   Glass-pill / glass-dark / glass-light components keep their
+   internal text styling — those are intentionally white on dark
+   regardless of the surrounding section.
+*/
+
+/* When admin forces white text on a section that would otherwise
+   default to ink text. Catches every common dark-on-cream class. */
+.section-text-light :where(
+  .text-ink,
+  .text-ink\/85,
+  .text-ink\/80,
+  .text-ink\/75,
+  .text-ink\/70,
+  .text-ink-muted,
+  .text-navy,
+  .text-navy-dark
+) {
+  color: rgba(255, 255, 255, 0.9);
+}
+.section-text-light :where(.text-ink\/55, .text-ink\/65) {
+  color: rgba(255, 255, 255, 0.75);
+}
+.section-text-light :where(h1, h2, h3, h4, p) {
+  color: inherit;
+}
+/* Default text color when no explicit class — picks up section color */
+.section-text-light {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* When admin forces ink text on a section that would otherwise
+   default to white text (e.g. they cleared a photo bg from a
+   dark_break but the white text styles remained). */
+.section-text-dark :where(
+  .text-white,
+  .text-white\/95,
+  .text-white\/90,
+  .text-white\/85,
+  .text-white\/80,
+  .text-white\/75,
+  .text-white\/70
+) {
+  color: rgb(var(--ink-rgb, 24 36 51));
+}
+.section-text-dark :where(.text-white\/55, .text-white\/65, .text-white\/45) {
+  color: rgba(24, 36, 51, 0.6);
+}
+.section-text-dark {
+  color: rgb(var(--ink-rgb, 24 36 51));
+}
+
+/* The frosted-glass content panels (glass-dark / glass-light /
+   glass-pill) keep their own internal white/ink colors regardless of
+   the parent section choice — those are designed for legibility on
+   their own backdrop. */
+.section-text-light :where(.glass-dark, .glass-pill) {
+  color: white;
+}
+.section-text-dark :where(.glass-light) {
+  color: rgb(var(--ink-rgb, 24 36 51));
+}

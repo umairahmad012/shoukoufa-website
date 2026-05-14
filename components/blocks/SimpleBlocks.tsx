@@ -279,12 +279,21 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
     : theme === "white"
       ? "relative bg-white text-ink"
       : "relative bg-cream-soft text-ink";
+  // textColor: explicit override > auto from theme
+  const textClass =
+    w.textColor === "light"
+      ? "section-text-light"
+      : w.textColor === "dark"
+        ? "section-text-dark"
+        : isDark
+          ? "section-text-light"
+          : "section-text-dark";
   const eyebrowClass = isDark ? "eyebrow-light" : "eyebrow";
   const bodyClass = isDark ? "text-white/85" : "text-ink/75";
   const dividerClass = isDark ? "bg-white/40" : "bg-navy/40";
 
   return (
-    <section className={`${sectionClass} py-24 md:py-32 gutter-x overflow-hidden`}>
+    <section className={`${sectionClass} ${textClass} py-24 md:py-32 gutter-x overflow-hidden`}>
       {/* Background photo only renders on dark themes — on cream/white
           the band is intentionally a quiet plain section. */}
       {bg && isDark ? (

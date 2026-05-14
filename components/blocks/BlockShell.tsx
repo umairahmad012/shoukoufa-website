@@ -65,7 +65,16 @@ export default async function BlockShell({
   const ytId = w.backgroundYouTubeUrl
     ? parseYouTubeId(w.backgroundYouTubeUrl)
     : null;
-  const bgImageUrl = w.backgroundImage
+  // Only treat as a real background when an image_id is actually set —
+  // an empty `{ image_id: null }` shell (left over from earlier block
+  // conversions) shouldn't count as "has background".
+  const hasImageId = Boolean(
+    w.backgroundImage &&
+      typeof w.backgroundImage === "object" &&
+      typeof (w.backgroundImage as { image_id?: unknown }).image_id === "string" &&
+      (w.backgroundImage as { image_id: string }).image_id.length > 0,
+  );
+  const bgImageUrl = hasImageId
     ? await resolveImageUrl(w.backgroundImage, {
         fallback: "",
         crop: "wide",
@@ -75,12 +84,29 @@ export default async function BlockShell({
 
   const hasBackground = Boolean(ytId || bgImageUrl);
 
+  // Resolve text color. "auto" picks based on theme/bg:
+  //   • light (white text)  on navy theme OR any wrapper bg
+  //   • dark  (ink text)    on cream / white / transparent without bg
+  // Explicit "light" / "dark" forces the choice — escape hatch for the
+  // case where an admin uploads a dark photo to a normally-cream
+  // section and the ink text becomes unreadable.
+  const textMode: "light" | "dark" =
+    w.textColor === "light"
+      ? "light"
+      : w.textColor === "dark"
+        ? "dark"
+        : hasBackground || theme === "navy"
+          ? "light"
+          : "dark";
+  const textClass = textMode === "light" ? "section-text-light" : "section-text-dark";
+
   return (
     <section
       id={id}
       className={[
         "relative w-full overflow-hidden",
         hasBackground ? "" : THEME_BG[theme],
+        textClass,
         className ?? "",
       ]
         .filter(Boolean)

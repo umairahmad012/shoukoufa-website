@@ -48,6 +48,13 @@ export type BlockWrapper = {
   spacing?: "compact" | "normal" | "large";
   /** Color theme for the section. */
   theme?: "cream" | "white" | "navy" | "transparent";
+  /**
+   * Text color override. "auto" (default) picks dark text for cream/white
+   * sections and light text for navy / photo-bg sections. "light" forces
+   * white text for unreadable cases (e.g. you uploaded a dark photo bg
+   * on a normally-cream section). "dark" forces ink text.
+   */
+  textColor?: "auto" | "light" | "dark";
 };
 
 export const wrapperShape: Record<string, Field> = {
@@ -78,6 +85,12 @@ export const wrapperShape: Record<string, Field> = {
     type: "text",
     label: "Theme",
     help: '"cream" · "white" · "navy" · "transparent". Base color of this section.',
+  },
+  textColor: {
+    type: "text",
+    label: "Text Color",
+    help:
+      '"auto" (default — light text on dark/photo sections, dark text on cream/white) · "light" (force white text) · "dark" (force ink text). Use this when you upload a dark background photo to a normally-cream section and the text becomes unreadable.',
   },
 };
 

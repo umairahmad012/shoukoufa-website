@@ -33,6 +33,10 @@ type HeroData = {
  */
 export default async function HeroBlock({ data }: { data: HeroData }) {
   const w = data.wrapper ?? {};
+  // Hero is photo-dominant by design, so default to light text. Admin
+  // can override to dark for a rare cream-photo hero.
+  const textClass =
+    w.textColor === "dark" ? "section-text-dark" : "section-text-light";
   const ytId = w.backgroundYouTubeUrl
     ? parseYouTubeId(w.backgroundYouTubeUrl)
     : null;
@@ -51,7 +55,7 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
   const stats = data.stats ?? [];
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-navy-dark">
+    <section className={`relative w-full min-h-screen overflow-hidden bg-navy-dark ${textClass}`}>
       {/* Background */}
       <div className="absolute inset-0">
         {ytId ? (

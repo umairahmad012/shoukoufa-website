@@ -212,11 +212,24 @@ Every block carries an optional `data.wrapper` object:
 { backgroundImage?: { image_id }, backgroundYouTubeUrl?: string,
   overlay?: 'none'|'light'|'dark'|'heavy',
   spacing?: 'compact'|'normal'|'large',
-  theme?: 'cream'|'white'|'navy'|'transparent' }
+  theme?: 'cream'|'white'|'navy'|'transparent',
+  textColor?: 'auto'|'light'|'dark' }
 ```
 
 This is rendered by `BlockShell` and edited in the "Section Background & Style"
 accordion at the bottom of every block's Edit modal.
+
+**`textColor` — readability override.** Normally `BlockShell` picks
+white text on dark/photo sections and ink text on cream/white sections
+automatically (`auto`, the default). If an admin uploads a dark photo
+to a normally-cream section (or sets `theme: navy` on a block that
+would default light anyway) and the text ends up unreadable, set
+`textColor: 'light'` to force white text or `textColor: 'dark'` to
+force ink text. The override class (`section-text-light` /
+`section-text-dark`) is applied on the `<section>` element and
+overrides common Tailwind text utilities inside it (`.text-white`,
+`.text-ink`, etc.) via `app/globals.css`. `HeroBlock` and `CtaBandBlock`
+don't go through `BlockShell` and apply the class directly.
 
 | Type | Label | Category | File |
 |---|---|---|---|
@@ -695,6 +708,7 @@ in case the DB is unavailable.
 | Section text on Home / About / etc. | `/admin/builder/<page>` → click ⚙ on the section |
 | Add a new section to a page | `/admin/builder/<page>` → + Add Block |
 | Background image / video on a section | Same Edit modal → "Section Background & Style" accordion |
+| Force a section's text light or dark (unreadable contrast fix) | Same Edit modal → "Section Background & Style" → Text Color |
 | Reorder sections | `/admin/builder/<page>` → ↑ / ↓ |
 | Hide a section without deleting | `/admin/builder/<page>` → 👁 toggle |
 | Create a brand new page | `/admin/pages` → + New Page |
