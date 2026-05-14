@@ -114,42 +114,50 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
           </h2>
         ) : null}
       </div>
-      <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-7 md:gap-9">
-        {cards.map((c, i) => (
-          <div
-            key={i}
-            className="relative aspect-[3/4] overflow-hidden glow-on-hover"
-          >
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url('${c._img}')` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
-            <div className="relative z-10 h-full flex flex-col justify-end p-8 text-white">
-              {c.title ? (
-                <h3
-                  className="text-2xl md:text-3xl uppercase mb-4"
-                  style={{ fontWeight: 200, letterSpacing: "0.08em" }}
-                >
-                  {c.title}
-                </h3>
-              ) : null}
-              {c.body ? (
-                <p className="text-sm md:text-base font-light leading-[1.8] text-white/90 mb-6">
-                  {c.body}
-                </p>
-              ) : null}
-              {c.cta && c.href ? (
-                <Link
-                  href={c.href}
-                  className="inline-block self-start text-[0.7rem] tracking-[0.32em] uppercase border-b border-white/60 pb-1 hover:border-white transition-colors"
-                >
-                  {c.cta}
-                </Link>
-              ) : null}
-            </div>
-          </div>
-        ))}
+      <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 md:gap-10 items-stretch">
+        {cards.map((c, i) => {
+          const CardWrap = c.href ? Link : ("div" as React.ElementType);
+          return (
+            <CardWrap
+              key={i}
+              {...(c.href ? { href: c.href } : {})}
+              className="group relative block aspect-[3/4.2] overflow-hidden bg-navy-dark"
+            >
+              {/* Photo background */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.4s] ease-editorial group-hover:scale-[1.05]"
+                style={{ backgroundImage: `url('${c._img}')` }}
+              />
+              {/* Subtle dim so text on glass stays legible against any photo */}
+              <div className="absolute inset-0 overlay-card" />
+
+              {/* Frosted glass content panel anchored at the bottom */}
+              <div className="absolute left-5 right-5 bottom-5 md:left-8 md:right-8 md:bottom-8 glass-dark p-6 md:p-9 text-white">
+                {c.title ? (
+                  <h3
+                    className="text-lg md:text-2xl uppercase mb-4 md:mb-5"
+                    style={{ fontWeight: 400, letterSpacing: "0.08em" }}
+                  >
+                    {c.title}
+                  </h3>
+                ) : null}
+                {c.body ? (
+                  <p className="text-sm md:text-[0.95rem] font-light leading-[1.8] md:leading-[1.85] text-white/85 mb-5 md:mb-7">
+                    {c.body}
+                  </p>
+                ) : null}
+                {c.cta && c.href ? (
+                  <span className="inline-flex items-center gap-3 text-[0.62rem] md:text-[0.68rem] tracking-[0.30em] md:tracking-[0.32em] uppercase font-light text-white border-t border-white/25 pt-4 md:pt-5">
+                    {c.cta}
+                    <span className="transition-transform duration-500 ease-editorial group-hover:translate-x-1.5 group-hover:-translate-y-1.5">
+                      ↗
+                    </span>
+                  </span>
+                ) : null}
+              </div>
+            </CardWrap>
+          );
+        })}
       </div>
     </BlockShell>
   );

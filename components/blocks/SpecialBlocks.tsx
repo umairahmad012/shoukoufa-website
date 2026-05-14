@@ -43,31 +43,72 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
           </p>
         ) : null}
       </div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-stretch">
         {items.map((c) => (
           <Link
             key={c.slug}
             href={`/communities/${c.slug}`}
-            className="group relative aspect-[4/5] overflow-hidden glow-on-hover bg-navy-dark"
+            className="group relative aspect-[4/3.2] block overflow-hidden bg-navy-dark"
           >
+            {/* Photo background */}
             <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.6s] ease-editorial group-hover:scale-[1.05]"
               style={{ backgroundImage: `url('${c.image}')` }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
-            <div className="relative z-10 h-full flex flex-col justify-end p-7 text-white">
-              <p className="text-[0.65rem] tracking-[0.32em] uppercase text-white/70 mb-3">
-                {c.state}
-              </p>
+            <div className="absolute inset-0 overlay-card" />
+
+            {/* Frosted glass strip at the bottom — state header, name,
+                and median / YoY / DOM stats */}
+            <div className="absolute left-5 right-5 bottom-5 md:left-8 md:right-8 md:bottom-8 glass-dark p-5 md:p-9 text-white">
+              <div className="flex items-baseline justify-between mb-3 md:mb-4">
+                <p className="text-[0.62rem] md:text-[0.72rem] tracking-[0.32em] uppercase text-white/70">
+                  {c.state}
+                </p>
+                <span className="inline-flex items-center gap-2 text-[0.55rem] md:text-[0.62rem] tracking-[0.30em] md:tracking-[0.32em] uppercase text-white/70 group-hover:text-white transition-colors">
+                  Explore <span>↗</span>
+                </span>
+              </div>
+
               <h3
-                className="text-2xl md:text-3xl uppercase mb-3"
-                style={{ fontWeight: 200, letterSpacing: "0.06em" }}
+                className="text-2xl md:text-4xl uppercase tracking-wide mb-4 md:mb-6"
+                style={{ fontWeight: 200, letterSpacing: "0.05em" }}
               >
                 {c.name}
               </h3>
-              <p className="text-sm font-light text-white/85 italic">{c.tagline}</p>
-              <div className="mt-6 inline-flex items-center text-[0.7rem] tracking-[0.32em] uppercase border-b border-white/40 pb-1 self-start group-hover:border-white transition-colors">
-                Read more
+
+              <div className="grid grid-cols-3 gap-2 md:gap-4 pt-4 md:pt-5 border-t border-white/20">
+                <div>
+                  <p className="text-[0.52rem] md:text-[0.6rem] tracking-[0.24em] md:tracking-[0.28em] uppercase text-white/55 mb-1 md:mb-1.5">
+                    Median
+                  </p>
+                  <p className="text-sm md:text-base font-light text-white">
+                    {c.median}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[0.52rem] md:text-[0.6rem] tracking-[0.24em] md:tracking-[0.28em] uppercase text-white/55 mb-1 md:mb-1.5">
+                    YoY
+                  </p>
+                  <p
+                    className={`text-sm md:text-base font-light ${
+                      c.yoyDirection === "up"
+                        ? "text-emerald-300"
+                        : c.yoyDirection === "down"
+                          ? "text-rose-300"
+                          : "text-white/85"
+                    }`}
+                  >
+                    {c.yoy}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[0.52rem] md:text-[0.6rem] tracking-[0.24em] md:tracking-[0.28em] uppercase text-white/55 mb-1 md:mb-1.5">
+                    DOM
+                  </p>
+                  <p className="text-sm md:text-base font-light text-white">
+                    {c.dom}
+                  </p>
+                </div>
               </div>
             </div>
           </Link>
