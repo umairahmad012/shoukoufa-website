@@ -607,13 +607,62 @@ button:hover svg,
   color: rgb(var(--ink-rgb, 24 36 51));
 }
 
-/* The frosted-glass content panels (glass-dark / glass-light /
-   glass-pill) keep their own internal white/ink colors regardless of
-   the parent section choice — those are designed for legibility on
-   their own backdrop. */
-.section-text-light :where(.glass-dark, .glass-pill) {
-  color: white;
+/* ──────────────────────────────────────────────────────────────────
+   Glass-panel "islands" — defended from any section override.
+   ──────────────────────────────────────────────────────────────────
+   .glass-dark and .glass-pill are dark surfaces (their own backdrop
+   is dark); they always need WHITE text.
+   .glass-light is a light surface; it always needs INK text.
+
+   These rules sit AFTER the section-text-* overrides above. They use
+   the same specificity (class + :where), so source order wins —
+   meaning the glass rules re-assert color and the section override
+   never reaches text inside a glass panel. This is what stops the
+   single "Text Color" toggle from breaking the dark cards inside an
+   otherwise cream-themed section (or vice versa).
+
+   IMPORTANT: list every dark-text utility used inside .glass-light,
+   and every white-text utility used inside .glass-dark / .glass-pill,
+   so we lift them back out of any section override.
+*/
+:where(.glass-dark, .glass-pill) :where(
+  .text-white,
+  .text-white\/95,
+  .text-white\/90,
+  .text-white\/85,
+  .text-white\/80,
+  .text-white\/75,
+  .text-white\/70
+) {
+  color: rgba(255, 255, 255, 0.95);
 }
-.section-text-dark :where(.glass-light) {
+:where(.glass-dark, .glass-pill) :where(
+  .text-white\/55,
+  .text-white\/65,
+  .text-white\/45
+) {
+  color: rgba(255, 255, 255, 0.7);
+}
+/* Naked text directly inside a dark glass panel */
+:where(.glass-dark, .glass-pill) {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+:where(.glass-light) :where(
+  .text-ink,
+  .text-ink\/85,
+  .text-ink\/80,
+  .text-ink\/75,
+  .text-ink\/70,
+  .text-ink-muted,
+  .text-navy,
+  .text-navy-dark
+) {
+  color: rgb(var(--ink-rgb, 24 36 51));
+}
+:where(.glass-light) :where(.text-ink\/55, .text-ink\/65) {
+  color: rgba(24, 36, 51, 0.6);
+}
+:where(.glass-light) {
   color: rgb(var(--ink-rgb, 24 36 51));
 }

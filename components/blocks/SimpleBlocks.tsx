@@ -279,15 +279,16 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
     : theme === "white"
       ? "relative bg-white text-ink"
       : "relative bg-cream-soft text-ink";
-  // textColor: explicit override > auto from theme
+  // textColor: only attach an override class when admin explicitly
+  // sets light/dark. In auto mode we let the block's own hardcoded
+  // text classes (text-white on navy, text-ink on cream/white) win
+  // so inner glass-* cards stay readable.
   const textClass =
     w.textColor === "light"
       ? "section-text-light"
       : w.textColor === "dark"
         ? "section-text-dark"
-        : isDark
-          ? "section-text-light"
-          : "section-text-dark";
+        : "";
   const eyebrowClass = isDark ? "eyebrow-light" : "eyebrow";
   const bodyClass = isDark ? "text-white/85" : "text-ink/75";
   const dividerClass = isDark ? "bg-white/40" : "bg-navy/40";

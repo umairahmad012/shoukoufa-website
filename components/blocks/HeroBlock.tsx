@@ -33,10 +33,15 @@ type HeroData = {
  */
 export default async function HeroBlock({ data }: { data: HeroData }) {
   const w = data.wrapper ?? {};
-  // Hero is photo-dominant by design, so default to light text. Admin
-  // can override to dark for a rare cream-photo hero.
+  // Hero is photo-dominant by design — its own markup hardcodes white
+  // text. Only attach an override class when admin explicitly asks for
+  // it (e.g. a rare cream-photo hero where ink reads better).
   const textClass =
-    w.textColor === "dark" ? "section-text-dark" : "section-text-light";
+    w.textColor === "light"
+      ? "section-text-light"
+      : w.textColor === "dark"
+        ? "section-text-dark"
+        : "";
   const ytId = w.backgroundYouTubeUrl
     ? parseYouTubeId(w.backgroundYouTubeUrl)
     : null;

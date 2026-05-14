@@ -107,11 +107,11 @@ export const wrapperShape: Record<string, Field> = {
     type: "select",
     label: "Text Color",
     help:
-      "Use this when contrast looks wrong — e.g. you put a dark photo on a normally-cream section and the body text becomes unreadable.",
+      'Only flips the section\'s "naked" text (eyebrow, heading, subtitle, body). Text inside dark frosted-glass cards stays white; text inside light cards stays ink — those are self-contained islands. Use this when you upload a dark photo to a normally-cream section and the headings disappear.',
     options: [
-      { value: "auto", label: "Auto — match background" },
-      { value: "light", label: "Light — force white text" },
-      { value: "dark", label: "Dark — force ink text" },
+      { value: "auto", label: "Auto — leave block defaults alone" },
+      { value: "light", label: "Light — flip ambient text to white" },
+      { value: "dark", label: "Dark — flip ambient text to ink" },
     ],
   },
 };

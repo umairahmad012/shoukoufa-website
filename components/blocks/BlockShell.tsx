@@ -84,21 +84,21 @@ export default async function BlockShell({
 
   const hasBackground = Boolean(ytId || bgImageUrl);
 
-  // Resolve text color. "auto" picks based on theme/bg:
-  //   • light (white text)  on navy theme OR any wrapper bg
-  //   • dark  (ink text)    on cream / white / transparent without bg
-  // Explicit "light" / "dark" forces the choice — escape hatch for the
-  // case where an admin uploads a dark photo to a normally-cream
-  // section and the ink text becomes unreadable.
-  const textMode: "light" | "dark" =
+  // Resolve text color. The override classes are ONLY applied when the
+  // admin explicitly sets `textColor: "light"` or `"dark"`. In `auto`
+  // mode we attach no class, so each block's own hardcoded Tailwind
+  // colors win (the natural design — `text-ink` on cream sections,
+  // `text-white` inside `.glass-dark` cards, etc.).
+  //
+  // This is what stops a single section toggle from accidentally
+  // flipping text on inner frosted-glass cards: if admin doesn't ask
+  // for an override, nothing inside is touched.
+  const textClass =
     w.textColor === "light"
-      ? "light"
+      ? "section-text-light"
       : w.textColor === "dark"
-        ? "dark"
-        : hasBackground || theme === "navy"
-          ? "light"
-          : "dark";
-  const textClass = textMode === "light" ? "section-text-light" : "section-text-dark";
+        ? "section-text-dark"
+        : "";
 
   return (
     <section
