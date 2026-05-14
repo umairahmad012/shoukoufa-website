@@ -35,7 +35,7 @@ export default async function EditCommunityPage({
   const { data: row } = await supabase
     .from("communities")
     .select(
-      `id, slug, name, state, tagline, about, market_year_summary, samina_quote,
+      `id, slug, name, state, tagline, about, market_year_summary, agent_quote,
        median_price, yoy_change, yoy_direction, days_on_market, market_type,
        data_year, image_id, image_crop, hero_image_id, hero_image_crop,
        is_visible, price_tiers, life`,
@@ -58,7 +58,7 @@ export default async function EditCommunityPage({
     tagline: row.tagline ?? "",
     about: row.about ?? "",
     market_year_summary: row.market_year_summary ?? "",
-    samina_quote: row.samina_quote ?? "",
+    agent_quote: row.agent_quote ?? "",
     median_price: row.median_price ?? "",
     yoy_change: row.yoy_change ?? "",
     yoy_direction: (row.yoy_direction ?? "flat") as CommunityInput["yoy_direction"],

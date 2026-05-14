@@ -43,7 +43,7 @@ export default function ValuationForm() {
           <Check size={22} className="text-emerald-700" strokeWidth={1.5} />
         </div>
         <p className="text-base md:text-lg text-ink leading-[1.85] font-light">
-          Got it — Samina will review your property and respond within 24 hours.
+          Got it — Shoukoufa will review your property and respond within 24 hours.
         </p>
       </div>
     );
@@ -54,7 +54,7 @@ export default function ValuationForm() {
       l: "Property Address",
       k: "address" as const,
       t: "text",
-      p: "1234 Main St, Woodbridge, VA 22192",
+      p: "1234 Main St, Vienna, VA 22180",
       req: true,
     },
     { l: "Your Name", k: "name" as const, t: "text", p: "", req: true },

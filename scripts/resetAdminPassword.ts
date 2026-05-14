@@ -58,7 +58,7 @@ async function main() {
   if (updErr) throw updErr;
 
   console.log(`✓ Password reset for ${email}`);
-  console.log(`  Sign in at https://samina-bilal-website.netlify.app/admin`);
+  console.log(`  Sign in at https://shoukoufa-website.netlify.app/admin`);
 }
 
 main().catch((e) => {

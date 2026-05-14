@@ -105,17 +105,18 @@ export default async function Hero() {
           <h1
             className="heading-display text-white animate-fade-in-up"
             style={{
-              fontSize: "clamp(2.5rem, 9vw, 6.5rem)",
+              // Min lowered so long lines (e.g. "ONE MEMORY AT A TIME") still
+              // fit on one row on narrow viewports without wrapping.
+              fontSize: "clamp(1.25rem, 6.5vw, 6rem)",
               animationDelay: "0.4s",
               animationFillMode: "both",
-              lineHeight: 1.04,
+              lineHeight: 1.06,
             }}
           >
             <ShimmerText delay={1.2}>
               {c.titleLines.map((line, i) => (
-                <span key={i}>
+                <span key={i} className="block whitespace-nowrap">
                   {line}
-                  {i < c.titleLines.length - 1 && <br />}
                 </span>
               ))}
             </ShimmerText>

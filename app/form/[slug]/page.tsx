@@ -20,7 +20,7 @@ export async function generateMetadata({
     .maybeSingle();
   if (!form) return { title: "Form" };
   return {
-    title: `${form.title} | Samina Bilal`,
+    title: `${form.title} | Shoukoufa Aboubakri`,
     description: form.description ?? undefined,
   };
 }

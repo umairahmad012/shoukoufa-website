@@ -50,7 +50,7 @@ export default function LeaveReviewForm() {
           Thank you.
         </h2>
         <p className="text-sm text-ink/70 max-w-md mx-auto leading-relaxed">
-          Your review has been sent. Samina reviews each submission personally
+          Your review has been sent. Shoukoufa reviews each submission personally
           before it appears on her site — you&rsquo;ll see it within a few days.
         </p>
       </div>
@@ -143,7 +143,7 @@ export default function LeaveReviewForm() {
           className="mt-1"
         />
         <span className="text-xs text-ink/65 leading-relaxed">
-          Samina may also share my review on her Google Business profile,
+          Shoukoufa may also share my review on her Google Business profile,
           Zillow, or Realtor.com. I can withdraw consent at any time.
         </span>
       </label>

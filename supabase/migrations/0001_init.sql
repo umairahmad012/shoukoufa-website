@@ -1,5 +1,5 @@
 -- =============================================================================
--- Samina Bilal · Admin Panel — Initial Database Schema
+-- Shoukoufa Aboubakri · Admin Panel — Initial Database Schema
 -- Run this in Supabase: SQL Editor → paste → Run
 -- =============================================================================
 

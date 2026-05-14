@@ -3,9 +3,9 @@ import LeaveReviewForm from "@/components/LeaveReviewForm";
 import { getPortrait } from "@/lib/contentLoader";
 
 export const metadata = {
-  title: "Leave a Review | Samina Bilal",
+  title: "Leave a Review | Shoukoufa Aboubakri",
   description:
-    "Share your experience working with Samina Bilal — RE/MAX Galaxy Realtor, Northern Virginia & Maryland.",
+    "Share your experience working with Shoukoufa Aboubakri — REMAX Galaxy Real Estate Specialist, Northern Virginia & Maryland.",
 };
 
 export default async function LeaveReviewPage() {
@@ -30,7 +30,7 @@ export default async function LeaveReviewPage() {
           >
             <Image
               src={portrait.avatar}
-              alt="Samina Bilal"
+              alt="Shoukoufa Aboubakri"
               fill
               sizes="(min-width: 768px) 14rem, 11rem"
               className="object-cover"
@@ -49,11 +49,11 @@ export default async function LeaveReviewPage() {
           className="text-3xl md:text-4xl text-ink text-center mb-4"
           style={{ fontWeight: 600, letterSpacing: "0.005em", lineHeight: 1.2 }}
         >
-          Leave Samina a review.
+          Leave Shoukoufa a review.
         </h1>
         <p className="text-sm md:text-base text-ink/70 text-center max-w-xl mx-auto mb-12 leading-relaxed">
           Your words help future first-time buyers and sellers know what to
-          expect. Anything you share goes through Samina before it appears on
+          expect. Anything you share goes through Shoukoufa before it appears on
           her site — feel free to be honest.
         </p>
 

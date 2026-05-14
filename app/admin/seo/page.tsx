@@ -81,7 +81,7 @@ export default async function SeoHubPage() {
           className="text-sm max-w-2xl mb-10"
           style={{ color: "var(--muted-foreground)" }}
         >
-          Help the right people find Samina on Google. Each tile below is a
+          Help the right people find Shoukoufa on Google. Each tile below is a
           lever you can pull — county landing pages are the highest-impact
           one for local real estate searches.
         </p>

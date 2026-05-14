@@ -14,7 +14,7 @@
  * Source resolution chain (handled inside getFavicon):
  *   1) brand.favicon section → Cloudinary r_max URL (already round)
  *   2) brand.portrait section → Cloudinary r_max URL
- *   3) Static /images/Samina Headshot.jpeg (square JPEG)
+ *   3) Static /images/Shoukoufa Headshot.jpeg (square JPEG)
  *
  * For (3) we read the file from disk and embed it as a data URL since
  * ImageResponse runs in an isolated environment and can't fetch

@@ -55,7 +55,7 @@ type DbRow = {
   tagline: string | null;
   about: string | null;
   market_year_summary: string | null;
-  samina_quote: string | null;
+  agent_quote: string | null;
   median_price: string | null;
   yoy_change: string | null;
   yoy_direction: "up" | "down" | "flat" | null;
@@ -121,7 +121,7 @@ function rowToCommunity(row: DbRow, fallback?: Community): Community {
     market2026: row.market_year_summary ?? fallback?.market2026 ?? "",
     priceTiers,
     life: lifeObj,
-    saminaQuote: row.samina_quote ?? fallback?.saminaQuote ?? "",
+    agentQuote: row.agent_quote ?? fallback?.agentQuote ?? "",
     // Always render *something* — picked photo → static slug fallback → generic stock
     image: imageFromDb ?? fallback?.image ?? DEFAULT_COMMUNITY_PHOTO,
     heroImage: heroImageFromDb ?? undefined,
@@ -142,7 +142,7 @@ export async function getCommunities(): Promise<Community[]> {
     const { data, error } = await supabase
       .from("communities")
       .select(
-        `id, slug, name, state, tagline, about, market_year_summary, samina_quote,
+        `id, slug, name, state, tagline, about, market_year_summary, agent_quote,
          median_price, yoy_change, yoy_direction, days_on_market, market_type, data_year,
          image_id, image_crop, hero_image_id, hero_image_crop,
          display_order, is_visible, price_tiers, life,
@@ -170,7 +170,7 @@ export async function getCommunityBySlug(slug: string): Promise<Community | null
     const { data, error } = await supabase
       .from("communities")
       .select(
-        `id, slug, name, state, tagline, about, market_year_summary, samina_quote,
+        `id, slug, name, state, tagline, about, market_year_summary, agent_quote,
          median_price, yoy_change, yoy_direction, days_on_market, market_type, data_year,
          image_id, image_crop, hero_image_id, hero_image_crop,
          display_order, is_visible, price_tiers, life,

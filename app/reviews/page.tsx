@@ -4,7 +4,7 @@ import ShimmerText from "@/components/ShimmerText";
 import { getPageContent, resolveImageUrl } from "@/lib/contentLoader";
 
 export const metadata = {
-  title: "Reviews | Samina Bilal",
+  title: "Reviews | Shoukoufa Aboubakri",
   description:
     "Five-star ratings across Zillow, Google, and Realtor.com. In their own words.",
 };

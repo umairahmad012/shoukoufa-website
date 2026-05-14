@@ -35,7 +35,7 @@ import type { UsageResult } from "@/lib/cloudinaryAdmin";
 // visually present without misleading anyone into clicking a dead button.
 const RESELL_BILLING_ENABLED = false;
 
-// Cloudinary's billing page — works whether Samina is logged in or not
+// Cloudinary's billing page — works whether Shoukoufa is logged in or not
 // (redirects to login first, then back to billing).
 const CLOUDINARY_BILLING_URL = "https://cloudinary.com/console/billing/plans";
 

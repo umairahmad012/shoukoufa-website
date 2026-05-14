@@ -16,7 +16,7 @@ export async function generateMetadata({
   const c = await getCommunityBySlug(slug);
   if (!c) return {};
   return {
-    title: `${c.name}, ${c.state} Real Estate | Samina Bilal`,
+    title: `${c.name}, ${c.state} Real Estate | Shoukoufa Aboubakri`,
     description: c.tagline,
   };
 }
@@ -175,25 +175,25 @@ export default async function CommunityPage({
         </div>
       </section>
 
-      {/* Dark break — separates "Life here" from "Samina's take" */}
+      {/* Dark break — separates "Life here" from "Shoukoufa's take" */}
       <DarkBreak
         bgImage="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&auto=format&fit=crop&q=85"
         height="sm"
       />
 
-      {/* Samina's take */}
+      {/* Shoukoufa's take */}
       <section className="section-y-lg gutter-x">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="eyebrow mb-12">Samina's Take</p>
+          <p className="eyebrow mb-12">Shoukoufa's Take</p>
           <blockquote
             className="text-2xl md:text-3xl lg:text-4xl leading-[1.45] text-ink italic"
             style={{ fontWeight: 200, letterSpacing: "0.005em" }}
           >
-            &ldquo;{c.saminaQuote}&rdquo;
+            &ldquo;{c.agentQuote}&rdquo;
           </blockquote>
           <div className="mx-auto my-12 w-10 h-px bg-navy/40" />
           <p className="text-[0.7rem] tracking-[0.4em] uppercase text-ink-muted">
-            Samina Bilal · Realtor
+            Shoukoufa Aboubakri · Real Estate Specialist
           </p>
         </div>
       </section>

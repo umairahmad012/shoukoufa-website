@@ -3,9 +3,9 @@ import ShimmerText from "@/components/ShimmerText";
 import { getPageContent, resolveImageUrl } from "@/lib/contentLoader";
 
 export const metadata = {
-  title: "Recent Closings | Samina Bilal",
+  title: "Recent Closings | Shoukoufa Aboubakri",
   description:
-    "Every home Samina personally represented at the closing table. Northern Virginia and Maryland.",
+    "Every home Shoukoufa personally represented at the closing table. Northern Virginia and Maryland.",
 };
 
 export const dynamic = "force-dynamic";

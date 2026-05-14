@@ -294,7 +294,7 @@ function ThemePreview({ theme }: { theme: BrandTheme }) {
           style={{ background: primaryBg }}
         >
           <span className="text-sm" style={{ fontWeight: 500, letterSpacing: "0.04em" }}>
-            Samina Bilal
+            Shoukoufa Aboubakri
           </span>
           <div className="hidden sm:flex items-center gap-4 text-[11px] uppercase tracking-[0.2em] opacity-90">
             <span>Home</span>
@@ -336,7 +336,7 @@ function ThemePreview({ theme }: { theme: BrandTheme }) {
           className="rounded-lg px-5 py-3 text-white text-[11px] flex items-center justify-between"
           style={{ background: primaryBg }}
         >
-          <span className="opacity-80">© Samina Bilal · RE/MAX Galaxy</span>
+          <span className="opacity-80">© Shoukoufa Aboubakri · REMAX Galaxy</span>
           <span className="uppercase tracking-[0.2em] opacity-70">Footer</span>
         </div>
       </div>

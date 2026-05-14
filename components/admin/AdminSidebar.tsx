@@ -121,7 +121,7 @@ export default function AdminSidebar({
           >
             <NextImage
               src={portraitUrl}
-              alt="Samina Bilal"
+              alt="Shoukoufa Aboubakri"
               fill
               sizes="48px"
               className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -133,7 +133,7 @@ export default function AdminSidebar({
               className="block text-sm leading-tight truncate"
               style={{ fontWeight: 600, letterSpacing: "0.01em", color: "var(--sidebar-foreground)" }}
             >
-              Samina Bilal
+              Shoukoufa Aboubakri
             </span>
             <span
               className="block text-[10px] uppercase tracking-[0.2em] mt-1"

@@ -16,7 +16,7 @@ interface AdminLayoutContextValue {
 }
 
 const AdminLayoutContext = createContext<AdminLayoutContextValue>({
-  portraitUrl: "/images/Samina%20Headshot.jpeg",
+  portraitUrl: "/images/Shoukoufa%20Headshot.jpeg",
 });
 
 export function AdminLayoutProvider({

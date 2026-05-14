@@ -6,16 +6,16 @@ import DarkBreak from "@/components/DarkBreak";
 import { getPageContent, getSection, resolveImageUrl } from "@/lib/contentLoader";
 
 export const metadata = {
-  title: "Path to Ownership | Renter to Homeowner — Samina Bilal",
+  title: "Invest | Shoukoufa Aboubakri",
   description:
-    "A guided 12-to-24 month plan to take you from renting to closing. Free consultation. No pressure.",
+    "Investment property guidance across the DMV — strategy, diligence, and acquisition support for first-time and seasoned investors.",
 };
 
 export const dynamic = "force-dynamic";
 
 // Step image fallbacks — if no admin-picked image exists, the live page
 // renders these Unsplash URLs. The registry's `path.stepImages` section
-// lets Samina swap each one independently.
+// lets Shoukoufa swap each one independently.
 const stepImageFallbacks = [
   "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&auto=format&fit=crop&q=85",
   "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1920&auto=format&fit=crop&q=85",
@@ -109,10 +109,10 @@ export default async function PathPage() {
   ]);
 
   const darkBreakEyebrow =
-    (darkBreak?.eyebrow && darkBreak.eyebrow.trim()) || "The Plan";
+    (darkBreak?.eyebrow && darkBreak.eyebrow.trim()) || "The Strategy";
   const darkBreakQuote =
     (darkBreak?.quote && darkBreak.quote.trim()) ||
-    "A real closing date, not a fantasy.";
+    "Real properties. Real numbers. Real returns.";
   const darkBreakAttribution =
     darkBreak?.attribution && darkBreak.attribution.trim()
       ? darkBreak.attribution
@@ -180,7 +180,7 @@ export default async function PathPage() {
             className="heading-section text-ink"
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
-            Four Steps to the Front Door
+            Four Steps to a Smart Acquisition
           </h2>
         </div>
       </section>

@@ -223,12 +223,12 @@ export default function CommunityForm({
             />
           </div>
           <div>
-            <label className="admin-label">Samina&rsquo;s Quote</label>
+            <label className="admin-label">Shoukoufa&rsquo;s Quote</label>
             <textarea
               rows={3}
               className="admin-input"
-              value={v.samina_quote}
-              onChange={(e) => set("samina_quote", e.target.value)}
+              value={v.agent_quote}
+              onChange={(e) => set("agent_quote", e.target.value)}
               placeholder="Pull-quote that appears next to the photo."
             />
           </div>

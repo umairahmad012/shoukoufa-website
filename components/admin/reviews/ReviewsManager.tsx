@@ -542,7 +542,7 @@ function ReviewDialog({
               className="admin-input"
               value={v.quote}
               onChange={(e) => set("quote", e.target.value)}
-              placeholder="What the client said about working with Samina."
+              placeholder="What the client said about working with Shoukoufa."
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

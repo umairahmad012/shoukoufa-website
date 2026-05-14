@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8e2d6"/>
+      <stop offset="100%" stop-color="#c9bfaa"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <g transform="translate(300 380)" fill="#8a7d63" opacity="0.55">
+    <circle cx="0" cy="-60" r="90"/>
+    <path d="M -160 220 Q -160 70 0 70 Q 160 70 160 220 Z"/>
+  </g>
+  <text x="300" y="700" text-anchor="middle" fill="#6b5e44" font-family="Georgia, serif" font-size="22" letter-spacing="6" opacity="0.7">SHOUKOUFA ABOUBAKRI</text>
+  <text x="300" y="735" text-anchor="middle" fill="#6b5e44" font-family="Georgia, serif" font-size="13" letter-spacing="3" opacity="0.55">UPLOAD HEADSHOT IN ADMIN</text>
+</svg>

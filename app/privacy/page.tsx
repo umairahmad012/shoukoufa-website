@@ -3,9 +3,9 @@ import ShimmerText from "@/components/ShimmerText";
 import { site } from "@/lib/site";
 
 export const metadata = {
-  title: "Privacy Policy & Disclaimers | Samina Bilal",
+  title: "Privacy Policy & Disclaimers | Shoukoufa Aboubakri",
   description:
-    "Privacy policy, real estate disclaimers, and terms for saminarealtor.com.",
+    "Privacy policy, real estate disclaimers, and terms for shoukoufahomes.com.",
 };
 
 export default function PrivacyPage() {
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
 
             <p className="mb-5">
               By submitting a contact form on this site, you agree to be
-              contacted by Samina Bilal by call, email, and text for real estate
+              contacted by Shoukoufa Aboubakri by call, email, and text for real estate
               services. To opt out at any time, reply{" "}
               <strong>STOP</strong> to any text or click "unsubscribe" at the
               bottom of any email.
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
             <ul className="space-y-5 list-none">
               <li>
                 <strong className="text-ink">Equal Housing Opportunity.</strong>{" "}
-                Samina Bilal and {site.brokerage} fully support the principles
+                Shoukoufa Aboubakri and {site.brokerage} fully support the principles
                 of the Fair Housing Act and the Equal Opportunity Act. We do
                 not discriminate on the basis of race, color, religion, sex,
                 handicap, familial status, or national origin.
@@ -208,7 +208,7 @@ export default function PrivacyPage() {
             <div className="mb-8 w-12 h-px bg-navy/40" />
 
             <p className="mb-5">
-              Samina Bilal is a licensed real estate agent affiliated with{" "}
+              Shoukoufa Aboubakri is a licensed real estate agent affiliated with{" "}
               {site.brokerage}.
             </p>
             <ul className="space-y-2 text-sm">
@@ -251,7 +251,7 @@ export default function PrivacyPage() {
               .
             </p>
             <Link href="/contact" className="btn-outline-dark mt-4">
-              Contact Samina
+              Contact Shoukoufa
             </Link>
           </div>
         </div>

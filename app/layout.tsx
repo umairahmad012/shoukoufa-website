@@ -28,23 +28,23 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = await getFeaturedImage();
   return {
     metadataBase: new URL(siteOrigin()),
-    title: "Samina Bilal | Northern Virginia & Maryland Real Estate",
+    title: "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.",
     description:
-      "Make yourself at home. Samina Bilal is a licensed Realtor with RE/MAX Galaxy serving Virginia and Maryland — Woodbridge, Stafford, Lorton, Ashburn, Manassas, Dumfries.",
+      "Building legacies, one house at a time. Shoukoufa Aboubakri is a licensed Real Estate Specialist with REMAX Galaxy, serving the DMV — Virginia, Maryland, and Washington D.C.",
     // Favicon is generated dynamically by `app/icon.tsx` (round PNG with
     // transparent corners). Next auto-discovers it; no manual entry needed.
     openGraph: {
-      title: "Samina Bilal | Northern Virginia & Maryland Real Estate",
+      title: "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.",
       description:
-        "Make yourself at home. Boutique real estate representation across Virginia and Maryland.",
+        "Building legacies, one house at a time. Boutique real estate representation across the DMV.",
       type: "website",
       images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Samina Bilal | Northern Virginia & Maryland Real Estate",
+      title: "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.",
       description:
-        "Make yourself at home. Boutique real estate representation across Virginia and Maryland.",
+        "Building legacies, one house at a time. Boutique real estate representation across the DMV.",
       images: [ogImage],
     },
   };

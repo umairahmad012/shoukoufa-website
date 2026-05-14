@@ -30,8 +30,8 @@ const DB2_FALLBACK_BG =
   "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&auto=format&fit=crop&q=85";
 const DB2_DEFAULT_EYEBROW = "Why I Do This Work";
 const DB2_DEFAULT_QUOTE =
-  "Real estate is the most important purchase most people make. It deserves a Realtor who treats it that way.";
-const DB2_DEFAULT_ATTRIBUTION = "Samina";
+  "Real estate is the most important purchase most people make. It deserves a Real Estate Specialist who treats it that way.";
+const DB2_DEFAULT_ATTRIBUTION = "Shoukoufa";
 
 export default async function Home() {
   const [db1, db2] = await Promise.all([

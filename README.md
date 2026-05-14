@@ -1,6 +1,6 @@
-# Samina Bilal — Realtor Website
+# Shoukoufa Aboubakri — Real Estate Specialist Website
 
-Boutique luxury real estate website for **Samina Bilal**, licensed Realtor with **RE/MAX Galaxy** in Virginia and Maryland.
+Boutique luxury real estate website for **Shoukoufa Aboubakri**, licensed Real Estate Specialist with **REMAX Galaxy** in Virginia and Maryland.
 
 Live: _coming soon_
 
@@ -72,4 +72,4 @@ Configured for **Netlify** (also Vercel-compatible).
 
 ---
 
-© Samina Bilal · RE/MAX Galaxy · Equal Housing Opportunity
+© Shoukoufa Aboubakri · REMAX Galaxy · Equal Housing Opportunity

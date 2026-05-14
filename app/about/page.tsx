@@ -9,9 +9,9 @@ import ShimmerText from "@/components/ShimmerText";
 import DarkBreak from "@/components/DarkBreak";
 
 export const metadata = {
-  title: "About Samina Bilal | RE/MAX Galaxy Realtor — VA & MD",
+  title: "About Shoukoufa Aboubakri | REMAX Galaxy Real Estate Specialist — VA, MD & DC",
   description:
-    "Samina Bilal is a Realtor with RE/MAX Galaxy, dual-licensed in Virginia and Maryland. Speaks English, Urdu, and Hindi. Based in Woodbridge.",
+    "Shoukoufa Aboubakri is a Real Estate Specialist with REMAX Galaxy, licensed in Virginia, Maryland, and Washington D.C. Based in Northern Virginia.",
 };
 
 export const dynamic = "force-dynamic";

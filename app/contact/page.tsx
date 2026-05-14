@@ -5,9 +5,9 @@ import ContactForm from "@/components/ContactForm";
 import { getPageContent, resolveImageUrl } from "@/lib/contentLoader";
 
 export const metadata = {
-  title: "Contact | Samina Bilal",
+  title: "Contact | Shoukoufa Aboubakri",
   description:
-    "Get in touch with Samina Bilal — Realtor at RE/MAX Galaxy. Licensed in Virginia and Maryland.",
+    "Get in touch with Shoukoufa Aboubakri — Real Estate Specialist at REMAX Galaxy. Licensed in Virginia and Maryland.",
 };
 
 export const dynamic = "force-dynamic";

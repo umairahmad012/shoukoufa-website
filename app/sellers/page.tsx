@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "Selling a Home | Samina Bilal — VA & MD Listing Agent",
+  title: "Selling a Home | Shoukoufa Aboubakri — VA, MD & DC Listing Agent",
   description:
     "List with confidence. Local pricing intelligence, professional marketing, and negotiation that protects your bottom line — across Northern Virginia and Maryland.",
 };
@@ -184,7 +184,7 @@ export default async function SellersPage() {
         </div>
       </section>
 
-      {/* Why list with Samina */}
+      {/* Why list with Shoukoufa */}
       <section className="section-y-lg gutter-x">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-24">
           <p className="eyebrow mb-8">{c.why.eyebrow}</p>

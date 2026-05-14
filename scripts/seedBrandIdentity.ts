@@ -1,6 +1,7 @@
 /**
- * One-off seed: upsert content_blocks(page=brand, key=identity) with Samina's
- * defaults so the public site + admin form ship with real data, not blanks.
+ * One-off seed: upsert content_blocks(page=brand, key=identity) with the
+ * brand defaults so the public site + admin form ship with real data, not
+ * blanks.
  *
  *   npx tsx scripts/seedBrandIdentity.ts
  */
@@ -35,13 +36,13 @@ if (!url || !key) {
 
 const supabase = createClient(url, key, { auth: { persistSession: false } });
 
-const SAMINA_BRAND = {
-  name: "Samina Bilal",
-  role: "Realtor",
-  brokerage: "RE/MAX Galaxy",
-  tagline: "Make Yourself at Home",
-  serviceArea: "Northern Virginia & Maryland",
-  languages: ["English", "Urdu", "Hindi"],
+const BRAND = {
+  name: "Shoukoufa Aboubakri",
+  role: "Real Estate Specialist",
+  brokerage: "REMAX Galaxy",
+  tagline: "Building Legacies, One House at a Time",
+  serviceArea: "Virginia · Maryland · D.C.",
+  languages: ["English"],
 };
 
 async function main() {
@@ -51,7 +52,7 @@ async function main() {
       {
         page: "brand",
         key: "identity",
-        value: JSON.stringify(SAMINA_BRAND),
+        value: JSON.stringify(BRAND),
         updated_at: new Date().toISOString(),
       },
       { onConflict: "page,key" },
@@ -64,7 +65,7 @@ async function main() {
     process.exit(1);
   }
   console.log(`✓ brand.identity seeded (block id: ${data?.id})`);
-  console.log(SAMINA_BRAND);
+  console.log(BRAND);
 }
 
 main().catch((e) => {

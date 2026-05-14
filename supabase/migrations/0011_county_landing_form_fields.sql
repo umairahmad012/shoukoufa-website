@@ -7,7 +7,7 @@
 --   • zip_codes      — list of ZIPs covered by this landing page
 --   • service_areas  — extra cities/towns/neighborhoods inside the county
 --                      (separate from the static lib/counties.ts highlights)
---   • services       — list of services Samina offers in this area
+--   • services       — list of services Shoukoufa offers in this area
 --                      (e.g. "First-time buyers", "Investment properties")
 --
 -- All three are jsonb arrays of strings, so they're easy to edit from the

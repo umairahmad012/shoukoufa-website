@@ -45,7 +45,7 @@ export default function AdminLoginForm({ from }: { from?: string }) {
           className="text-2xl mb-2 text-ink"
           style={{ fontWeight: 600, letterSpacing: "0.01em" }}
         >
-          Samina&nbsp;Bilal · Admin
+          Shoukoufa&nbsp;Aboubakri · Admin
         </h1>
         <p className="text-sm text-ink/60 mb-10" style={{ fontWeight: 400 }}>
           Sign in to manage your website.

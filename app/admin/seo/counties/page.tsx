@@ -119,7 +119,7 @@ export default async function SeoCountiesPage() {
               className="text-sm max-w-md mx-auto mb-6"
               style={{ color: "var(--muted-foreground)" }}
             >
-              Pick a county where Samina works (Loudoun, Montgomery, Prince
+              Pick a county where Shoukoufa works (Loudoun, Montgomery, Prince
               William …) and we&apos;ll build a fully-formed SEO landing
               page in a few clicks.
             </p>

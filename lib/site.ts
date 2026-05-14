@@ -2,42 +2,43 @@
 // All on-page COPY lives in lib/content.ts — edit there to change wording.
 
 export const site = {
-  name: "Samina Bilal",
-  tagline: "Make Yourself at Home",
-  brokerage: "RE/MAX Galaxy",
-  phone: "(703) 973-7036",
-  phoneHref: "tel:+17039737036",
-  email: "samina@saminarealtor.com", // placeholder — confirm
-  emailHref: "mailto:samina@saminarealtor.com",
-  // RE/MAX Galaxy brokerage office — for footer + header brand callout
+  name: "Shoukoufa Aboubakri",
+  tagline: "Building Legacies, One House at a Time",
+  brokerage: "REMAX Galaxy",
+  phone: "(703) 307-0889",
+  phoneHref: "tel:+17033070889",
+  email: "realtor@shoukoufahomes.com",
+  emailHref: "mailto:realtor@shoukoufahomes.com",
+  // REMAX Galaxy brokerage office — for footer + header brand callout
   brokerageOffice: {
-    name: "RE/MAX Galaxy",
-    street: "12781 Darby Brook Court, Suite 102",
-    cityStateZip: "Woodbridge, VA 22192",
-    phone: "(703) 491-9570", // placeholder — replace with confirmed brokerage line
-    phoneHref: "tel:+17034919570",
-    logoSrc: "/images/remax-galaxy-logo.png", // drop the actual logo here
+    name: "REMAX Galaxy",
+    street: "8100 Boone Blvd, Suite 260",
+    cityStateZip: "Vienna, VA 22182",
+    phone: "(703) 821-1840",
+    phoneHref: "tel:+17038211840",
+    logoSrc: "/images/Remax%20Galaxy.png",
   },
-  // Samina's listed office address (kept for local "Office" reference in About / Contact)
+  // Shoukoufa's listed office address (kept for local "Office" reference in About / Contact)
   office: {
-    street: "12781 Darby Brook Court, Suite 102",
-    cityStateZip: "Woodbridge, VA 22192",
+    street: "8100 Boone Blvd, Suite 260",
+    cityStateZip: "Vienna, VA 22182",
   },
   licenses: {
-    va: "0225256757",
-    md: "[license pending]",
+    va: "0225231001",
+    md: "5006551",
+    dc: "SP40001379",
   },
   social: {
-    instagram: "https://www.instagram.com/homewithsamina/",
-    facebook: "https://www.facebook.com/SaminaBilalRealtor/",
-    tiktok: "https://www.tiktok.com/@samina.realtor",
+    instagram: "https://www.instagram.com/realtorshoukoufa_dmv/",
+    facebook: "https://www.facebook.com/ShoukoufaHomes/",
+    tiktok: "https://www.tiktok.com/@shoukoufahomes_",
   },
-  // Portrait — Samina's real headshot.
+  // Portrait — Shoukoufa's headshot.
   // One URL change here updates header, footer, homepage Meet section, and About page.
   portrait: {
     // Used everywhere — header avatar, footer, homepage Meet section, About page hero + bio.
-    avatar: "/images/Samina%20Headshot.jpeg",
-    full: "/images/Samina%20Headshot.jpeg",
+    avatar: "/images/Shoukoufa%20Potrait.png",
+    full: "/images/Shoukoufa%20Potrait.png",
   },
 };
 
@@ -46,17 +47,17 @@ export const nav = [
   { label: "About", href: "/about" },
   { label: "Buyers", href: "/buyers" },
   { label: "Sellers", href: "/sellers" },
-  { label: "Path to Ownership", href: "/path-to-ownership" },
+  { label: "Invest", href: "/invest" },
   {
     label: "Communities",
     href: "/communities",
     children: [
-      { label: "Woodbridge", href: "/communities/woodbridge" },
-      { label: "Dumfries", href: "/communities/dumfries" },
-      { label: "Ashburn", href: "/communities/ashburn" },
-      { label: "Lorton", href: "/communities/lorton" },
-      { label: "Stafford", href: "/communities/stafford" },
-      { label: "Manassas", href: "/communities/manassas" },
+      { label: "Alexandria", href: "/communities/alexandria" },
+      { label: "Arlington", href: "/communities/arlington" },
+      { label: "Vienna", href: "/communities/vienna" },
+      { label: "McLean", href: "/communities/mclean" },
+      { label: "Falls Church", href: "/communities/falls-church" },
+      { label: "Great Falls", href: "/communities/great-falls" },
     ],
   },
   { label: "Recent Closings", href: "/closings" },
@@ -73,6 +74,6 @@ export const heroStats: Array<{
   label: string;
 }> = [
   { to: 5.0, decimals: 1, suffix: "★", label: "Across Zillow, Google & Realtor.com" },
-  { to: 42, suffix: "+", label: "Five-Star Client Reviews" },
-  { to: 2, label: "States Licensed (VA & MD)" },
+  { to: 0, suffix: "+", label: "Five-Star Client Reviews" },
+  { to: 3, label: "Licensed in VA · MD · DC" },
 ];

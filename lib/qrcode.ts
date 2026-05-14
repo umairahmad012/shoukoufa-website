@@ -34,6 +34,6 @@ export function siteOrigin(): string {
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.URL ||
     process.env.DEPLOY_PRIME_URL ||
-    "http://localhost:3008"
+    "http://localhost:3009"
   );
 }

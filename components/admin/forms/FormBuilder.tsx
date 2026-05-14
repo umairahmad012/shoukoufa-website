@@ -302,7 +302,7 @@ export default function FormBuilder({
               className="admin-input"
               value={v.notify_email ?? ""}
               onChange={(e) => set("notify_email", e.target.value || null)}
-              placeholder="samina@example.com"
+              placeholder="name@example.com"
             />
           </div>
           <label className="inline-flex items-center gap-2">

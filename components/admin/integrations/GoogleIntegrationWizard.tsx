@@ -272,7 +272,7 @@ export default function GoogleIntegrationWizard({
       <Step number={2} title="Find your business Place ID">
         <p className="text-xs mb-3 leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
           The Place ID is a stable identifier for your business on Google
-          Maps. Use Google&apos;s finder, search for &ldquo;Samina Bilal RE/MAX
+          Maps. Use Google&apos;s finder, search for &ldquo;Shoukoufa Aboubakri REMAX
           Galaxy&rdquo;, copy the ID that pops up (looks like{" "}
           <code className="admin-mono">ChIJ...</code>).
         </p>

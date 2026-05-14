@@ -22,7 +22,7 @@ import { getBrandTheme, DEFAULT_BRAND_THEME } from "@/lib/brandTheme";
  *
  *   • Identity (name, role, brokerage, tagline, service area, languages)
  *   • Site Colors (theme — primary + surface + optional gradients)
- *   • Realtor Image
+ *   • Real Estate Specialist Image
  *   • Broker Image
  *   • Favicon
  *   • Featured Image
@@ -70,7 +70,7 @@ const CARDS: CardConfig[] = [
   {
     href: "/admin/content/brand/portrait",
     icon: User,
-    title: "Realtor Image",
+    title: "Real Estate Specialist Image",
     description:
       "Headshot used in the header avatar, footer, homepage intro, and About hero.",
     blockKey: "portrait",

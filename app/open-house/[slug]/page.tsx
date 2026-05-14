@@ -353,7 +353,7 @@ export default async function OpenHousePage({
                     className="text-[0.55rem] md:text-[0.6rem] tracking-[0.22em] uppercase opacity-80 mt-0.5"
                     style={{ fontWeight: 500 }}
                   >
-                    Realtor · VA Lic # {site.licenses.va}
+                    Real Estate Specialist · VA Lic # {site.licenses.va}
                   </p>
                   <div className="mt-1.5 flex flex-col gap-0.5 text-[0.66rem] md:text-[0.72rem]">
                     <a
@@ -443,7 +443,7 @@ export default async function OpenHousePage({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/images/Realtor-Emblem.png"
-                    alt="Realtor"
+                    alt="Real Estate Specialist"
                     className="h-4 md:h-[18px] w-auto opacity-90 brightness-0 invert"
                   />
                   {/* eslint-disable-next-line @next/next/no-img-element */}

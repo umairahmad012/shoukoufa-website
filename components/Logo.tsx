@@ -20,7 +20,7 @@ export default function Logo({
     <Link
       href="/"
       className={cn("inline-flex items-center gap-4 leading-none", color, className)}
-      aria-label="Samina Bilal — Home"
+      aria-label="Shoukoufa Aboubakri — Home"
     >
       {/* Circular portrait — left of wordmark */}
       <span
@@ -41,13 +41,13 @@ export default function Logo({
           className="text-[1.55rem] md:text-[1.8rem] font-thin tracking-[0.18em] uppercase"
           style={{ fontWeight: 200 }}
         >
-          Samina&nbsp;Bilal
+          Shoukoufa&nbsp;Aboubakri
         </span>
         <span
           className="text-[0.6rem] md:text-[0.68rem] font-light tracking-[0.42em] uppercase opacity-90 mt-1.5 self-end"
           style={{ fontWeight: 300 }}
         >
-          Realtor
+          Real Estate Specialist
         </span>
       </span>
     </Link>

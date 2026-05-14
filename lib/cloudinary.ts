@@ -59,8 +59,8 @@ export type CldOptions = {
 /**
  * Build a Cloudinary delivery URL from a public_id + options.
  *
- *   cldUrl("hero/woodbridge", { crop: "wide", width: 1920 })
- *   → https://res.cloudinary.com/<cloud>/image/upload/c_fill,ar_16:9,g_auto,w_1920,q_auto,f_auto/hero/woodbridge
+ *   cldUrl("hero/vienna", { crop: "wide", width: 1920 })
+ *   → https://res.cloudinary.com/<cloud>/image/upload/c_fill,ar_16:9,g_auto,w_1920,q_auto,f_auto/hero/vienna
  */
 export function cldUrl(publicId: string, opts: CldOptions = {}): string {
   if (!CLOUD_NAME) return ""; // Fail soft — caller should fall back

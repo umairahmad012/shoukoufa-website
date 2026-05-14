@@ -79,7 +79,7 @@ export default function AdminShell({
             className="ml-3 text-sm"
             style={{ fontWeight: 600, letterSpacing: "0.02em" }}
           >
-            Samina Bilal · Admin
+            Shoukoufa Aboubakri · Admin
           </span>
         </header>
 

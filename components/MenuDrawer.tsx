@@ -71,10 +71,10 @@ export default function MenuDrawer({
             className="mt-4 text-[0.7rem] tracking-[0.4em] uppercase text-white/85"
             style={{ fontWeight: 300 }}
           >
-            Samina&nbsp;Bilal
+            Shoukoufa&nbsp;Aboubakri
           </span>
           <span className="mt-1.5 text-[0.6rem] tracking-[0.4em] uppercase text-white/55">
-            Realtor
+            Real Estate Specialist
           </span>
         </div>
 

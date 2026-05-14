@@ -41,7 +41,7 @@ export default function ContactForm() {
           <Check size={22} className="text-emerald-700" strokeWidth={1.5} />
         </div>
         <p className="text-base md:text-lg text-ink leading-[1.85] font-light">
-          Thanks — your message has been sent. Samina will be in touch within 24
+          Thanks — your message has been sent. Shoukoufa will be in touch within 24
           hours.
         </p>
       </div>
@@ -73,7 +73,7 @@ export default function ContactForm() {
           className="mt-1 flex-shrink-0"
         />
         <span>
-          I agree to be contacted by Samina Bilal via call, email, and text.
+          I agree to be contacted by Shoukoufa Aboubakri via call, email, and text.
           Reply STOP to opt out at any time. Message and data rates may apply.
         </span>
       </label>

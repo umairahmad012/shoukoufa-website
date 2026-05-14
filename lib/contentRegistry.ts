@@ -89,7 +89,7 @@ export const PAGE_LABELS: Record<PageKey, string> = {
   about: "About",
   buyers: "Buyers",
   sellers: "Sellers",
-  path: "Path to Ownership",
+  path: "Invest",
   partners: "Trusted Partners",
   contact: "Contact",
   communities: "Communities (page)",
@@ -271,7 +271,7 @@ export const SECTIONS: SectionDef[] = [
         label: "Realtor Image",
         crop: "portrait",
         help: "Best aspect ratio is 3:4 (vertical). The crop preset adapts automatically per location.",
-        fallback: "/images/Samina%20Headshot.jpeg",
+        fallback: "/images/Shoukoufa%20Potrait.png",
       },
     },
   },
@@ -304,7 +304,7 @@ export const SECTIONS: SectionDef[] = [
         crop: "square",
         previewShape: "circle",
         help: "Square crop, shown in browser tabs as a circle.",
-        fallback: "/images/Samina%20Headshot.jpeg",
+        fallback: "/images/Shoukoufa%20Potrait.png",
       },
     },
   },
@@ -368,7 +368,7 @@ export const SECTIONS: SectionDef[] = [
   {
     page: "home",
     key: "meet",
-    label: "Meet Samina",
+    label: "Meet Shoukoufa",
     description: "Intro section with portrait + bio paragraphs + pull quote.",
     shape: {
       eyebrow: { type: "text", label: "Eyebrow" },
@@ -382,7 +382,7 @@ export const SECTIONS: SectionDef[] = [
     page: "home",
     key: "services",
     label: "Three Ways I Help",
-    description: "The three service cards (Buying, Selling, Path to Ownership).",
+    description: "The three service cards (Buying, Selling, Invest).",
     shape: {
       eyebrow: { type: "text", label: "Eyebrow" },
       heading: { type: "text", label: "Heading" },
@@ -420,7 +420,7 @@ export const SECTIONS: SectionDef[] = [
   {
     page: "home",
     key: "pathTeaser",
-    label: "Path to Ownership Teaser",
+    label: "Invest Teaser",
     description: "Short pitch block linking to the full Path page.",
     shape: {
       eyebrow: { type: "text", label: "Eyebrow" },
@@ -469,7 +469,7 @@ export const SECTIONS: SectionDef[] = [
     key: "darkBreak1",
     label: "Dark Break Divider 1",
     description:
-      "First dark photo strip on the homepage — between Meet Samina and the service cards.",
+      "First dark photo strip on the homepage — between Meet Shoukoufa and the service cards.",
     shape: makeDarkBreakShape({
       fallbackBg:
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&auto=format&fit=crop&q=85",
@@ -491,7 +491,7 @@ export const SECTIONS: SectionDef[] = [
       defaultEyebrow: "Why I Do This Work",
       defaultQuote:
         "Real estate is the most important purchase most people make. It deserves a Realtor who treats it that way.",
-      defaultAttribution: "Samina",
+      defaultAttribution: "Shoukoufa",
     }),
   },
   {
@@ -513,7 +513,7 @@ export const SECTIONS: SectionDef[] = [
       "About-page hero. Defaults to your portrait — pick a different image for a non-portrait cover.",
     // The current default is the portrait — use it as the fallback so the
     // picker matches what's on the live site.
-    shape: makeHeroFields("/images/Samina%20Headshot.jpeg"),
+    shape: makeHeroFields("/images/Shoukoufa%20Potrait.png"),
   },
   {
     page: "about",
@@ -893,7 +893,7 @@ export const SECTIONS: SectionDef[] = [
       fallbackBg:
         "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&auto=format&fit=crop&q=85",
       defaultEyebrow: "The Plan",
-      defaultQuote: "A real closing date, not a fantasy.",
+      defaultQuote: "Real properties. Real numbers. Real returns.",
     }),
   },
   {

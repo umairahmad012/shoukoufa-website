@@ -16,7 +16,7 @@ const sourceCodePro = Source_Code_Pro({
 });
 
 export const metadata = {
-  title: "Admin · Samina Bilal",
+  title: "Admin · Shoukoufa Aboubakri",
 };
 
 /**

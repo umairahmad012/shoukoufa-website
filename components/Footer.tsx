@@ -27,7 +27,7 @@ export default function Footer({
   return (
     <footer className="bg-navy text-white pt-20 md:pt-24 pb-8">
       <div className="max-w-[1500px] mx-auto gutter-x grid md:grid-cols-2 gap-14 md:gap-20">
-        {/* Left — Samina + brokerage */}
+        {/* Left — Shoukoufa + brokerage */}
         <div>
           <div className="relative w-24 h-24 rounded-full overflow-hidden ring-1 ring-white/30 mb-5">
             <div
@@ -40,13 +40,13 @@ export default function Footer({
             className="text-[0.7rem] tracking-[0.42em] uppercase text-white/85 mb-2"
             style={{ fontWeight: 300 }}
           >
-            Samina&nbsp;Bilal · Realtor
+            Shoukoufa&nbsp;Aboubakri · Real Estate Specialist
           </p>
           <p
             className="text-[0.6rem] tracking-[0.32em] uppercase text-white/55 mb-10"
             style={{ fontWeight: 300 }}
           >
-            Licensed in Virginia &amp; Maryland
+            Licensed in Virginia, Maryland &amp; D.C.
           </p>
 
           {/* Direct contact */}
@@ -66,7 +66,7 @@ export default function Footer({
             </a>
           </p>
 
-          {/* Brokerage card — info + large RE/MAX Galaxy logo at the end */}
+          {/* Brokerage card — info + large REMAX Galaxy logo at the end */}
           <div className="mt-10 pt-6 border-t border-white/10">
             <p
               className="text-[0.65rem] tracking-[0.32em] uppercase text-white/55 mb-3"
@@ -91,11 +91,11 @@ export default function Footer({
               {bo.phone}
             </a>
 
-            {/* RE/MAX Galaxy logo — displayed at the END of the brokerage info */}
+            {/* REMAX Galaxy logo — displayed at the END of the brokerage info */}
             <div className="mt-7">
               <img
                 src="/images/Remax%20Galaxy.png"
-                alt="RE/MAX Galaxy"
+                alt="REMAX Galaxy"
                 className="h-20 md:h-24 w-auto object-contain"
               />
             </div>
@@ -113,9 +113,9 @@ export default function Footer({
           </h3>
           <div className="mb-8 w-12 h-px bg-white/40" />
           <p className="text-base font-light leading-[1.85] text-white/85 mb-8 max-w-md">
-            Quarterly market reports for Northern Virginia &amp; Maryland. New
-            listings, sold prices, and what it means for your zip code. No spam,
-            ever.
+            Quarterly market reports for the DMV — Virginia, Maryland &amp; D.C.
+            New listings, sold prices, and what it means for your zip code. No
+            spam, ever.
           </p>
 
           <form className="max-w-md">
@@ -154,7 +154,7 @@ export default function Footer({
           {/* Left — copyright + privacy link */}
           <div className="flex flex-wrap items-center gap-3 md:gap-5">
             <span>
-              © {new Date().getFullYear()} Samina Bilal · Licensed in VA &amp; MD
+              © {new Date().getFullYear()} Shoukoufa Aboubakri · Licensed in VA, MD &amp; DC
             </span>
             <span className="opacity-60 hidden sm:inline">·</span>
             <Link
@@ -170,7 +170,7 @@ export default function Footer({
             {/* Tiny compliance logos — white */}
             <img
               src="/images/Realtor-Emblem.png"
-              alt="Realtor"
+              alt="Real Estate Specialist"
               className="h-6 w-auto opacity-80 brightness-0 invert"
             />
             <img

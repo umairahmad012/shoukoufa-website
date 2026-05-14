@@ -5,9 +5,9 @@ import { getCommunities } from "@/lib/communitiesLoader";
 import { getPageContent, resolveImageUrl } from "@/lib/contentLoader";
 
 export const metadata = {
-  title: "Communities | Northern Virginia & Maryland Real Estate",
+  title: "Communities | Northern Virginia Real Estate",
   description:
-    "Six neighborhoods Samina knows by street name. Real 2026 market data for Woodbridge, Dumfries, Ashburn, Lorton, Stafford, and Manassas.",
+    "Six Northern Virginia neighborhoods Shoukoufa knows by street name. Real 2026 market data for Alexandria, Arlington, Vienna, McLean, Falls Church, and Great Falls.",
 };
 
 export const dynamic = "force-dynamic";
@@ -153,7 +153,7 @@ export default async function CommunitiesPage() {
       {/* Dark break — separates the comparison table from the photo grid */}
       <DarkBreak
         bgImage={darkBreakBg}
-        eyebrow={c.darkBreak.eyebrow || "Six Neighborhoods, One Realtor"}
+        eyebrow={c.darkBreak.eyebrow || "Six Neighborhoods, One Real Estate Specialist"}
         quote={c.darkBreak.quote || "Local matters."}
         attribution={c.darkBreak.attribution}
         height="md"

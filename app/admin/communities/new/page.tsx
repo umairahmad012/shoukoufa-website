@@ -25,7 +25,7 @@ export default async function NewCommunityPage() {
     tagline: "",
     about: "",
     market_year_summary: "",
-    samina_quote: "",
+    agent_quote: "",
     median_price: "",
     yoy_change: "",
     yoy_direction: "flat",

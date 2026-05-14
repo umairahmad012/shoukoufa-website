@@ -12,7 +12,7 @@ export type Closing = {
   caption?: string;
 };
 
-// Stock placeholders — Samina's real closings replace these.
+// Stock placeholders — real closings replace these once added in Admin.
 const stock = [
   "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&auto=format&fit=crop&q=80",
   "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&auto=format&fit=crop&q=80",
@@ -29,12 +29,12 @@ const stock = [
 ];
 
 const neighborhoods = [
-  { n: "Lake Ridge", c: "Woodbridge", s: "VA" },
-  { n: "Old Town", c: "Manassas", s: "VA" },
-  { n: "Brambleton", c: "Ashburn", s: "VA" },
-  { n: "Aquia Harbour", c: "Stafford", s: "VA" },
-  { n: "Laurel Hill", c: "Lorton", s: "VA" },
-  { n: "Potomac Shores", c: "Dumfries", s: "VA" },
+  { n: "Old Town", c: "Alexandria", s: "VA" },
+  { n: "Clarendon", c: "Arlington", s: "VA" },
+  { n: "Maple Avenue", c: "Vienna", s: "VA" },
+  { n: "Langley", c: "McLean", s: "VA" },
+  { n: "Broad Street", c: "Falls Church", s: "VA" },
+  { n: "River Bend", c: "Great Falls", s: "VA" },
 ];
 
 export const closings: Closing[] = Array.from({ length: 24 }).map((_, i) => {

@@ -50,10 +50,10 @@ export async function generateMetadata({
   const page = await getCountyLanding(slug);
   if (!page) return { title: "Not found" };
 
-  const title = `Realtor in ${page.countyName} County, ${page.stateName} | Samina Bilal`;
+  const title = `Real Estate Specialist in ${page.countyName} County, ${page.stateName} | Shoukoufa Aboubakri`;
   const description =
     page.customMetaDescription ||
-    `Looking for a realtor in ${page.countyName} County, ${page.stateName}? Samina Bilal — RE/MAX Galaxy — guides buyers and sellers across ${page.serviceAreas.slice(0, 3).join(", ") || page.countyName} with five-star service and deep local market knowledge.`;
+    `Looking for a realtor in ${page.countyName} County, ${page.stateName}? Shoukoufa Aboubakri — REMAX Galaxy — guides buyers and sellers across ${page.serviceAreas.slice(0, 3).join(", ") || page.countyName} with five-star service and deep local market knowledge.`;
   return {
     metadataBase: new URL(siteOrigin()),
     title,
@@ -96,7 +96,7 @@ export default async function CountyLandingPage({
 
   const heading =
     page.customHeading ||
-    `Your ${page.countyName} County, ${page.stateName} Realtor.`;
+    `Your ${page.countyName} County, ${page.stateName} Real Estate Specialist.`;
 
   const intro =
     page.customIntro ||
@@ -109,7 +109,7 @@ export default async function CountyLandingPage({
         "@type": "RealEstateAgent",
         "@id": `${siteOrigin()}/realtor-in/${slug}#realtor`,
         name: brand.name,
-        description: `Realtor serving ${page.countyName} County, ${page.stateName}.`,
+        description: `Real Estate Specialist serving ${page.countyName} County, ${page.stateName}.`,
         url: `${siteOrigin()}/realtor-in/${slug}`,
         image: portrait.full,
         telephone: site.phone,
@@ -298,7 +298,7 @@ export default async function CountyLandingPage({
             </a>
             <a href={site.emailHref} className="btn-outline-light">
               <Mail size={14} className="mr-2" />
-              Email Samina
+              Email Shoukoufa
             </a>
           </div>
           <Link

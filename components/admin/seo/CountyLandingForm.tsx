@@ -236,7 +236,7 @@ export default function CountyLandingForm({
           <input
             value={v.custom_heading ?? ""}
             onChange={(e) => set("custom_heading", e.target.value || null)}
-            placeholder={`Your ${v.county_name || "County"} County, ${STATE_NAMES[v.state_abbr]} Realtor.`}
+            placeholder={`Your ${v.county_name || "County"} County, ${STATE_NAMES[v.state_abbr]} Real Estate Specialist.`}
             className="admin-input"
           />
         </div>

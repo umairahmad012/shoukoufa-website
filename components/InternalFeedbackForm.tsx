@@ -57,7 +57,7 @@ export default function InternalFeedbackForm() {
           Thank you.
         </h2>
         <p className="text-sm text-ink/70 max-w-md mx-auto leading-relaxed">
-          Your feedback was sent privately to Samina. She reviews every note
+          Your feedback was sent privately to Shoukoufa. She reviews every note
           personally and will reach out if you&apos;ve asked for a follow-up.
         </p>
       </div>
@@ -77,7 +77,7 @@ export default function InternalFeedbackForm() {
             This is private feedback.
           </p>
           <p className="text-xs text-ink/70 leading-relaxed">
-            What you write here goes only to Samina. It is <strong>not</strong>{" "}
+            What you write here goes only to Shoukoufa. It is <strong>not</strong>{" "}
             posted to Google, and it does <strong>not</strong> appear on the
             public website. Use this space to be honest — including
             constructive criticism — so she can address anything that fell short.
@@ -117,7 +117,7 @@ export default function InternalFeedbackForm() {
           required
           value={quote}
           onChange={(e) => setQuote(e.target.value)}
-          placeholder="Anything that went well, anything that didn't, what could've been better — be honest, this stays between you and Samina."
+          placeholder="Anything that went well, anything that didn't, what could've been better — be honest, this stays between you and Shoukoufa."
           className="w-full px-4 py-3 border border-black/15 rounded bg-white text-sm focus:outline-none focus:border-navy focus:ring-2 focus:ring-navy/15"
         />
       </div>
@@ -160,7 +160,7 @@ export default function InternalFeedbackForm() {
           className="w-full px-4 py-3 border border-black/15 rounded bg-white text-sm focus:outline-none focus:border-navy"
         />
         <p className="text-[11px] text-ink/55 mt-1.5">
-          Only used if Samina wants to reach out about your feedback.
+          Only used if Shoukoufa wants to reach out about your feedback.
         </p>
       </div>
 
@@ -171,7 +171,7 @@ export default function InternalFeedbackForm() {
       )}
 
       <button type="submit" disabled={pending} className="btn-solid w-full sm:w-auto">
-        {pending ? "Sending…" : "Send privately to Samina"}
+        {pending ? "Sending…" : "Send privately to Shoukoufa"}
       </button>
     </form>
   );

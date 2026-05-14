@@ -280,7 +280,7 @@ function ClosingDialog({
                 className="admin-input"
                 value={v.city}
                 onChange={(e) => set("city", e.target.value)}
-                placeholder="Woodbridge"
+                placeholder="Vienna"
               />
             </div>
             <div>

@@ -9,7 +9,7 @@ Once these 6 steps are done, the `/admin` panel goes live.
 1. Open **https://supabase.com** in a browser, sign in with `admin@brandbonjour.com`
 2. Click **New Project**
 3. Fill in:
-   - **Name:** `samina-website`
+   - **Name:** `shoukoufa-website`
    - **Database password:** click "Generate", **save this somewhere** (LastPass, password manager — you may never need it but you can't recover it later)
    - **Region:** `East US (North Virginia)` (closest to her business)
    - **Pricing plan:** Free
@@ -32,7 +32,7 @@ This creates all the tables: team_members, content_blocks, content_history, medi
 
 ## 3. Disable email confirmation (optional, recommended for dev)
 
-By default, Supabase requires users to click a confirmation link in their email before they can log in. For a small team (just Samina + Umair), this is unnecessary friction.
+By default, Supabase requires users to click a confirmation link in their email before they can log in. For a small team (just Shoukoufa + Umair), this is unnecessary friction.
 
 1. Sidebar → **Authentication** → **Providers** → **Email**
 2. Toggle **Confirm email** to **OFF**
@@ -54,7 +54,7 @@ By default, Supabase requires users to click a confirmation link in their email 
 
 ## 5. Add credentials to local env
 
-Create `/Users/umairahmad/Downloads/samina-website/.env.local` (already gitignored):
+Create `/Users/umairahmad/Downloads/shoukoufa-website/.env.local` (already gitignored):
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
@@ -80,7 +80,7 @@ Then restart the dev server: `npm run dev`
 
 Once local works:
 
-1. **https://app.netlify.com** → samina-bilal-website project
+1. **https://app.netlify.com** → shoukoufa-website project
 2. **Site settings → Environment variables → Add variable**
 3. Add the same 3 keys (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`)
 4. Trigger a redeploy: **Deploys → Trigger deploy → Deploy site**
@@ -100,9 +100,9 @@ The admin **Media Library** uses Cloudinary for uploads, crops, and background r
 1. Open **https://cloudinary.com** → sign up with `admin@brandbonjour.com`
 2. From the dashboard, copy the **Cloud name** (top-right under your account)
 3. **Settings → Upload → Add upload preset**
-   - **Preset name:** `samina-website-uploads`
+   - **Preset name:** `shoukoufa-website-uploads`
    - **Signing Mode:** `Unsigned`
-   - **Folder:** `samina-website`
+   - **Folder:** `shoukoufa-website`
    - **Allowed formats:** `jpg, jpeg, png, webp, avif`
    - **Max file size:** `15 MB` (or whatever feels reasonable)
    - Click **Save**
@@ -110,7 +110,7 @@ The admin **Media Library** uses Cloudinary for uploads, crops, and background r
 5. Add to `.env.local`:
    ```bash
    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
-   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=samina-website-uploads
+   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=shoukoufa-website-uploads
    ```
 6. Restart the dev server. Upload a test image at `/admin/media`.
 7. On Netlify: add the same two `NEXT_PUBLIC_CLOUDINARY_*` env vars and trigger a redeploy.

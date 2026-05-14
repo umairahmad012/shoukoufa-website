@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://saminarealtor.com/sitemap.xml",
+    sitemap: "https://shoukoufahomes.com/sitemap.xml",
   };
 }

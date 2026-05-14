@@ -14,7 +14,7 @@ export type CommunityInput = {
   tagline: string;
   about: string;
   market_year_summary: string;
-  samina_quote: string;
+  agent_quote: string;
   median_price: string;
   yoy_change: string;
   yoy_direction: "up" | "down" | "flat";
@@ -149,7 +149,7 @@ export async function seedDefaultCommunities(): Promise<Result> {
       tagline: c.tagline,
       about: c.about,
       market_year_summary: c.market2026,
-      samina_quote: c.saminaQuote,
+      agent_quote: c.agentQuote,
       median_price: c.median,
       yoy_change: c.yoy,
       yoy_direction: c.yoyDirection,

@@ -17,9 +17,9 @@ import DarkBreak from "@/components/DarkBreak";
 import ProcessTimeline from "@/components/ProcessTimeline";
 
 export const metadata = {
-  title: "Buying a Home | Samina Bilal — VA & MD Buyer's Agent",
+  title: "Buying a Home | Shoukoufa Aboubakri — VA, MD & DC Buyer's Agent",
   description:
-    "First home or fifth — Samina makes the buying process feel calm. Local market knowledge, sharp negotiation, end-to-end representation across Northern Virginia and Maryland.",
+    "First home or fifth — Shoukoufa makes the buying process feel calm. Local market knowledge, sharp negotiation, end-to-end representation across Northern Virginia and Maryland.",
 };
 
 export const dynamic = "force-dynamic";
@@ -179,7 +179,7 @@ export default async function BuyersPage() {
         </div>
       </section>
 
-      {/* Why work with Samina */}
+      {/* Why work with Shoukoufa */}
       <section className="section-y-lg gutter-x">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-24">
           <p className="eyebrow mb-8">{c.why.eyebrow}</p>
@@ -304,7 +304,7 @@ export default async function BuyersPage() {
       {/* Featured communities preview */}
       <section className="section-y-lg gutter-x">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-24">
-          <p className="eyebrow mb-8">Where Samina Works</p>
+          <p className="eyebrow mb-8">Where Shoukoufa Works</p>
           <h2
             className="heading-section text-ink"
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}

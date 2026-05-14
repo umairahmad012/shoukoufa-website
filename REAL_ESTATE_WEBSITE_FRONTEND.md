@@ -1,6 +1,6 @@
 # Real Estate Website Frontend — Complete Specification
 
-**Project:** Samina Bilal · Realtor — Boutique luxury real estate site
+**Project:** Shoukoufa Aboubakri · Real Estate Specialist — Boutique luxury real estate site
 **Stack:** Next.js 16 (App Router) · React 19 · TypeScript (strict) · Tailwind CSS 3
 **Aesthetic:** Editorial luxury, Carolwood-inspired. Cream + navy palette, single-typeface system, full-bleed photography, deliberate whitespace, restrained motion.
 
@@ -81,7 +81,7 @@ This targets only modern browsers — autoprefixer skips obsolete prefixes that 
 ## 2. Project Structure
 
 ```
-samina-website/
+shoukoufa-website/
 ├── app/
 │   ├── globals.css                    # design system CSS (510 lines)
 │   ├── layout.tsx                     # root layout (Header + Footer wrap)
@@ -108,7 +108,7 @@ samina-website/
 │   ├── Footer.tsx                     # navy footer with brokerage card
 │   ├── Hero.tsx                       # homepage hero with video + glass stat strip
 │   ├── PageHero.tsx                   # standard inner-page hero
-│   ├── IntroSection.tsx               # "Meet Samina" 2-col with portrait
+│   ├── IntroSection.tsx               # "Meet Shoukoufa" 2-col with portrait
 │   ├── PillarCards.tsx                # 3 service cards (Buy/Sell/Path)
 │   ├── CommunitiesGrid.tsx            # 6-tile community grid
 │   ├── PathTeaser.tsx                 # path-to-ownership homepage CTA
@@ -132,7 +132,7 @@ samina-website/
 │
 ├── public/
 │   ├── images/
-│   │   ├── Samina Headshot.jpeg       # her real photo
+│   │   ├── Shoukoufa Headshot.jpeg       # her real photo
 │   │   └── remax-galaxy-logo.png      # placeholder for brokerage logo
 │   ├── closings/                      # closing photos
 │   └── videos/                        # hero videos
@@ -286,7 +286,7 @@ p {
 
 1. **Headings: always uppercase, always tracked wide.** Letter-spacing scale: 0.06em (hero H1) → 0.10em (section H2) → 0.32em (eyebrow). Big text gets less letter-spacing, small text gets more.
 2. **Body paragraphs: light (300), line-height 1.85.** Never tighten.
-3. **Italic for pull-quotes only** — used for Samina's quoted lines, review blockquotes, and "guided by Samina Bilal" callouts in the hero.
+3. **Italic for pull-quotes only** — used for Shoukoufa's quoted lines, review blockquotes, and "guided by Shoukoufa Aboubakri" callouts in the hero.
 4. **Numbers in counters/stats: weight 200, slightly tracked.** `style={{ fontWeight: 200, letterSpacing: "0.04em" }}`.
 5. **Hairline dividers** between heading and body — `<div className="w-12 h-px bg-navy/40" />`. Width 12 (3rem), height 1px, color is navy at 40% alpha (or white at 40% on dark).
 
@@ -925,9 +925,9 @@ Optional content: `eyebrow`, `quote`, `attribution` — all render center-aligne
 - Container max-width: `max-w-[1600px]`, padding `px-6 md:px-12`
 
 ### Logo (`components/Logo.tsx`)
-- Circular portrait (44px desktop) + Samina Bilal wordmark + Realtor subtag
+- Circular portrait (44px desktop) + Shoukoufa Aboubakri wordmark + Real Estate Specialist subtag
 - `variant="light"` (white text on hero) or `"dark"` (ink on cream when scrolled)
-- Layout: `[circular avatar] [SAMINA BILAL / REALTOR (stacked)]`
+- Layout: `[circular avatar] [SHOUKOUFA ABOUBAKRI / REAL ESTATE SPECIALIST (stacked)]`
 
 ### MenuDrawer (`components/MenuDrawer.tsx`)
 - Slides in from right, full-width on mobile, 520px on desktop
@@ -946,10 +946,10 @@ Optional content: `eyebrow`, `quote`, `attribution` — all render center-aligne
 - Two-column grid (`md:grid-cols-2 gap-20 md:gap-24`)
 - **Left column:**
   - Circular portrait (112px, ring-1 white/30)
-  - "SAMINA BILAL · REALTOR" caption
+  - "SHOUKOUFA ABOUBAKRI · REAL ESTATE SPECIALIST" caption
   - "Licensed in Virginia & Maryland" subtitle
   - DIRECT contact (phone + email)
-  - Brokerage card: RE/MAX Galaxy logo placeholder + office address + brokerage phone + "Each office independently owned" disclaimer
+  - Brokerage card: REMAX Galaxy logo placeholder + office address + brokerage phone + "Each office independently owned" disclaimer
 - **Right column:**
   - "STAY IN TOUCH" eyebrow + "NEWSLETTER" heading
   - Description paragraph
@@ -970,7 +970,7 @@ Optional content: `eyebrow`, `quote`, `attribution` — all render center-aligne
 - Eyebrow → display H1 (ShimmerText tone="light") → hairline → subtitle
 
 ### IntroSection (`components/IntroSection.tsx`)
-- "Meet Samina" — homepage only
+- "Meet Shoukoufa" — homepage only
 - 2-column grid: portrait left (3:4, grayscale, hairline frame) + text right (eyebrow → heading → divider → 2 paragraphs → italic quote → CTA button)
 - Reveal directions: portrait from left, text staggered up
 
@@ -1019,7 +1019,7 @@ Optional content: `eyebrow`, `quote`, `attribution` — all render center-aligne
 | Route | Purpose | SSG |
 |---|---|---|
 | `/` | Homepage | static |
-| `/about` | About Samina | static |
+| `/about` | About Shoukoufa | static |
 | `/buyers` | For Buyers | static |
 | `/sellers` | For Sellers + valuation form | static |
 | `/path-to-ownership` | Renter-to-buyer program + FAQ + sticky steps | static |
@@ -1041,7 +1041,7 @@ Optional content: `eyebrow`, `quote`, `attribution` — all render center-aligne
 ### Homepage Structure (`app/page.tsx`)
 ```
 <Hero />                       // dark — video + glass stat strip
-<IntroSection />               // light — Meet Samina (2-col with portrait)
+<IntroSection />               // light — Meet Shoukoufa (2-col with portrait)
 <DarkBreak />                  // dark — review pull-quote
 <PillarCards />                // light — Buy/Sell/Path
 <CommunitiesGrid />            // light-soft — 6 communities
@@ -1100,7 +1100,7 @@ Global: `html { scroll-behavior: smooth; }`. Anchor links (`#intro` from hero do
 ### Sources
 - **Stock:** Unsplash (`images.unsplash.com`) for placeholders. Use `?w=1920&auto=format&fit=crop&q=85` query strings.
 - **Cloudinary:** for hero video (`res.cloudinary.com`).
-- **Local:** for Samina's portrait at `/public/images/Samina Headshot.jpeg`.
+- **Local:** for Shoukoufa's portrait at `/public/images/Shoukoufa Headshot.jpeg`.
 
 ### Aspect Ratios
 | Use Case | Ratio | Tailwind |
@@ -1120,7 +1120,7 @@ Global: `html { scroll-behavior: smooth; }`. Anchor links (`#intro` from hero do
 
 ### Required Asset Files
 For full deployment, replace these placeholders:
-- `/public/images/Samina Headshot.jpeg` (already real)
+- `/public/images/Shoukoufa Headshot.jpeg` (already real)
 - `/public/images/remax-galaxy-logo.png` (placeholder text shows fallback)
 - `/public/closings/*.jpg` (real closing photos)
 
@@ -1142,7 +1142,7 @@ All copy lives in `lib/content.ts` — single source of truth.
 ### Sections That Get Direct, Clear Headings
 - Service section: "How I Work With Clients" / "Three ways I help" — NOT "Three Ways In"
 - Communities: "Where I Work Most" / "Six neighborhoods I know especially well"
-- Closings: "Sold by Samina" / "Recent closings"
+- Closings: "Sold by Shoukoufa" / "Recent closings"
 - Reviews: "What Clients Say" / "In their words"
 
 ### Languages Mentioned
@@ -1270,8 +1270,8 @@ Build each page following the inner-page pattern (Section 17):
 12. `app/sitemap.ts` + `app/robots.ts`
 
 ### Phase 5 — Assets
-1. Drop portrait at `/public/images/Samina Headshot.jpeg`
-2. Drop RE/MAX Galaxy logo at `/public/images/remax-galaxy-logo.png` (footer auto-swaps text fallback for image)
+1. Drop portrait at `/public/images/Shoukoufa Headshot.jpeg`
+2. Drop REMAX Galaxy logo at `/public/images/remax-galaxy-logo.png` (footer auto-swaps text fallback for image)
 3. Drop closing photos at `/public/closings/`
 4. Drop hero video at `/public/videos/` (or use Cloudinary)
 

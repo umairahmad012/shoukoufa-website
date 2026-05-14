@@ -2,11 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "samina-website",
+      "name": "shoukoufa-website",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
-      "port": 3008,
-      "cwd": "/Users/umairahmad/Downloads/samina-website"
+      "port": 3009,
+      "cwd": "/Users/umairahmad/Downloads/shoukoufa-website"
     }
   ]
 }

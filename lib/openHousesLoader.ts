@@ -51,7 +51,7 @@ export type OpenHouse = {
   heading: string;
   /** Legacy single-line address (used as fallback when structured fields blank). */
   address: string;
-  /** Structured address line 2: "Woodbridge, Virginia 22192". */
+  /** Structured address line 2: "Vienna, Virginia 22180". */
   cityLine: string;
   city: string | null;
   stateFull: string | null;

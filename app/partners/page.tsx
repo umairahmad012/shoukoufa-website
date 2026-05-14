@@ -6,9 +6,9 @@ import { getPageContent, getSection, resolveImageUrl } from "@/lib/contentLoader
 import { getPartnerCategories } from "@/lib/partnersLoader";
 
 export const metadata = {
-  title: "Trusted Partners | Samina Bilal",
+  title: "Trusted Partners | Shoukoufa Aboubakri",
   description:
-    "The lenders, inspectors, insurance agents, and trades Samina trusts with her own clients. Real names, real contact info, no kickbacks.",
+    "The lenders, inspectors, insurance agents, and trades Shoukoufa trusts with her own clients. Real names, real contact info, no kickbacks.",
 };
 
 export const dynamic = "force-dynamic";
