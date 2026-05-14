@@ -7,18 +7,24 @@ import {
   youTubeBackgroundEmbed,
 } from "@/lib/cloudinary";
 import type { BlockWrapper } from "@/lib/blockRegistry";
+import { tc } from "@/lib/textColor";
 
 type HeroData = {
   eyebrow?: string;
+  eyebrowColor?: string;
   titleLines?: string[];
+  titleLinesColor?: string;
   subtitle?: string;
+  subtitleColor?: string;
   ctas?: Array<{ label?: string; href?: string; style?: string }>;
   stats?: Array<{
     value?: string | number;
+    valueColor?: string;
     decimals?: string | number;
     prefix?: string;
     suffix?: string;
     label?: string;
+    labelColor?: string;
   }>;
   wrapper?: BlockWrapper;
 };
@@ -88,14 +94,22 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
       <div className="relative z-10 min-h-screen flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-8 pt-28 md:pt-32 pb-10 md:pb-12">
           {data.eyebrow ? (
-            <p className="eyebrow-light mb-7 md:mb-10 animate-fade-in">
+            <p
+              className={tc(
+                "eyebrow-light mb-7 md:mb-10 animate-fade-in",
+                data.eyebrowColor,
+              )}
+            >
               {data.eyebrow}
             </p>
           ) : null}
 
           {titleLines.length > 0 && (
             <h1
-              className="heading-display text-white animate-fade-in-up"
+              className={tc(
+                "heading-display text-white animate-fade-in-up",
+                data.titleLinesColor,
+              )}
               style={{
                 fontSize: "clamp(1.25rem, 6.5vw, 6rem)",
                 lineHeight: 1.06,
@@ -114,7 +128,12 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
           <div className="mt-9 md:mt-12 w-14 md:w-16 h-px bg-white/40" />
 
           {data.subtitle ? (
-            <p className="mt-9 md:mt-12 max-w-xl text-sm sm:text-base md:text-lg font-light text-white/90 leading-[1.85] md:leading-[1.9] px-2">
+            <p
+              className={tc(
+                "mt-9 md:mt-12 max-w-xl text-sm sm:text-base md:text-lg font-light text-white/90 leading-[1.85] md:leading-[1.9] px-2",
+                data.subtitleColor,
+              )}
+            >
               {data.subtitle}
             </p>
           ) : null}
@@ -172,7 +191,10 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
                       }`}
                     >
                       <p
-                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-wide"
+                        className={tc(
+                          "text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-wide",
+                          s.valueColor,
+                        )}
                         style={{ fontWeight: 200, letterSpacing: "0.04em" }}
                       >
                         <Counter
@@ -184,7 +206,10 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
                       </p>
                       <div className="mx-auto my-4 md:my-5 w-8 md:w-9 h-px bg-white/35" />
                       <p
-                        className="text-[0.62rem] sm:text-[0.68rem] md:text-[0.75rem] tracking-[0.30em] md:tracking-[0.32em] uppercase text-white/80 px-2"
+                        className={tc(
+                          "text-[0.62rem] sm:text-[0.68rem] md:text-[0.75rem] tracking-[0.30em] md:tracking-[0.32em] uppercase text-white/80 px-2",
+                          s.labelColor,
+                        )}
                         style={{ fontWeight: 400 }}
                       >
                         {s.label}

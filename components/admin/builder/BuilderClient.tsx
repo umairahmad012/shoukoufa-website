@@ -473,14 +473,24 @@ function BlockEditor({
           {/* Block-specific fields */}
           <MediaLibraryProvider library={library as VideoLibraryItem[]}>
             <div className="space-y-6">
-              {Object.entries(def.dataShape).map(([key, field]) => (
-                <FieldRenderer
-                  key={key}
-                  field={field}
-                  value={data[key]}
-                  onChange={(next) => setField(key, next)}
-                />
-              ))}
+              {Object.entries(def.dataShape).map(([key, field]) => {
+                const colorKey = `${key}Color`;
+                const colorable =
+                  (field.type === "text" || field.type === "paragraph") &&
+                  field.colorable === true;
+                return (
+                  <FieldRenderer
+                    key={key}
+                    field={field}
+                    value={data[key]}
+                    onChange={(next) => setField(key, next)}
+                    colorValue={colorable ? (data[colorKey] as string | undefined) : undefined}
+                    onColorChange={
+                      colorable ? (next) => setField(colorKey, next) : undefined
+                    }
+                  />
+                );
+              })}
             </div>
 
             {/* Universal wrapper fields */}

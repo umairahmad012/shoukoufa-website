@@ -13,24 +13,30 @@ import {
   youTubeBackgroundEmbed,
 } from "@/lib/cloudinary";
 import type { BlockWrapper } from "@/lib/blockRegistry";
+import { tc } from "@/lib/textColor";
 
 type WithWrapper<T> = T & { wrapper?: BlockWrapper };
 
 // ────────────────────────────────────────────────────────────── PARAGRAPH BLOCK
 type ParagraphBlockData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   paragraphs?: string[];
+  paragraphsColor?: string;
 }>;
 
 export async function ParagraphBlock({ data }: { data: ParagraphBlockData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-12">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -40,7 +46,9 @@ export async function ParagraphBlock({ data }: { data: ParagraphBlockData }) {
       </div>
       <div className="space-y-6 text-base md:text-lg font-light leading-[1.9] text-ink/85">
         {(data.paragraphs ?? []).map((p, i) => (
-          <p key={i}>{p}</p>
+          <p key={i} className={tc("", data.paragraphsColor)}>
+            {p}
+          </p>
         ))}
       </div>
     </BlockShell>
@@ -50,18 +58,23 @@ export async function ParagraphBlock({ data }: { data: ParagraphBlockData }) {
 // ────────────────────────────────────────────────────────────── BULLET LIST
 type BulletListData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   bullets?: string[];
+  bulletsColor?: string;
 }>;
 
 export async function BulletListBlock({ data }: { data: BulletListData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-12 md:mb-16">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -77,7 +90,7 @@ export async function BulletListBlock({ data }: { data: BulletListData }) {
             >
               ·
             </span>
-            <p>{line}</p>
+            <p className={tc("", data.bulletsColor)}>{line}</p>
           </div>
         ))}
       </div>
@@ -88,18 +101,22 @@ export async function BulletListBlock({ data }: { data: BulletListData }) {
 // ────────────────────────────────────────────────────────────── FAQ
 type FaqData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
-  items?: Array<{ q: string; a: string }>;
+  headingColor?: string;
+  items?: Array<{ q: string; qColor?: string; a: string; aColor?: string }>;
 }>;
 
 export async function FaqBlock({ data }: { data: FaqData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-12 md:mb-16">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -113,12 +130,12 @@ export async function FaqBlock({ data }: { data: FaqData }) {
             className="group glass-light px-8 md:px-10 py-7 transition-all"
           >
             <summary className="cursor-pointer flex items-center justify-between text-base md:text-lg font-light text-ink list-none">
-              <span>{f.q}</span>
+              <span className={tc("", f.qColor)}>{f.q}</span>
               <span className="text-navy text-2xl ml-6 group-open:rotate-45 transition-transform duration-400 ease-editorial flex-shrink-0">
                 +
               </span>
             </summary>
-            <p className="mt-6 text-base font-light text-ink/75 leading-[1.9]">
+            <p className={tc("mt-6 text-base font-light text-ink/75 leading-[1.9]", f.aColor)}>
               {f.a}
             </p>
           </details>
@@ -132,10 +149,12 @@ export async function FaqBlock({ data }: { data: FaqData }) {
 type StatsStripData = WithWrapper<{
   stats?: Array<{
     value?: string | number;
+    valueColor?: string;
     decimals?: string | number;
     prefix?: string;
     suffix?: string;
     label?: string;
+    labelColor?: string;
   }>;
 }>;
 
@@ -158,13 +177,18 @@ export async function StatsStripBlock({ data }: { data: StatsStripData }) {
           return (
             <div key={i}>
               <p
-                className="text-5xl md:text-6xl text-navy mb-6"
+                className={tc("text-5xl md:text-6xl text-navy mb-6", s.valueColor)}
                 style={{ fontWeight: 200 }}
               >
                 <Counter to={num} decimals={dec} prefix={s.prefix} suffix={s.suffix} />
               </p>
               <div className="mx-auto mb-5 w-8 h-px bg-navy/40" />
-              <p className="text-[0.7rem] tracking-[0.32em] uppercase text-ink-muted leading-[1.7]">
+              <p
+                className={tc(
+                  "text-[0.7rem] tracking-[0.32em] uppercase text-ink-muted leading-[1.7]",
+                  s.labelColor,
+                )}
+              >
                 {s.label}
               </p>
             </div>
@@ -178,8 +202,11 @@ export async function StatsStripBlock({ data }: { data: StatsStripData }) {
 // ────────────────────────────────────────────────────────────── DARK BREAK
 type DarkBreakData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   quote?: string;
+  quoteColor?: string;
   attribution?: string;
+  attributionColor?: string;
 }>;
 
 export async function DarkBreakBlock({ data }: { data: DarkBreakData }) {
@@ -219,15 +246,25 @@ export async function DarkBreakBlock({ data }: { data: DarkBreakData }) {
         <div className="relative z-10 min-h-[50vh] flex items-center justify-center px-6 py-20">
           <div className="glass-dark max-w-2xl mx-auto p-10 md:p-14 text-center text-white">
             {data.eyebrow ? (
-              <p className="eyebrow-light mb-8">{data.eyebrow}</p>
+              <p className={tc("eyebrow-light mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
             ) : null}
             {data.quote ? (
-              <p className="text-xl md:text-2xl font-light italic leading-[1.6]">
+              <p
+                className={tc(
+                  "text-xl md:text-2xl font-light italic leading-[1.6]",
+                  data.quoteColor,
+                )}
+              >
                 {data.quote}
               </p>
             ) : null}
             {data.attribution ? (
-              <p className="mt-6 text-[0.7rem] tracking-[0.32em] uppercase text-white/70">
+              <p
+                className={tc(
+                  "mt-6 text-[0.7rem] tracking-[0.32em] uppercase text-white/70",
+                  data.attributionColor,
+                )}
+              >
                 {data.attribution}
               </p>
             ) : null}
@@ -250,8 +287,11 @@ export async function DarkBreakBlock({ data }: { data: DarkBreakData }) {
 // ────────────────────────────────────────────────────────────── CTA BAND
 type CtaBandData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   body?: string;
+  bodyColor?: string;
   primary?: { label?: string; href?: string };
   secondary?: { label?: string; href?: string };
 }>;
@@ -304,10 +344,15 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
         />
       ) : null}
       <div className="relative max-w-3xl mx-auto text-center">
-        {data.eyebrow ? <p className={`${eyebrowClass} mb-8`}>{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc(`${eyebrowClass} mb-8`, data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className={`heading-section mb-10 ${isDark ? "" : "text-ink"}`}
+            className={tc(
+              `heading-section mb-10 ${isDark ? "" : "text-ink"}`,
+              data.headingColor,
+            )}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -315,7 +360,12 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
         ) : null}
         <div className={`mx-auto mb-10 w-12 h-px ${dividerClass}`} />
         {data.body ? (
-          <p className={`text-base md:text-lg font-light leading-[1.9] ${bodyClass} max-w-xl mx-auto mb-14`}>
+          <p
+            className={tc(
+              `text-base md:text-lg font-light leading-[1.9] ${bodyClass} max-w-xl mx-auto mb-14`,
+              data.bodyColor,
+            )}
+          >
             {data.body}
           </p>
         ) : null}
@@ -351,12 +401,17 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
 }
 
 // ────────────────────────────────────────────────────────────── BOTTOM SIGN-OFF
-type BottomSignoffData = WithWrapper<{ text?: string }>;
+type BottomSignoffData = WithWrapper<{ text?: string; textColor?: string }>;
 
 export async function BottomSignoffBlock({ data }: { data: BottomSignoffData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
-      <p className="text-center text-base md:text-lg font-light italic text-ink/70">
+      <p
+        className={tc(
+          "text-center text-base md:text-lg font-light italic text-ink/70",
+          data.textColor,
+        )}
+      >
         {data.text}
       </p>
     </BlockShell>
@@ -366,25 +421,38 @@ export async function BottomSignoffBlock({ data }: { data: BottomSignoffData }) 
 // ────────────────────────────────────────────────────────────── QUOTE PULL-QUOTE
 type QuotePullquoteData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   quote?: string;
+  quoteColor?: string;
   attribution?: string;
+  attributionColor?: string;
 }>;
 
 export async function QuotePullquoteBlock({ data }: { data: QuotePullquoteData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="max-w-3xl mx-auto text-center">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.quote ? (
           <p
-            className="text-2xl md:text-3xl font-light italic leading-[1.5] text-ink"
+            className={tc(
+              "text-2xl md:text-3xl font-light italic leading-[1.5] text-ink",
+              data.quoteColor,
+            )}
             style={{ fontWeight: 300 }}
           >
             “{data.quote}”
           </p>
         ) : null}
         {data.attribution ? (
-          <p className="mt-8 text-[0.7rem] tracking-[0.32em] uppercase text-ink-muted">
+          <p
+            className={tc(
+              "mt-8 text-[0.7rem] tracking-[0.32em] uppercase text-ink-muted",
+              data.attributionColor,
+            )}
+          >
             {data.attribution}
           </p>
         ) : null}
@@ -396,9 +464,12 @@ export async function QuotePullquoteBlock({ data }: { data: QuotePullquoteData }
 // ────────────────────────────────────────────────────────────── VIDEO EMBED
 type VideoEmbedData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   videoUrl?: string;
   caption?: string;
+  captionColor?: string;
 }>;
 
 export async function VideoEmbedBlock({ data }: { data: VideoEmbedData }) {
@@ -408,11 +479,14 @@ export async function VideoEmbedBlock({ data }: { data: VideoEmbedData }) {
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-4xl mx-auto">
         {data.eyebrow ? (
-          <p className="eyebrow mb-6 text-center">{data.eyebrow}</p>
+          <p className={tc("eyebrow mb-6 text-center", data.eyebrowColor)}>{data.eyebrow}</p>
         ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink mb-10 text-center"
+            className={tc(
+              "heading-section text-ink mb-10 text-center",
+              data.headingColor,
+            )}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -429,7 +503,12 @@ export async function VideoEmbedBlock({ data }: { data: VideoEmbedData }) {
           />
         </div>
         {data.caption ? (
-          <p className="mt-6 text-sm md:text-base font-light text-ink/75 text-center max-w-2xl mx-auto">
+          <p
+            className={tc(
+              "mt-6 text-sm md:text-base font-light text-ink/75 text-center max-w-2xl mx-auto",
+              data.captionColor,
+            )}
+          >
             {data.caption}
           </p>
         ) : null}

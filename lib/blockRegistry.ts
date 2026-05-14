@@ -126,11 +126,11 @@ const ctaShape: Record<string, Field> = {
 };
 
 const statItemShape: Record<string, Field> = {
-  value: { type: "text", label: "Value", help: "e.g. 5.0 or 42" },
+  value: { type: "text", label: "Value", help: "e.g. 5.0 or 42", colorable: true },
   decimals: { type: "text", label: "Decimals", help: "e.g. 1 for 5.0" },
   prefix: { type: "text", label: "Prefix", help: "$, +, etc." },
   suffix: { type: "text", label: "Suffix", help: "★, +, %" },
-  label: { type: "text", label: "Label" },
+  label: { type: "text", label: "Label", colorable: true },
 };
 
 // ----------------------------------------------------------------------------
@@ -165,14 +165,15 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Full-bleed opening section with eyebrow, large title, subtitle, optional CTAs, and optional stats overlay.",
     category: "Hero & Headers",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
       titleLines: {
         type: "list",
         itemType: "text",
         label: "Title Lines",
         help: "Each line stacks. Usually 1–2.",
+        colorable: true,
       },
-      subtitle: { type: "paragraph", label: "Subtitle", rows: 3 },
+      subtitle: { type: "paragraph", label: "Subtitle", rows: 3, colorable: true },
       ctas: {
         type: "array",
         label: "Buttons",
@@ -209,10 +210,15 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Portrait + bio paragraphs with optional pull-quote and CTA. The portrait pulls from Brand → Realtor Image.",
     category: "Content & Cards",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "paragraph", label: "Heading", rows: 2 },
-      body: { type: "list", itemType: "paragraph", label: "Body Paragraphs" },
-      quote: { type: "paragraph", label: "Pull Quote", rows: 2 },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "paragraph", label: "Heading", rows: 2, colorable: true },
+      body: {
+        type: "list",
+        itemType: "paragraph",
+        label: "Body Paragraphs",
+        colorable: true,
+      },
+      quote: { type: "paragraph", label: "Pull Quote", rows: 2, colorable: true },
       cta: { type: "object", label: "Button", shape: ctaShape },
       portraitSide: {
         type: "text",
@@ -236,14 +242,14 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Three feature cards in a row, each with title, body, photo, and CTA. Used for Buying / Selling / Invest.",
     category: "Content & Cards",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       cards: {
         type: "array",
         label: "Cards",
         itemShape: {
-          title: { type: "text", label: "Title" },
-          body: { type: "paragraph", label: "Body", rows: 4 },
+          title: { type: "text", label: "Title", colorable: true },
+          body: { type: "paragraph", label: "Body", rows: 4, colorable: true },
           cta: { type: "text", label: "Button Label" },
           href: { type: "url", label: "Link" },
           image: { type: "image", label: "Card Photo", crop: "portrait" },
@@ -265,14 +271,14 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Three numbered cards (01/02/03) with heading + body. Used for credentials / focus areas.",
     category: "Content & Cards",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       cards: {
         type: "array",
         label: "Cards",
         itemShape: {
-          h: { type: "text", label: "Heading" },
-          p: { type: "paragraph", label: "Body", rows: 4 },
+          h: { type: "text", label: "Heading", colorable: true },
+          p: { type: "paragraph", label: "Body", rows: 4, colorable: true },
         },
         itemTitleField: "h",
         itemNoun: "Card",
@@ -291,9 +297,14 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Headline + paragraphs on one side, image on the other. Swap sides per instance.",
     category: "Content & Cards",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      paragraphs: { type: "list", itemType: "paragraph", label: "Paragraphs" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      paragraphs: {
+        type: "list",
+        itemType: "paragraph",
+        label: "Paragraphs",
+        colorable: true,
+      },
       image: { type: "image", label: "Image", crop: "landscape" },
       imageSide: {
         type: "text",
@@ -316,9 +327,14 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Eyebrow, heading, then a stack of body paragraphs.",
     category: "Content & Cards",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      paragraphs: { type: "list", itemType: "paragraph", label: "Paragraphs" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      paragraphs: {
+        type: "list",
+        itemType: "paragraph",
+        label: "Paragraphs",
+        colorable: true,
+      },
     },
     defaultData: () => ({ eyebrow: "", heading: "", paragraphs: [""] }),
   },
@@ -328,9 +344,9 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Large italic quote with attribution.",
     category: "Content & Cards",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      quote: { type: "paragraph", label: "Quote", rows: 3 },
-      attribution: { type: "text", label: "Attribution" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      quote: { type: "paragraph", label: "Quote", rows: 3, colorable: true },
+      attribution: { type: "text", label: "Attribution", colorable: true },
     },
     defaultData: () => ({ eyebrow: "", quote: "", attribution: "" }),
   },
@@ -359,15 +375,15 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Numbered step list with heading + body per step. Used for buyer/seller process.",
     category: "Numbers & Lists",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       steps: {
         type: "array",
         label: "Steps",
         itemShape: {
           n: { type: "text", label: "Number", help: '"01", "02"...' },
-          h: { type: "text", label: "Heading" },
-          p: { type: "paragraph", label: "Body", rows: 4 },
+          h: { type: "text", label: "Heading", colorable: true },
+          p: { type: "paragraph", label: "Body", rows: 4, colorable: true },
         },
         itemTitleField: "h",
         itemNoun: "Step",
@@ -385,9 +401,9 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: 'Eyebrow + heading + a list of bullet lines. Used for "Who It\'s For" type blocks.',
     category: "Numbers & Lists",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      bullets: { type: "list", itemType: "text", label: "Bullet Lines" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      bullets: { type: "list", itemType: "text", label: "Bullet Lines", colorable: true },
     },
     defaultData: () => ({ eyebrow: "", heading: "", bullets: [""] }),
   },
@@ -397,14 +413,14 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Question + answer accordion list.",
     category: "Numbers & Lists",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       items: {
         type: "array",
         label: "Questions",
         itemShape: {
-          q: { type: "text", label: "Question" },
-          a: { type: "paragraph", label: "Answer", rows: 4 },
+          q: { type: "text", label: "Question", colorable: true },
+          a: { type: "paragraph", label: "Answer", rows: 4, colorable: true },
         },
         itemTitleField: "q",
         itemNoun: "Question",
@@ -425,9 +441,9 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Full-bleed dark photo break with optional eyebrow, italic quote, and attribution.",
     category: "Visuals",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      quote: { type: "paragraph", label: "Quote", rows: 2 },
-      attribution: { type: "text", label: "Attribution" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      quote: { type: "paragraph", label: "Quote", rows: 2, colorable: true },
+      attribution: { type: "text", label: "Attribution", colorable: true },
     },
     defaultData: () => ({ eyebrow: "", quote: "", attribution: "" }),
   },
@@ -437,10 +453,10 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Standalone YouTube video embedded in the section flow.",
     category: "Visuals",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       videoUrl: { type: "text", label: "YouTube URL or ID" },
-      caption: { type: "paragraph", label: "Caption", rows: 2 },
+      caption: { type: "paragraph", label: "Caption", rows: 2, colorable: true },
     },
     defaultData: () => ({ eyebrow: "", heading: "", videoUrl: "", caption: "" }),
   },
@@ -453,9 +469,9 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Pulls the 6 communities and renders them as a card grid. Content managed in Admin → Communities.",
     category: "Special Sections",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      subtitle: { type: "paragraph", label: "Subtitle", rows: 3 },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      subtitle: { type: "paragraph", label: "Subtitle", rows: 3, colorable: true },
     },
     defaultData: () => ({
       eyebrow: "Communities",
@@ -470,10 +486,10 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Side-by-side market read for the six communities (median, YoY, DOM, market type).",
     category: "Special Sections",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      subtitle: { type: "paragraph", label: "Subtitle", rows: 2 },
-      sourceNote: { type: "text", label: "Source Note" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      subtitle: { type: "paragraph", label: "Subtitle", rows: 2, colorable: true },
+      sourceNote: { type: "text", label: "Source Note", colorable: true },
     },
     defaultData: () => ({
       eyebrow: "At a Glance",
@@ -489,8 +505,8 @@ export const BLOCK_DEFS: BlockDef[] = [
       'Featured client reviews from the "is_featured_homepage" flag in Admin → Reviews.',
     category: "Special Sections",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
     },
     defaultData: () => ({ eyebrow: "What Clients Say", heading: "In their words." }),
   },
@@ -510,9 +526,9 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Closings managed in Admin → Recent Closings. Use preview mode on the homepage to show just the first 6 with a 'See All' link; full mode (used on /closings) shows all and paginates.",
     category: "Special Sections",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      subtitle: { type: "paragraph", label: "Subtitle", rows: 2 },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      subtitle: { type: "paragraph", label: "Subtitle", rows: 2, colorable: true },
       mode: {
         type: "select",
         label: "Mode",
@@ -537,10 +553,10 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Trusted partners managed in Admin → Trusted Partners.",
     category: "Special Sections",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      intro: { type: "paragraph", label: "Intro", rows: 3 },
-      disclaimer: { type: "paragraph", label: "Disclaimer", rows: 3 },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      intro: { type: "paragraph", label: "Intro", rows: 3, colorable: true },
+      disclaimer: { type: "paragraph", label: "Disclaimer", rows: 3, colorable: true },
     },
     defaultData: () => ({
       eyebrow: "Trusted Partners",
@@ -557,9 +573,9 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Colored band with heading, body, primary + optional secondary buttons.",
     category: "Forms & CTAs",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
-      body: { type: "paragraph", label: "Body", rows: 3 },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
+      body: { type: "paragraph", label: "Body", rows: 3, colorable: true },
       primary: { type: "object", label: "Primary Button", shape: ctaShape },
       secondary: { type: "object", label: "Secondary Button", shape: ctaShape },
     },
@@ -577,12 +593,12 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Home valuation request form.",
     category: "Forms & CTAs",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       addressPlaceholder: { type: "text", label: "Address Placeholder" },
       notesPlaceholder: { type: "text", label: "Notes Placeholder" },
       submit: { type: "text", label: "Submit Label" },
-      response: { type: "text", label: "Response Note" },
+      response: { type: "text", label: "Response Note", colorable: true },
     },
     defaultData: () => ({
       eyebrow: "Request a Valuation",
@@ -599,10 +615,10 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Name / email / phone / message form.",
     category: "Forms & CTAs",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
       submit: { type: "text", label: "Submit Label" },
-      consent: { type: "paragraph", label: "Consent Disclaimer", rows: 3 },
+      consent: { type: "paragraph", label: "Consent Disclaimer", rows: 3, colorable: true },
     },
     defaultData: () => ({
       eyebrow: "Send a Message",
@@ -619,8 +635,8 @@ export const BLOCK_DEFS: BlockDef[] = [
       "Displays the agent's phone, email, and licensing. Pulls from Brand Identity.",
     category: "Forms & CTAs",
     dataShape: {
-      eyebrow: { type: "text", label: "Eyebrow" },
-      heading: { type: "text", label: "Heading" },
+      eyebrow: { type: "text", label: "Eyebrow", colorable: true },
+      heading: { type: "text", label: "Heading", colorable: true },
     },
     defaultData: () => ({ eyebrow: "Direct Contact", heading: "" }),
   },
@@ -632,7 +648,7 @@ export const BLOCK_DEFS: BlockDef[] = [
     description: "Final centered line at the bottom of a page.",
     category: "Footer",
     dataShape: {
-      text: { type: "text", label: "Text" },
+      text: { type: "text", label: "Text", colorable: true },
     },
     defaultData: () => ({ text: "Building legacies, one house at a time." }),
   },

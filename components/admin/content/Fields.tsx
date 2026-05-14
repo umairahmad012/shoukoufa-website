@@ -46,15 +46,65 @@ type FieldRendererProps = {
   onChange: (next: unknown) => void;
   /** Visual depth for indentation/styling */
   depth?: number;
+  /**
+   * When the field is `colorable: true`, the parent (ObjectField /
+   * ArrayField / top-level form) wires these so the per-field color
+   * dropdown writes its value to a sibling key like `headingColor`.
+   * If undefined, no color picker is shown.
+   */
+  colorValue?: string;
+  onColorChange?: (next: string) => void;
 };
 
-export function FieldRenderer({ field, value, onChange, depth = 0 }: FieldRendererProps) {
+/** Tiny inline color picker shown next to colorable text/paragraph fields. */
+function FieldColorPicker({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (next: string) => void;
+}) {
+  return (
+    <select
+      className="text-[11px] tracking-wide border border-black/15 rounded bg-white px-2 py-0.5 text-ink/80 cursor-pointer hover:border-black/30"
+      value={value || "auto"}
+      onChange={(e) => onChange(e.target.value)}
+      title="Text color for this field"
+    >
+      <option value="auto">Color: Auto</option>
+      <option value="light">Color: White</option>
+      <option value="dark">Color: Black</option>
+    </select>
+  );
+}
+
+export function FieldRenderer({
+  field,
+  value,
+  onChange,
+  depth = 0,
+  colorValue,
+  onColorChange,
+}: FieldRendererProps) {
+  const isColorable =
+    (field.type === "text" || field.type === "paragraph") &&
+    field.colorable === true &&
+    onColorChange !== undefined;
+
   switch (field.type) {
     case "text":
     case "url":
       return (
         <div>
-          <label className="admin-label">{field.label}</label>
+          <div className="flex items-center justify-between gap-3 mb-1">
+            <label className="admin-label !mb-0">{field.label}</label>
+            {isColorable && (
+              <FieldColorPicker
+                value={colorValue ?? "auto"}
+                onChange={onColorChange!}
+              />
+            )}
+          </div>
           <input
             type={field.type === "url" ? "text" : "text"}
             className="admin-input"
@@ -103,7 +153,15 @@ export function FieldRenderer({ field, value, onChange, depth = 0 }: FieldRender
     case "paragraph":
       return (
         <div>
-          <label className="admin-label">{field.label}</label>
+          <div className="flex items-center justify-between gap-3 mb-1">
+            <label className="admin-label !mb-0">{field.label}</label>
+            {isColorable && (
+              <FieldColorPicker
+                value={colorValue ?? "auto"}
+                onChange={onColorChange!}
+              />
+            )}
+          </div>
           <textarea
             className="admin-input"
             rows={field.rows ?? 4}
@@ -345,15 +403,27 @@ function ObjectField({
       )}
     >
       <legend className="admin-label px-1.5">{field.label}</legend>
-      {Object.entries(field.shape).map(([childKey, childField]) => (
-        <FieldRenderer
-          key={childKey}
-          field={childField}
-          value={value?.[childKey]}
-          onChange={(next) => onChange({ ...value, [childKey]: next })}
-          depth={depth + 1}
-        />
-      ))}
+      {Object.entries(field.shape).map(([childKey, childField]) => {
+        const colorKey = `${childKey}Color`;
+        const colorable =
+          (childField.type === "text" || childField.type === "paragraph") &&
+          childField.colorable === true;
+        return (
+          <FieldRenderer
+            key={childKey}
+            field={childField}
+            value={value?.[childKey]}
+            onChange={(next) => onChange({ ...value, [childKey]: next })}
+            depth={depth + 1}
+            colorValue={colorable ? asString(value?.[colorKey]) : undefined}
+            onColorChange={
+              colorable
+                ? (next) => onChange({ ...value, [colorKey]: next })
+                : undefined
+            }
+          />
+        );
+      })}
       {field.help && <p className="text-[11px] text-ink/50">{field.help}</p>}
     </fieldset>
   );
@@ -459,15 +529,27 @@ function ArrayField({
 
               {open && (
                 <div className="border-t border-black/8 p-4 space-y-4 bg-black/[0.015]">
-                  {Object.entries(field.itemShape).map(([childKey, childField]) => (
-                    <FieldRenderer
-                      key={childKey}
-                      field={childField}
-                      value={item[childKey]}
-                      onChange={(next) => update(i, { ...item, [childKey]: next })}
-                      depth={depth + 1}
-                    />
-                  ))}
+                  {Object.entries(field.itemShape).map(([childKey, childField]) => {
+                    const colorKey = `${childKey}Color`;
+                    const colorable =
+                      (childField.type === "text" || childField.type === "paragraph") &&
+                      childField.colorable === true;
+                    return (
+                      <FieldRenderer
+                        key={childKey}
+                        field={childField}
+                        value={item[childKey]}
+                        onChange={(next) => update(i, { ...item, [childKey]: next })}
+                        depth={depth + 1}
+                        colorValue={colorable ? asString(item[colorKey]) : undefined}
+                        onColorChange={
+                          colorable
+                            ? (next) => update(i, { ...item, [colorKey]: next })
+                            : undefined
+                        }
+                      />
+                    );
+                  })}
                 </div>
               )}
             </div>

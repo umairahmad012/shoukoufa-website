@@ -12,14 +12,18 @@ import { getClosings } from "@/lib/closingsLoader";
 import { site } from "@/lib/site";
 import ClosingsGalleryClient from "@/components/ClosingsGalleryClient";
 import type { BlockWrapper } from "@/lib/blockRegistry";
+import { tc } from "@/lib/textColor";
 
 type WithWrapper<T> = T & { wrapper?: BlockWrapper };
 
 // ────────────────────────────────────────────────────────────── COMMUNITY GRID
 type CommunityGridData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   subtitle?: string;
+  subtitleColor?: string;
 }>;
 
 export async function CommunityGridBlock({ data }: { data: CommunityGridData }) {
@@ -27,10 +31,12 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
   return (
     <BlockShell wrapper={{ theme: "cream", ...(data.wrapper ?? {}) }}>
       <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink mb-8"
+            className={tc("heading-section text-ink mb-8", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -38,7 +44,12 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
         ) : null}
         <div className="mx-auto mb-8 w-12 h-px bg-navy/40" />
         {data.subtitle ? (
-          <p className="text-base md:text-lg font-light text-ink/75 leading-[1.9]">
+          <p
+            className={tc(
+              "text-base md:text-lg font-light text-ink/75 leading-[1.9]",
+              data.subtitleColor,
+            )}
+          >
             {data.subtitle}
           </p>
         ) : null}
@@ -128,9 +139,13 @@ export async function CommunityGridBlock({ data }: { data: CommunityGridData }) 
 // ────────────────────────────────────────────────────────────── COMPARISON TABLE
 type ComparisonTableData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   subtitle?: string;
+  subtitleColor?: string;
   sourceNote?: string;
+  sourceNoteColor?: string;
 }>;
 
 export async function ComparisonTableBlock({
@@ -151,17 +166,24 @@ export async function ComparisonTableBlock({
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-12">
-        {data.eyebrow ? <p className="eyebrow mb-6">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-6", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink mb-6"
+            className={tc("heading-section text-ink mb-6", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
           </h2>
         ) : null}
         {data.subtitle ? (
-          <p className="text-base md:text-lg font-light text-ink/75 leading-[1.9] mb-3">
+          <p
+            className={tc(
+              "text-base md:text-lg font-light text-ink/75 leading-[1.9] mb-3",
+              data.subtitleColor,
+            )}
+          >
             {data.subtitle}
           </p>
         ) : null}
@@ -200,7 +222,9 @@ export async function ComparisonTableBlock({
           </tbody>
         </table>
         {data.sourceNote ? (
-          <p className="mt-6 text-xs italic text-ink-muted">{data.sourceNote}</p>
+          <p className={tc("mt-6 text-xs italic text-ink-muted", data.sourceNoteColor)}>
+            {data.sourceNote}
+          </p>
         ) : null}
       </div>
     </BlockShell>
@@ -208,17 +232,24 @@ export async function ComparisonTableBlock({
 }
 
 // ────────────────────────────────────────────────────────────── REVIEWS STRIP (featured)
-type ReviewsStripData = WithWrapper<{ eyebrow?: string; heading?: string }>;
+type ReviewsStripData = WithWrapper<{
+  eyebrow?: string;
+  eyebrowColor?: string;
+  heading?: string;
+  headingColor?: string;
+}>;
 
 export async function ReviewsStripBlock({ data }: { data: ReviewsStripData }) {
   const reviews = await getReviews({ onlyHomepage: true });
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-14">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -274,8 +305,11 @@ export async function ReviewsFullBlock({ data }: { data: WithWrapper<Record<stri
 // ────────────────────────────────────────────────────────────── CLOSINGS GRID
 type ClosingsGridData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   subtitle?: string;
+  subtitleColor?: string;
   /** "preview" = first 6 with "See All Closings" CTA (homepage); "full" = all + Load More (/closings). */
   mode?: "preview" | "full";
 }>;
@@ -290,8 +324,11 @@ export async function ClosingsGridBlock({ data }: { data: ClosingsGridData }) {
         preview={preview}
         content={{
           eyebrow: data.eyebrow || "",
+          eyebrowColor: data.eyebrowColor,
           heading: data.heading || "",
+          headingColor: data.headingColor,
           subtitle: data.subtitle || "",
+          subtitleColor: data.subtitleColor,
         }}
       />
     </BlockShell>
@@ -301,9 +338,13 @@ export async function ClosingsGridBlock({ data }: { data: ClosingsGridData }) {
 // ────────────────────────────────────────────────────────────── PARTNERS DIRECTORY
 type PartnersDirectoryData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   intro?: string;
+  introColor?: string;
   disclaimer?: string;
+  disclaimerColor?: string;
 }>;
 
 export async function PartnersDirectoryBlock({
@@ -343,17 +384,24 @@ export async function PartnersDirectoryBlock({
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-12">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink mb-8"
+            className={tc("heading-section text-ink mb-8", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
           </h2>
         ) : null}
         {data.intro ? (
-          <p className="text-base md:text-lg font-light text-ink/75 leading-[1.9]">
+          <p
+            className={tc(
+              "text-base md:text-lg font-light text-ink/75 leading-[1.9]",
+              data.introColor,
+            )}
+          >
             {data.intro}
           </p>
         ) : null}
@@ -398,7 +446,12 @@ export async function PartnersDirectoryBlock({
         ))}
       </div>
       {data.disclaimer ? (
-        <p className="mt-16 max-w-2xl mx-auto text-xs italic text-ink-muted text-center">
+        <p
+          className={tc(
+            "mt-16 max-w-2xl mx-auto text-xs italic text-ink-muted text-center",
+            data.disclaimerColor,
+          )}
+        >
           {data.disclaimer}
         </p>
       ) : null}
@@ -409,17 +462,21 @@ export async function PartnersDirectoryBlock({
 // ────────────────────────────────────────────────────────────── DIRECT CONTACT
 type DirectContactData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
 }>;
 
 export async function DirectContactBlock({ data }: { data: DirectContactData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-12">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}

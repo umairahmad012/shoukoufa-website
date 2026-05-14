@@ -6,25 +6,31 @@ import BlockShell from "./BlockShell";
 import ContactForm from "@/components/ContactForm";
 import ValuationForm from "@/components/ValuationForm";
 import type { BlockWrapper } from "@/lib/blockRegistry";
+import { tc } from "@/lib/textColor";
 
 type WithWrapper<T> = T & { wrapper?: BlockWrapper };
 
 // ────────────────────────────────────────────────────────────── CONTACT FORM
 type ContactFormData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   submit?: string;
   consent?: string;
+  consentColor?: string;
 }>;
 
 export async function ContactFormBlock({ data }: { data: ContactFormData }) {
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-10">
-        {data.eyebrow ? <p className="eyebrow mb-6">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-6", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -39,11 +45,14 @@ export async function ContactFormBlock({ data }: { data: ContactFormData }) {
 // ────────────────────────────────────────────────────────────── VALUATION FORM
 type ValuationFormData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   addressPlaceholder?: string;
   notesPlaceholder?: string;
   submit?: string;
   response?: string;
+  responseColor?: string;
 }>;
 
 export async function ValuationFormBlock({
@@ -54,10 +63,12 @@ export async function ValuationFormBlock({
   return (
     <BlockShell wrapper={data.wrapper} narrow>
       <div className="text-center mb-10">
-        {data.eyebrow ? <p className="eyebrow mb-6">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-6", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}

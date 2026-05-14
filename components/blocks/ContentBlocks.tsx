@@ -6,15 +6,20 @@ import Link from "next/link";
 import BlockShell from "./BlockShell";
 import { getPortrait, resolveImageUrl } from "@/lib/contentLoader";
 import type { BlockWrapper } from "@/lib/blockRegistry";
+import { tc } from "@/lib/textColor";
 
 type WithWrapper<T> = T & { wrapper?: BlockWrapper };
 
 // ────────────────────────────────────────────────────────────── MEET AGENT
 type MeetAgentData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   body?: string[];
+  bodyColor?: string;
   quote?: string;
+  quoteColor?: string;
   cta?: { label?: string; href?: string };
   portraitSide?: "left" | "right";
 }>;
@@ -42,11 +47,13 @@ export async function MeetAgentBlock({ data }: { data: MeetAgentData }) {
           }`}
         >
           {data.eyebrow ? (
-            <p className="eyebrow text-navy mb-2">{data.eyebrow}</p>
+            <p className={tc("eyebrow text-navy mb-2", data.eyebrowColor)}>
+              {data.eyebrow}
+            </p>
           ) : null}
           {data.heading ? (
             <h2
-              className="heading-section text-ink"
+              className={tc("heading-section text-ink", data.headingColor)}
               style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
             >
               {data.heading}
@@ -54,10 +61,17 @@ export async function MeetAgentBlock({ data }: { data: MeetAgentData }) {
           ) : null}
           <div className="w-12 h-px bg-navy/40" />
           {(data.body ?? []).map((p, i) => (
-            <p key={i}>{p}</p>
+            <p key={i} className={tc("", data.bodyColor)}>
+              {p}
+            </p>
           ))}
           {data.quote ? (
-            <blockquote className="border-l-2 border-navy/40 pl-6 text-lg italic text-ink/75 mt-8">
+            <blockquote
+              className={tc(
+                "border-l-2 border-navy/40 pl-6 text-lg italic text-ink/75 mt-8",
+                data.quoteColor,
+              )}
+            >
               “{data.quote}”
             </blockquote>
           ) : null}
@@ -78,10 +92,14 @@ export async function MeetAgentBlock({ data }: { data: MeetAgentData }) {
 // ────────────────────────────────────────────────────────────── THREE CARDS
 type ThreeCardsData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   cards?: Array<{
     title?: string;
+    titleColor?: string;
     body?: string;
+    bodyColor?: string;
     cta?: string;
     href?: string;
     image?: { image_id?: string };
@@ -104,10 +122,12 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -145,7 +165,7 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
               <div className="absolute left-5 right-5 bottom-5 md:left-8 md:right-8 md:bottom-8 glass-dark p-6 md:p-9 text-white flex flex-col">
                 {c.title ? (
                   <h3
-                    className="text-lg md:text-2xl uppercase mb-4 md:mb-5"
+                    className={tc("text-lg md:text-2xl uppercase mb-4 md:mb-5", c.titleColor)}
                     style={{ fontWeight: 400, letterSpacing: "0.08em" }}
                   >
                     {c.title}
@@ -153,7 +173,10 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
                 ) : null}
                 {c.body ? (
                   <p
-                    className="text-sm md:text-[0.95rem] font-light leading-[1.8] md:leading-[1.85] text-white/85 mb-5 md:mb-7"
+                    className={tc(
+                      "text-sm md:text-[0.95rem] font-light leading-[1.8] md:leading-[1.85] text-white/85 mb-5 md:mb-7",
+                      c.bodyColor,
+                    )}
                     style={{
                       display: "-webkit-box",
                       WebkitLineClamp: 4,
@@ -184,18 +207,22 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
 // ────────────────────────────────────────────────────────────── PRACTICE AREAS
 type PracticeAreasData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
-  cards?: Array<{ h?: string; p?: string }>;
+  headingColor?: string;
+  cards?: Array<{ h?: string; hColor?: string; p?: string; pColor?: string }>;
 }>;
 
 export async function PracticeAreasBlock({ data }: { data: PracticeAreasData }) {
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -217,14 +244,19 @@ export async function PracticeAreasBlock({ data }: { data: PracticeAreasData }) 
             <div className="my-6 w-10 h-px bg-navy/40" />
             {b.h ? (
               <h3
-                className="text-lg uppercase mb-5 text-ink"
+                className={tc("text-lg uppercase mb-5 text-ink", b.hColor)}
                 style={{ fontWeight: 400, letterSpacing: "0.08em" }}
               >
                 {b.h}
               </h3>
             ) : null}
             {b.p ? (
-              <p className="text-sm md:text-base font-light leading-[1.85] text-ink/75">
+              <p
+                className={tc(
+                  "text-sm md:text-base font-light leading-[1.85] text-ink/75",
+                  b.pColor,
+                )}
+              >
                 {b.p}
               </p>
             ) : null}
@@ -238,18 +270,22 @@ export async function PracticeAreasBlock({ data }: { data: PracticeAreasData }) 
 // ────────────────────────────────────────────────────────────── PROCESS STEPS
 type ProcessStepsData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
-  steps?: Array<{ n?: string; h?: string; p?: string }>;
+  headingColor?: string;
+  steps?: Array<{ n?: string; h?: string; hColor?: string; p?: string; pColor?: string }>;
 }>;
 
 export async function ProcessStepsBlock({ data }: { data: ProcessStepsData }) {
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
-        {data.eyebrow ? <p className="eyebrow mb-8">{data.eyebrow}</p> : null}
+        {data.eyebrow ? (
+          <p className={tc("eyebrow mb-8", data.eyebrowColor)}>{data.eyebrow}</p>
+        ) : null}
         {data.heading ? (
           <h2
-            className="heading-section text-ink"
+            className={tc("heading-section text-ink", data.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {data.heading}
@@ -270,14 +306,19 @@ export async function ProcessStepsBlock({ data }: { data: ProcessStepsData }) {
             <div className="md:col-span-10">
               {s.h ? (
                 <h3
-                  className="text-lg md:text-xl uppercase mb-4 text-ink"
+                  className={tc("text-lg md:text-xl uppercase mb-4 text-ink", s.hColor)}
                   style={{ fontWeight: 400, letterSpacing: "0.08em" }}
                 >
                   {s.h}
                 </h3>
               ) : null}
               {s.p ? (
-                <p className="text-base md:text-lg font-light leading-[1.9] text-ink/80">
+                <p
+                  className={tc(
+                    "text-base md:text-lg font-light leading-[1.9] text-ink/80",
+                    s.pColor,
+                  )}
+                >
                   {s.p}
                 </p>
               ) : null}
@@ -292,8 +333,11 @@ export async function ProcessStepsBlock({ data }: { data: ProcessStepsData }) {
 // ────────────────────────────────────────────────────────────── TWO COLUMN
 type TwoColumnData = WithWrapper<{
   eyebrow?: string;
+  eyebrowColor?: string;
   heading?: string;
+  headingColor?: string;
   paragraphs?: string[];
+  paragraphsColor?: string;
   image?: { image_id?: string };
   imageSide?: "left" | "right";
   cta?: { label?: string; href?: string };
@@ -312,10 +356,12 @@ export async function TwoColumnBlock({ data }: { data: TwoColumnData }) {
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <div className={imgRight ? "" : "md:order-2"}>
-          {data.eyebrow ? <p className="eyebrow mb-6">{data.eyebrow}</p> : null}
+          {data.eyebrow ? (
+            <p className={tc("eyebrow mb-6", data.eyebrowColor)}>{data.eyebrow}</p>
+          ) : null}
           {data.heading ? (
             <h2
-              className="heading-section text-ink mb-8"
+              className={tc("heading-section text-ink mb-8", data.headingColor)}
               style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
             >
               {data.heading}
@@ -324,7 +370,9 @@ export async function TwoColumnBlock({ data }: { data: TwoColumnData }) {
           <div className="mb-8 w-12 h-px bg-navy/40" />
           <div className="space-y-5 text-base md:text-lg font-light leading-[1.9] text-ink/85">
             {(data.paragraphs ?? []).map((p, i) => (
-              <p key={i}>{p}</p>
+              <p key={i} className={tc("", data.paragraphsColor)}>
+                {p}
+              </p>
             ))}
           </div>
           {data.cta?.label && data.cta?.href ? (

@@ -541,6 +541,23 @@ button:hover svg,
 .gutter-x { padding-left: var(--gutter-x); padding-right: var(--gutter-x); }
 
 /* ============================================================
+   PER-FIELD TEXT-COLOR FORCERS
+   ============================================================
+   Each user-facing text field in the page builder (heading, paragraph,
+   eyebrow, card title, etc.) is paired with a Color dropdown in the
+   admin. When the admin picks White or Black, the block component
+   appends `.text-force-light` or `.text-force-dark` to that one
+   element only. !important is intentional — it has to beat the
+   block's own hardcoded `text-ink` / `text-white/85` colors.
+*/
+.text-force-light {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+.text-force-dark {
+  color: rgb(var(--ink-rgb, 24 36 51)) !important;
+}
+
+/* ============================================================
    SECTION TEXT-COLOR OVERRIDES
    ============================================================
    The block builder's wrapper.textColor field lets an admin force

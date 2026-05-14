@@ -20,9 +20,23 @@ import { content as defaults } from "./content";
 // SHAPE VOCABULARY — primitives the auto-editor knows how to render
 // =============================================================================
 
+/**
+ * When `colorable: true` on a text or paragraph field, the admin editor
+ * pairs it with a small color dropdown (Auto / White / Black). The value
+ * is stored in a sibling key `<fieldName>Color` and read by the block
+ * component to apply `.text-force-light` or `.text-force-dark`. Default
+ * (unset / "auto") leaves the block's own hardcoded color in place.
+ */
 export type Field =
-  | { type: "text"; label: string; placeholder?: string; help?: string }
-  | { type: "paragraph"; label: string; placeholder?: string; help?: string; rows?: number }
+  | { type: "text"; label: string; placeholder?: string; help?: string; colorable?: boolean }
+  | {
+      type: "paragraph";
+      label: string;
+      placeholder?: string;
+      help?: string;
+      rows?: number;
+      colorable?: boolean;
+    }
   | { type: "url"; label: string; placeholder?: string; help?: string }
   | {
       /** Dropdown picker — value is one of the option strings. */
@@ -32,7 +46,14 @@ export type Field =
       options: Array<{ value: string; label: string }>;
     }
   | { type: "boolean"; label: string; help?: string }
-  | { type: "list"; label: string; itemType: "text" | "paragraph"; help?: string }
+  | {
+      type: "list";
+      label: string;
+      itemType: "text" | "paragraph";
+      help?: string;
+      /** When true, each list item gets its own color picker. */
+      colorable?: boolean;
+    }
   | { type: "object"; label: string; help?: string; shape: Record<string, Field> }
   | {
       type: "array";

@@ -4,13 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Closing } from "@/lib/closings";
 import Reveal from "@/components/Reveal";
+import { tc } from "@/lib/textColor";
 
 const PAGE = 6;
 
 type ClosingsTeaser = {
   eyebrow: string;
+  eyebrowColor?: string;
   heading: string;
+  headingColor?: string;
   subtitle: string;
+  subtitleColor?: string;
 };
 
 export default function ClosingsGalleryClient({
@@ -30,13 +34,13 @@ export default function ClosingsGalleryClient({
     <section className="section-y-lg gutter-x bg-cream">
       <div className="max-w-[1500px] mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-28">
-          <Reveal as="p" className="eyebrow mb-8">
+          <Reveal as="p" className={tc("eyebrow mb-8", content.eyebrowColor)}>
             {content.eyebrow}
           </Reveal>
           <Reveal
             as="h2"
             delay={80}
-            className="heading-section text-ink mb-10"
+            className={tc("heading-section text-ink mb-10", content.headingColor)}
             style={{ fontSize: "clamp(1.6rem, 3vw, 2.25rem)" }}
           >
             {content.heading}
@@ -50,7 +54,10 @@ export default function ClosingsGalleryClient({
             as="p"
             delay={240}
             blur
-            className="text-base md:text-lg font-light leading-[1.9] text-ink/70 max-w-2xl mx-auto"
+            className={tc(
+              "text-base md:text-lg font-light leading-[1.9] text-ink/70 max-w-2xl mx-auto",
+              content.subtitleColor,
+            )}
           >
             {preview
               ? content.subtitle
