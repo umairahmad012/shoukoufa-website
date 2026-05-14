@@ -1,13 +1,21 @@
-/**
- * Homepage — composed via the page-builder system. The list of blocks
- * (Hero → Meet → Three Cards → Communities → ... → Sign-off) lives in
- * the `page_blocks` table and can be reordered, toggled, or replaced
- * from /admin/builder/home.
- */
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
+import { getPageMeta } from "@/lib/siteSettings";
 
-// Render dynamically so admin builder edits show up without a rebuild.
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("home");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: {
+      title: meta.title,
+      description: meta.description ?? undefined,
+    },
+  };
+}
 
 export default function Home() {
   return <PageRenderer pageKey="home" />;

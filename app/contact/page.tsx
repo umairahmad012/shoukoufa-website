@@ -1,13 +1,19 @@
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
-
-export const metadata = {
-  title: "Contact | Shoukoufa Aboubakri",
-  description:
-    "Get in touch with Shoukoufa Aboubakri — Real Estate Specialist at REMAX Galaxy. Licensed in Virginia, Maryland, and Washington D.C.",
-};
+import { getPageMeta } from "@/lib/siteSettings";
 
 export const dynamic = "force-dynamic";
 
-export default function ContactPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("contact");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: { title: meta.title, description: meta.description ?? undefined },
+  };
+}
+
+export default function Page() {
   return <PageRenderer pageKey="contact" />;
 }

@@ -3,14 +3,36 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Instagram, Facebook, Music2 } from "lucide-react";
-import { site } from "@/lib/site";
+import { site as staticSite } from "@/lib/site";
+import type { SiteSettings } from "@/lib/siteSettings";
 
 export default function Footer({
   portraitAvatar,
+  settings,
 }: {
   portraitAvatar?: string;
+  settings?: SiteSettings;
 }) {
   const pathname = usePathname();
+  // Prefer admin-edited settings; fall back to compile-time defaults
+  const site = settings ?? {
+    name: staticSite.name,
+    phone: staticSite.phone,
+    phoneHref: staticSite.phoneHref,
+    email: staticSite.email,
+    emailHref: staticSite.emailHref,
+    brokerageOffice: staticSite.brokerageOffice,
+    licenses: {
+      va: staticSite.licenses.va,
+      md: staticSite.licenses.md,
+      dc: (staticSite.licenses as { dc?: string }).dc ?? "",
+    },
+    social: staticSite.social,
+    portrait: staticSite.portrait,
+  } as Pick<
+    SiteSettings,
+    "phone" | "phoneHref" | "email" | "emailHref" | "brokerageOffice" | "licenses" | "social" | "portrait"
+  >;
   const bo = site.brokerageOffice;
   const avatar = portraitAvatar || site.portrait.avatar;
 

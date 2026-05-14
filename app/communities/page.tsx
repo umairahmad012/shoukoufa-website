@@ -1,13 +1,19 @@
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
-
-export const metadata = {
-  title: "Communities | Northern Virginia Real Estate",
-  description:
-    "Six Northern Virginia neighborhoods Shoukoufa knows by street name. Real 2026 market data for Alexandria, Arlington, Vienna, McLean, Falls Church, and Great Falls.",
-};
+import { getPageMeta } from "@/lib/siteSettings";
 
 export const dynamic = "force-dynamic";
 
-export default function CommunitiesPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("communities");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: { title: meta.title, description: meta.description ?? undefined },
+  };
+}
+
+export default function Page() {
   return <PageRenderer pageKey="communities" />;
 }

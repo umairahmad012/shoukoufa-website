@@ -9,6 +9,7 @@ import { getPortrait, getFeaturedImage } from "@/lib/contentLoader";
 import { getAnalyticsMeasurementId } from "@/lib/integrationStore";
 import { siteOrigin } from "@/lib/qrcode";
 import { getNavPages } from "@/lib/customPages";
+import { getSiteSettings, FIXED_NAV_HREF } from "@/lib/siteSettings";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -60,15 +61,23 @@ export default async function RootLayout({
   // don't each re-fetch. When admin pastes a GA Measurement ID via
   // /admin/integrations/analytics, this becomes a string like "G-XXXX...";
   // when blank or disabled, GA scripts simply don't render.
-  const [portrait, gaMeasurementId, navPages] = await Promise.all([
+  const [portrait, gaMeasurementId, navPages, settings] = await Promise.all([
     getPortrait(),
     getAnalyticsMeasurementId(),
     getNavPages(),
+    getSiteSettings(),
   ]);
-  const extraNavItems = navPages.map((p) => ({
+  // Build the full nav from the editable fixed_nav (enabled + ordered)
+  // followed by the custom pages flagged "Show in header nav".
+  const fixedNavItems = [...settings.fixedNav]
+    .filter((n) => n.enabled && FIXED_NAV_HREF[n.key])
+    .sort((a, b) => a.order - b.order)
+    .map((n) => ({ label: n.label, href: FIXED_NAV_HREF[n.key] }));
+  const customNavItems = navPages.map((p) => ({
     label: p.title,
     href: `/${p.slug}`,
   }));
+  const extraNavItems = [...customNavItems];
 
   return (
     <html lang="en" className={montserrat.variable}>
@@ -96,9 +105,13 @@ export default async function RootLayout({
         {/* Reads saved brand theme and overrides --brand-* CSS variables
             so navy/cream switches re-skin the entire site. */}
         <BrandThemeStyle />
-        <Header portraitAvatar={portrait.avatar} extraNavItems={extraNavItems} />
+        <Header
+          portraitAvatar={portrait.avatar}
+          fixedNavItems={fixedNavItems}
+          extraNavItems={extraNavItems}
+        />
         <main>{children}</main>
-        <Footer portraitAvatar={portrait.avatar} />
+        <Footer portraitAvatar={portrait.avatar} settings={settings} />
       </body>
     </html>
   );

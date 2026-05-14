@@ -10,27 +10,42 @@ export default function MenuDrawer({
   onClose,
   portraitAvatar,
   extraNavItems,
+  fixedNavItems,
 }: {
   open: boolean;
   onClose: () => void;
   portraitAvatar?: string;
   extraNavItems?: Array<{ label: string; href: string }>;
+  fixedNavItems?: Array<{ label: string; href: string }>;
 }) {
-  // Splice custom pages in just before the Contact item so the
-  // dropdowns (Communities) and core flow remain stable.
+  // Three-tier nav assembly:
+  //   1) Fixed nav from site_settings (enabled + ordered) — if provided
+  //   2) Otherwise fall back to the hardcoded `nav` array in lib/site.ts
+  //   3) Inject custom-page nav items (extraNavItems) before /contact
   type NavItem = {
     label: string;
     href: string;
     children?: { label: string; href: string }[];
   };
+  const baseNav: NavItem[] =
+    fixedNavItems && fixedNavItems.length > 0
+      ? // Re-attach Communities sub-children when present in the original nav
+        fixedNavItems.map((item) => {
+          const orig = (nav as NavItem[]).find((n) => n.href === item.href);
+          return orig?.children
+            ? { ...item, children: orig.children }
+            : item;
+        })
+      : (nav as NavItem[]);
+
   const mergedNav: NavItem[] = (() => {
-    if (!extraNavItems || extraNavItems.length === 0) return nav as NavItem[];
-    const idx = nav.findIndex((n) => n.href === "/contact");
-    const safeIdx = idx === -1 ? nav.length : idx;
+    if (!extraNavItems || extraNavItems.length === 0) return baseNav;
+    const idx = baseNav.findIndex((n) => n.href === "/contact");
+    const safeIdx = idx === -1 ? baseNav.length : idx;
     return [
-      ...(nav.slice(0, safeIdx) as NavItem[]),
+      ...baseNav.slice(0, safeIdx),
       ...extraNavItems.map((e) => ({ label: e.label, href: e.href })),
-      ...(nav.slice(safeIdx) as NavItem[]),
+      ...baseNav.slice(safeIdx),
     ];
   })();
   const avatar = portraitAvatar || site.portrait.avatar;

@@ -50,6 +50,7 @@ const NAV_GROUPS: NavGroup[] = [
       { href: "/admin", label: "Dashboard", icon: LayoutTemplate },
       { href: "/admin/builder/home", label: "Page Builder", icon: Layers, matchPrefix: true },
       { href: "/admin/pages", label: "Pages", icon: LayoutTemplate, matchPrefix: true },
+      { href: "/admin/settings", label: "Site Settings", icon: Plug, matchPrefix: true },
       { href: "/admin/brand", label: "Brand Identity", icon: Palette, matchPrefix: true },
       { href: "/admin/media", label: "Media Library", icon: ImageIcon, matchPrefix: true },
       { href: "/admin/reviews", label: "Reviews", icon: Star, matchPrefix: true },

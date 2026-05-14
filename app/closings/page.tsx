@@ -1,13 +1,19 @@
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
-
-export const metadata = {
-  title: "Recent Closings | Shoukoufa Aboubakri",
-  description:
-    "Every home Shoukoufa personally represented at the closing table across the DMV.",
-};
+import { getPageMeta } from "@/lib/siteSettings";
 
 export const dynamic = "force-dynamic";
 
-export default function ClosingsPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("closings");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: { title: meta.title, description: meta.description ?? undefined },
+  };
+}
+
+export default function Page() {
   return <PageRenderer pageKey="closings" />;
 }

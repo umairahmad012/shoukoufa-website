@@ -1,13 +1,19 @@
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
-
-export const metadata = {
-  title: "Invest | Shoukoufa Aboubakri",
-  description:
-    "Investment property guidance across the DMV — strategy, diligence, and acquisition support for first-time and seasoned investors.",
-};
+import { getPageMeta } from "@/lib/siteSettings";
 
 export const dynamic = "force-dynamic";
 
-export default function InvestPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("invest");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: { title: meta.title, description: meta.description ?? undefined },
+  };
+}
+
+export default function Page() {
   return <PageRenderer pageKey="invest" />;
 }

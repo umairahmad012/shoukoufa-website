@@ -34,6 +34,7 @@ const FIXED_PAGES: Array<{ key: string; label: string; livePath: string }> = [
   { key: "reviews", label: "Reviews", livePath: "/reviews" },
   { key: "partners", label: "Trusted Partners", livePath: "/partners" },
   { key: "contact", label: "Contact", livePath: "/contact" },
+  { key: "privacy", label: "Privacy & Disclaimers", livePath: "/privacy" },
 ];
 
 type Params = { page: string };

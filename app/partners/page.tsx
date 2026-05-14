@@ -1,13 +1,19 @@
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
-
-export const metadata = {
-  title: "Trusted Partners | Shoukoufa Aboubakri",
-  description:
-    "The lenders, inspectors, insurance agents, and trades Shoukoufa trusts with her own clients. Real names, real contact info, no kickbacks.",
-};
+import { getPageMeta } from "@/lib/siteSettings";
 
 export const dynamic = "force-dynamic";
 
-export default function PartnersPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("partners");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: { title: meta.title, description: meta.description ?? undefined },
+  };
+}
+
+export default function Page() {
   return <PageRenderer pageKey="partners" />;
 }

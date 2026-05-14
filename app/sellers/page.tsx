@@ -1,13 +1,19 @@
+import type { Metadata } from "next";
 import PageRenderer from "@/components/blocks/PageRenderer";
-
-export const metadata = {
-  title: "Selling a Home | Shoukoufa Aboubakri — VA, MD & DC Listing Agent",
-  description:
-    "Pricing strategy, professional marketing, and negotiation that protects you. Boutique listing representation across the DMV.",
-};
+import { getPageMeta } from "@/lib/siteSettings";
 
 export const dynamic = "force-dynamic";
 
-export default function SellersPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getPageMeta("sellers");
+  if (!meta) return {};
+  return {
+    title: meta.title,
+    description: meta.description ?? undefined,
+    openGraph: { title: meta.title, description: meta.description ?? undefined },
+  };
+}
+
+export default function Page() {
   return <PageRenderer pageKey="sellers" />;
 }

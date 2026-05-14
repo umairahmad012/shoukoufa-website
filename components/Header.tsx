@@ -12,9 +12,11 @@ export type ExtraNavItem = { label: string; href: string };
 export default function Header({
   portraitAvatar,
   extraNavItems,
+  fixedNavItems,
 }: {
   portraitAvatar?: string;
   extraNavItems?: ExtraNavItem[];
+  fixedNavItems?: ExtraNavItem[];
 }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -96,6 +98,7 @@ export default function Header({
         onClose={() => setOpen(false)}
         portraitAvatar={portraitAvatar}
         extraNavItems={extraNavItems}
+        fixedNavItems={fixedNavItems}
       />
     </>
   );
