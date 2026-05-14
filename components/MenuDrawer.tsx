@@ -18,14 +18,19 @@ export default function MenuDrawer({
 }) {
   // Splice custom pages in just before the Contact item so the
   // dropdowns (Communities) and core flow remain stable.
-  const mergedNav = (() => {
-    if (!extraNavItems || extraNavItems.length === 0) return nav;
+  type NavItem = {
+    label: string;
+    href: string;
+    children?: { label: string; href: string }[];
+  };
+  const mergedNav: NavItem[] = (() => {
+    if (!extraNavItems || extraNavItems.length === 0) return nav as NavItem[];
     const idx = nav.findIndex((n) => n.href === "/contact");
     const safeIdx = idx === -1 ? nav.length : idx;
     return [
-      ...nav.slice(0, safeIdx),
-      ...extraNavItems,
-      ...nav.slice(safeIdx),
+      ...(nav.slice(0, safeIdx) as NavItem[]),
+      ...extraNavItems.map((e) => ({ label: e.label, href: e.href })),
+      ...(nav.slice(safeIdx) as NavItem[]),
     ];
   })();
   const avatar = portraitAvatar || site.portrait.avatar;
