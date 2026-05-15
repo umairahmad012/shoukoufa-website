@@ -6,62 +6,89 @@
  *   • First page load (refresh / direct URL): 2 seconds.
  *   • Click-to-navigate between pages:        1 second.
  *
- * On click, captures the event BEFORE Next.js's Link handler fires,
- * preventDefault()s, shows the overlay, calls router.push() in
- * parallel so the new page renders underneath, then hides the
- * overlay after 1s — revealing the destination already in place.
+ * IMPORTANT — module-level state is intentional. Next.js can remount
+ * this client component on route change (the App Router does treat
+ * layout client components as stable, but in practice Reaches mount
+ * lifecycles run on each navigation). If the loader's visibility
+ * lived in `useState`, the new instance's first-load useEffect would
+ * fire and start a fresh 2-second timer — overriding the 1-second
+ * timer the click handler set on the old instance. That's exactly
+ * the bug we saw: clicks dismissed at ~2s instead of 1s.
  *
- * Two separate useEffects on purpose: the click listener must NOT
- * depend on pathname or `router`'s effect cleanup will clearTimeout
- * the hide-timer the moment navigation finishes, leaving the loader
- * stuck on screen.
+ * The fix: store the "hide-at" deadline in a module-level variable,
+ * and subscribe to it via useSyncExternalStore. Module state
+ * survives the component remount, so the click's 1-second deadline
+ * sticks. flushSync forces the final dismissal to apply
+ * synchronously even if Next.js's router transition is in flight.
  */
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
 import { AiLoader } from "@/components/ui/ai-loader";
 
 const CLICK_TRANSITION_MS = 1000;
 const FIRST_LOAD_MS = 2000;
 
+// ─── Module-level store (survives component remount) ─────────────
+let activeHideAt: number | null = null;
+let firstLoadFired = false;
+const subscribers = new Set<() => void>();
+
+function setActiveHideAt(value: number | null) {
+  activeHideAt = value;
+  for (const s of subscribers) s();
+}
+function subscribe(cb: () => void) {
+  subscribers.add(cb);
+  return () => {
+    subscribers.delete(cb);
+  };
+}
+function getSnapshot() {
+  return activeHideAt;
+}
+function getServerSnapshot(): number | null {
+  // Server render: no loader. The 2-second first-load timer kicks
+  // in client-side. Trade-off: a few ms of plain page before the
+  // loader appears, in exchange for zero hydration mismatch.
+  return null;
+}
+
 export default function PageTransitionLoader() {
   const router = useRouter();
-  // Start visible so the first-paint already shows the loader (no
-  // flash of plain page before the timer kicks in).
-  const [visible, setVisible] = useState(true);
-  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hideAt = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  /** Show the loader + schedule a hide after `durationMs`. The hide
-   *  uses `flushSync` so React applies the state change immediately
-   *  instead of letting Next.js's router transition defer it. Without
-   *  flushSync the loader stuck around for ~2s on click navigations
-   *  (the setVisible(false) got batched into the transition that
-   *  router.push() opened). */
-  function show(durationMs: number) {
-    setVisible(true);
-    if (hideTimer.current) clearTimeout(hideTimer.current);
-    hideTimer.current = setTimeout(() => {
-      flushSync(() => {
-        setVisible(false);
-      });
-      hideTimer.current = null;
-    }, durationMs);
-  }
-
-  // First-load: hide after 2s. Self-suppressed inside /admin.
+  // First-load (once per page-session). Mounts a 2-second timer
+  // unless we're inside /admin.
   useEffect(() => {
-    if (window.location.pathname.startsWith("/admin")) {
-      setVisible(false);
-      return;
-    }
-    show(FIRST_LOAD_MS);
-    // No cleanup that clearTimeouts — we WANT the hide timer to
-    // outlive this effect.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (typeof window === "undefined") return;
+    if (window.location.pathname.startsWith("/admin")) return;
+    if (firstLoadFired) return;
+    firstLoadFired = true;
+    setActiveHideAt(Date.now() + FIRST_LOAD_MS);
   }, []);
 
-  // Click interceptor. Stable across the component's lifetime —
-  // depends only on `router`, which is stable.
+  // Whenever the deadline changes, schedule a single timer for the
+  // remaining time. Cleanup clears the timer so we never double-fire.
+  useEffect(() => {
+    if (hideAt === null) return;
+    const remaining = hideAt - Date.now();
+    if (remaining <= 0) {
+      setActiveHideAt(null);
+      return;
+    }
+    const t = setTimeout(() => {
+      // flushSync so React applies the hide synchronously, even if
+      // Next.js's router transition is currently batching state
+      // updates from router.push().
+      flushSync(() => setActiveHideAt(null));
+    }, remaining);
+    return () => clearTimeout(t);
+  }, [hideAt]);
+
+  // Click interceptor — sets a 1-second deadline before kicking off
+  // the navigation. router.push() runs in parallel; the new page
+  // renders under the overlay during the 1-second window.
   useEffect(() => {
     function shouldSkipLink(link: HTMLAnchorElement, e: MouseEvent): boolean {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return true;
@@ -79,8 +106,6 @@ export default function PageTransitionLoader() {
           return true;
         }
       }
-      // No fullscreen loader inside admin — admin has its own
-      // contextual save loaders and the overlay would block editing.
       if (
         href.startsWith("/admin") ||
         window.location.pathname.startsWith("/admin")
@@ -91,9 +116,6 @@ export default function PageTransitionLoader() {
     }
 
     function onClick(e: MouseEvent) {
-      // Find the nearest <a> in the composed event path. We use
-      // composedPath() so SVG-icon clicks inside an <a> still
-      // resolve to the anchor.
       const path = e.composedPath ? e.composedPath() : [];
       const link =
         (path.find((n) => (n as HTMLElement)?.tagName === "A") as
@@ -106,7 +128,6 @@ export default function PageTransitionLoader() {
       if (shouldSkipLink(link, e)) return;
 
       const href = link.getAttribute("href")!;
-      // Resolve to a pathname so we can skip same-route clicks.
       let nextPath = href;
       try {
         nextPath = new URL(href, window.location.origin).pathname;
@@ -115,24 +136,18 @@ export default function PageTransitionLoader() {
       }
       if (nextPath === window.location.pathname) return;
 
-      // Intercept — block default + Next.js Link's own onClick.
       e.preventDefault();
       e.stopPropagation();
-
-      // Show loader, fire navigation in parallel, hide after 1s.
-      show(CLICK_TRANSITION_MS);
+      setActiveHideAt(Date.now() + CLICK_TRANSITION_MS);
       router.push(href);
     }
 
     document.addEventListener("click", onClick, { capture: true });
     return () => {
       document.removeEventListener("click", onClick, { capture: true });
-      // NOTE: we deliberately do NOT clearTimeout(hideTimer.current)
-      // here. If this effect re-runs for any reason, an active hide
-      // timer must survive so the loader actually dismisses itself.
     };
   }, [router]);
 
-  if (!visible) return null;
+  if (hideAt === null) return null;
   return <AiLoader fullscreen />;
 }
