@@ -219,7 +219,7 @@ export async function DarkBreakBlock({ data }: { data: DarkBreakData }) {
         fallback:
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2560&auto=format&fit=crop&q=85",
         crop: "wide",
-        width: 3840,
+        width: 2560,
       })
     : "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2560&auto=format&fit=crop&q=85";
 
@@ -302,7 +302,7 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
     ? await resolveImageUrl(w.backgroundImage, {
         fallback: "",
         crop: "wide",
-        width: 3840,
+        width: 2560,
       })
     : "";
 

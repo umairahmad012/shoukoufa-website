@@ -27,11 +27,9 @@ import { flushSync } from "react-dom";
 import { AiLoader } from "@/components/ui/ai-loader";
 
 const CLICK_TRANSITION_MS = 1000;
-const FIRST_LOAD_MS = 2000;
 
 // ─── Module-level store (survives component remount) ─────────────
 let activeHideAt: number | null = null;
-let firstLoadFired = false;
 const subscribers = new Set<() => void>();
 
 function setActiveHideAt(value: number | null) {
@@ -58,15 +56,10 @@ export default function PageTransitionLoader() {
   const router = useRouter();
   const hideAt = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  // First-load (once per page-session). Mounts a 2-second timer
-  // unless we're inside /admin.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.location.pathname.startsWith("/admin")) return;
-    if (firstLoadFired) return;
-    firstLoadFired = true;
-    setActiveHideAt(Date.now() + FIRST_LOAD_MS);
-  }, []);
+  // First-load loader intentionally disabled — it was adding ~2s
+  // of perceived wait on the very first visit, hurting perceived
+  // performance and the "real" pageload speed metrics. The
+  // page-transition loader (on inter-page clicks) still runs.
 
   // Whenever the deadline changes, schedule a single timer for the
   // remaining time. Cleanup clears the timer so we never double-fire.

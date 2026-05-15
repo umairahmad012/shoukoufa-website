@@ -16,7 +16,7 @@ export default async function PathTeaser() {
     fallback:
       "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&auto=format&fit=crop&q=85",
     crop: "wide",
-    width: 3840,
+    width: 2560,
   });
 
   return (

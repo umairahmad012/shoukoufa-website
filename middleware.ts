@@ -81,7 +81,10 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Run middleware on /admin and on auth callback routes; skip static assets.
-    "/((?!_next/static|_next/image|favicon.ico|images/|videos/|closings/).*)",
+    // Only run middleware on /admin. There is no authed UI outside /admin,
+    // so the previous "every request" matcher was forcing a Supabase
+    // auth.getUser() round-trip on every public page — adding 100-300ms
+    // to TTFB for visitors who will never log in.
+    "/admin/:path*",
   ],
 };

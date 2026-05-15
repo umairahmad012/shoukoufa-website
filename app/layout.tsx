@@ -83,6 +83,18 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={montserrat.variable}>
+      <head>
+        {/* Open the TCP/TLS connection to Cloudinary as early as the
+            HTML parses, so the moment the CSS references the hero
+            background-image we don't pay handshake cost. Shaves
+            200-500ms off LCP on cold loads. */}
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body>
         {/* Google Analytics 4 — auto-injected when configured in admin.
             `next/script` with strategy="afterInteractive" loads gtag.js

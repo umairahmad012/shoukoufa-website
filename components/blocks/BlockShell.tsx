@@ -78,7 +78,7 @@ export default async function BlockShell({
     ? await resolveImageUrl(w.backgroundImage, {
         fallback: "",
         crop: "wide",
-        width: 3840,
+        width: 2560,
       })
     : "";
 

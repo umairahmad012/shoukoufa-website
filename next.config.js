@@ -5,6 +5,13 @@ const nextConfig = {
   turbopack: {
     root: __dirname,
   },
+  // Tree-shake lucide-react imports at the import level so each icon
+  // only pulls its own module, not the whole library. Trims 20-50KB
+  // off any client bundle that imports icons (Header, Footer,
+  // MenuDrawer, admin panels).
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "res.cloudinary.com" },
