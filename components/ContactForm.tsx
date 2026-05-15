@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Check } from "lucide-react";
 import { submitBuiltInForm } from "@/app/admin/forms/actions";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
@@ -83,9 +84,16 @@ export default function ContactForm() {
       )}
 
       <div className="pt-4">
-        <button type="submit" disabled={pending} className="btn-solid">
-          {pending ? "Sending…" : "Submit"}
-        </button>
+        {pending ? (
+          // While submitting, swap the static "Sending…" text for the
+          // animated AI loader — same vertical slot, more obvious that
+          // something's actually happening.
+          <AiLoader text="Sending" />
+        ) : (
+          <button type="submit" className="btn-solid">
+            Submit
+          </button>
+        )}
       </div>
     </form>
   );

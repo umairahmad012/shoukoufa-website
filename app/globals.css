@@ -343,6 +343,98 @@ html {
 }
 
 /* ============================================================
+   AI LOADER (components/ui/ai-loader.tsx)
+   ============================================================
+   Shimmering letters + rotating gradient ring. Pure CSS, no JS
+   animation loop. Sized at ~1em — wrap the loader at the call
+   site if you want a bigger or smaller indicator. */
+.loader-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05em;
+  padding: 1.5em 1.75em;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  font-weight: 300;
+  color: rgb(var(--ink-rgb, 24 36 51));
+}
+.loader-letter {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  opacity: 0.4;
+  animation: loader-letter-anim 2s infinite;
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5em;
+  height: 5em;
+  margin-top: -2.5em;
+  margin-left: -2.5em;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  animation: loader-rotate 2s linear infinite;
+  /* Initial box-shadow set by the keyframe — kept here as the static
+     fallback for browsers / users with reduced motion. */
+  box-shadow:
+    0 10px 20px 0 #fff inset,
+    0 20px 30px 0 #ad5fff inset,
+    0 60px 60px 0 #471eec inset;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader,
+  .loader-letter {
+    animation: none;
+  }
+  .loader-letter { opacity: 1; }
+}
+
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(90deg);
+    box-shadow:
+      0 10px 20px 0 #fff inset,
+      0 20px 30px 0 #ad5fff inset,
+      0 60px 60px 0 #471eec inset;
+  }
+  50% {
+    transform: rotate(270deg);
+    box-shadow:
+      0 10px 20px 0 #fff inset,
+      0 20px 10px 0 #d60a47 inset,
+      0 40px 60px 0 #311e80 inset;
+  }
+  100% {
+    transform: rotate(450deg);
+    box-shadow:
+      0 10px 20px 0 #fff inset,
+      0 20px 30px 0 #ad5fff inset,
+      0 60px 60px 0 #471eec inset;
+  }
+}
+
+@keyframes loader-letter-anim {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  40% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
    STYLED TOOLTIPS (replaces ugly native title= attribute)
    ============================================================
    Pattern:
