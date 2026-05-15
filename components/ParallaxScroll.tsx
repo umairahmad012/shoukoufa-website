@@ -11,15 +11,19 @@
  *   scroll-driven `transform` works the same on every browser and
  *   benefits from GPU compositing (no main-thread layout cost).
  *
- * Effect:
- *   The bg image moves at a reduced speed relative to its parent
- *   section, giving a "the image is anchored, content scrolls over
- *   it" feel without the iOS quirks.
+ * Crispness:
+ *   The first cut used `transform: scale(1.15)` to give translate
+ *   headroom, but GPU `scale()` interpolates pixels — measurably
+ *   softer on Retina. We now extend the element's box natively via
+ *   negative top/bottom offsets (`top: -7.5%; bottom: -7.5%`) so
+ *   `background-size: cover` renders the image at its true delivered
+ *   size with the browser's native scaler. Only `translate3d(...)`
+ *   moves on scroll — translation is pixel-perfect on the GPU and
+ *   doesn't degrade quality.
  *
  * Accessibility:
  *   Honors `prefers-reduced-motion` by clearing transforms so the
- *   bg stays put in its container (no parallax for users who opted
- *   out of motion).
+ *   bg stays put in its container.
  *
  * Re-binds on every route change so newly mounted hero sections get
  * picked up.
@@ -28,11 +32,10 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-// Headroom for the bg image. Scale 1.15 keeps the image close to
-// its native resolution (only 15% upscale) while still giving room
-// to translate ~7.5% of section height in either direction. Larger
-// scale values blurred the image noticeably on Retina screens.
-const SCALE = 1.15;
+// Each bg layer extends HEADROOM_PCT above and below its section
+// box. That extra height (a) keeps the image native-resolution and
+// (b) gives `translate3d` somewhere to move without exposing edges.
+const HEADROOM_PCT = 7.5;
 
 export default function ParallaxScroll() {
   const pathname = usePathname();
@@ -52,9 +55,11 @@ export default function ParallaxScroll() {
     const items: Item[] = els.map((el) => {
       const parent = el.parentElement ?? el;
       el.style.willChange = "transform";
-      // Lock the scale baseline so the image always overflows its
-      // box by (SCALE - 1) / 2 on each side, giving translation room.
-      el.style.transformOrigin = "center center";
+      // Extend the element's box naturally — this gives translate
+      // headroom WITHOUT any `transform: scale()`, so the image
+      // renders at its true delivered resolution.
+      el.style.top = `-${HEADROOM_PCT}%`;
+      el.style.bottom = `-${HEADROOM_PCT}%`;
       return { el, parent };
     });
 
@@ -72,15 +77,13 @@ export default function ParallaxScroll() {
         // entering from below) through 0 (centered) to large-negative
         // (section has scrolled past).
         const centerDelta = rect.top + rect.height / 2 - vh / 2;
-        // Confine the parallax travel to (SCALE - 1) / 2 of section
-        // height so the bg image never exposes its edges. Travel is
-        // proportional to how far the section's center is from the
-        // viewport center.
-        const maxTravel = (rect.height * (SCALE - 1)) / 2;
+        // Cap travel to (HEADROOM_PCT/100) of section height — that's
+        // exactly how much overflow we built in via top/bottom offsets.
+        const maxTravel = rect.height * (HEADROOM_PCT / 100);
         const range = vh / 2 + rect.height / 2;
         const normalized = Math.max(-1, Math.min(1, centerDelta / range));
         const translateY = normalized * maxTravel;
-        el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) scale(${SCALE})`;
+        el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
       }
     }
 
@@ -100,7 +103,8 @@ export default function ParallaxScroll() {
       for (const { el } of items) {
         el.style.willChange = "";
         el.style.transform = "";
-        el.style.transformOrigin = "";
+        el.style.top = "";
+        el.style.bottom = "";
       }
     };
   }, [pathname]);
