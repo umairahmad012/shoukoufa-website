@@ -18,6 +18,7 @@
  */
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { AiLoader } from "@/components/ui/ai-loader";
 
 const CLICK_TRANSITION_MS = 1000;
@@ -30,12 +31,19 @@ export default function PageTransitionLoader() {
   const [visible, setVisible] = useState(true);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  /** Show the loader + schedule a hide after `durationMs`. */
+  /** Show the loader + schedule a hide after `durationMs`. The hide
+   *  uses `flushSync` so React applies the state change immediately
+   *  instead of letting Next.js's router transition defer it. Without
+   *  flushSync the loader stuck around for ~2s on click navigations
+   *  (the setVisible(false) got batched into the transition that
+   *  router.push() opened). */
   function show(durationMs: number) {
     setVisible(true);
     if (hideTimer.current) clearTimeout(hideTimer.current);
     hideTimer.current = setTimeout(() => {
-      setVisible(false);
+      flushSync(() => {
+        setVisible(false);
+      });
       hideTimer.current = null;
     }, durationMs);
   }
