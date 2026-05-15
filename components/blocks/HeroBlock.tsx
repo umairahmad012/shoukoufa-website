@@ -83,7 +83,7 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
           </div>
         ) : (
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center bg-parallax"
             style={{ backgroundImage: `url('${bgImage}')` }}
           />
         )}

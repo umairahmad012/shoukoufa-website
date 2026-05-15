@@ -22,7 +22,7 @@ export default async function PathTeaser() {
   return (
     <section className="relative section-y-lg gutter-x overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center bg-parallax"
         style={{
           backgroundImage: `url('${bgUrl}')`,
         }}

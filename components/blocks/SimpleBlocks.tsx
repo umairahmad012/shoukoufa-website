@@ -339,7 +339,7 @@ export async function CtaBandBlock({ data }: { data: CtaBandData }) {
           the band is intentionally a quiet plain section. */}
       {bg && isDark ? (
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-[0.18]"
+          className="absolute inset-0 bg-cover bg-center opacity-[0.18] bg-parallax"
           style={{ backgroundImage: `url('${bg}')` }}
         />
       ) : null}

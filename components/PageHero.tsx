@@ -16,7 +16,7 @@ export default function PageHero({
       {image && (
         <>
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-20"
+            className="absolute inset-0 bg-cover bg-center opacity-20 bg-parallax"
             style={{ backgroundImage: `url('${image}')` }}
           />
           <div className="absolute inset-0 bg-cream/55" />

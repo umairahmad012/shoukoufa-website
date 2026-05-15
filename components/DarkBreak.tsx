@@ -39,7 +39,7 @@ export default function DarkBreak({
       className={`relative w-full overflow-hidden bg-navy-dark gutter-x flex items-center ${heightMap[height]}`}
     >
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center bg-parallax"
         style={{ backgroundImage: `url('${bgImage}')` }}
       />
       <div className="absolute inset-0 overlay-hero" />
