@@ -223,10 +223,14 @@ export default function AdminSidebar({
         className="p-3 space-y-2"
         style={{ borderTop: "1px solid var(--sidebar-border)" }}
       >
-        {/* Back to public site — opens marketing site in same tab so admin
-            can preview their changes without losing the admin session. */}
-        <Link
+        {/* View public site — opens in a NEW tab so the admin keeps
+            their place. The icon already implies external/new-tab; the
+            previous same-tab behavior felt broken because clicking
+            this dumped admins out of their workflow. */}
+        <a
           href="/"
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={onClose}
           className="admin-tab w-full"
           style={{
@@ -235,8 +239,8 @@ export default function AdminSidebar({
           }}
         >
           <ExternalLink size={14} strokeWidth={1.75} />
-          Back to Site
-        </Link>
+          View Site
+        </a>
 
         <div
           className="px-3 py-2 rounded text-[11px] truncate"
