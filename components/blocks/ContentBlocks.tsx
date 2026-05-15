@@ -6,7 +6,7 @@ import Link from "next/link";
 import BlockShell from "./BlockShell";
 import { getPortrait, resolveImageUrl } from "@/lib/contentLoader";
 import type { BlockWrapper } from "@/lib/blockRegistry";
-import { tc } from "@/lib/textColor";
+import { tc, gridColsForCount } from "@/lib/textColor";
 
 type WithWrapper<T> = T & { wrapper?: BlockWrapper };
 
@@ -134,7 +134,11 @@ export async function ThreeCardsBlock({ data }: { data: ThreeCardsData }) {
           </h2>
         ) : null}
       </div>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 items-stretch">
+      {/* Adaptive grid — if admin adds a 4th card, render 2×2 instead
+          of 3+1 orphan. 5+ cards lay out as 3 across. */}
+      <div
+        className={`max-w-6xl mx-auto grid ${gridColsForCount(cards.length)} gap-6 md:gap-10 items-stretch`}
+      >
         {cards.map((c, i) => {
           const CardWrap = c.href ? Link : ("div" as React.ElementType);
           return (
@@ -218,6 +222,7 @@ type PracticeAreasData = WithWrapper<{
 }>;
 
 export async function PracticeAreasBlock({ data }: { data: PracticeAreasData }) {
+  const cards = data.cards ?? [];
   return (
     <BlockShell wrapper={data.wrapper}>
       <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
@@ -233,8 +238,12 @@ export async function PracticeAreasBlock({ data }: { data: PracticeAreasData }) 
           </h2>
         ) : null}
       </div>
-      <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-        {(data.cards ?? []).map((b, i) => (
+      {/* Adaptive grid: 4 cards → 2×2, 6 → 3×2, 5/7+ → 3 cols. Never
+          leaves a single orphan card on its own row at the lg+ breakpoint. */}
+      <div
+        className={`max-w-5xl mx-auto grid ${gridColsForCount(cards.length)} gap-8 md:gap-10`}
+      >
+        {cards.map((b, i) => (
           <div
             key={i}
             className="glass-light glow-on-hover p-7 md:p-12 flex flex-col"

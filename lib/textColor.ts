@@ -45,3 +45,22 @@ export function joinClasses(...parts: Array<string | false | null | undefined>):
 export function tc(className: string, color?: TextColor | string | null): string {
   return joinClasses(className, textColorClass(color));
 }
+
+/**
+ * Pick a balanced grid column count based on how many cards are being
+ * rendered. The hard rule: never leave a single orphan card on its own
+ * row at the wide breakpoint.
+ *
+ *   1 card  → 1 column
+ *   2 cards → 2 columns (sm+)
+ *   3 cards → 3 columns (lg+)
+ *   4 cards → 2 × 2 grid  (no 3rd column ever, prevents 3+1 orphan)
+ *   5 cards → 3 columns (lays out as 3 top + 2 bottom)
+ *   6 cards → 3 × 2
+ *   7+      → 3 columns (last row may be partial but never one orphan)
+ */
+export function gridColsForCount(n: number): string {
+  if (n <= 1) return "grid-cols-1";
+  if (n === 2 || n === 4) return "grid-cols-1 sm:grid-cols-2";
+  return "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+}
