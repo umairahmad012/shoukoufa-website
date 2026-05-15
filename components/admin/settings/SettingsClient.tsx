@@ -733,7 +733,7 @@ function NotificationsTab({
           <p>
             Emails are sent from{" "}
             <span className="font-mono text-[11px]">
-              {settings.name} Website &lt;notifications@brandbonjour.com&gt;
+              {settings.name} Website &lt;notify@brandbonjour.com&gt;
             </span>
             . When you hit Reply, your response goes directly to the visitor
             (we set the reply-to header to whatever email they submitted).
