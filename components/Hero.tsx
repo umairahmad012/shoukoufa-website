@@ -58,7 +58,7 @@ export default async function Hero() {
     resolveImageUrl(c.backgroundImage, {
       fallback: FALLBACK_POSTER,
       crop: "wide",
-      width: 2560,
+      width: 3840,
     }),
     resolveVideoUrl(c.backgroundVideo),
   ]);

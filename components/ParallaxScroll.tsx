@@ -28,10 +28,11 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-// Headroom for the bg image. With scale 1.4 the image is 40% larger
-// than its section box, so we can translate up to ~20% of section
-// height in either direction without exposing edges.
-const SCALE = 1.4;
+// Headroom for the bg image. Scale 1.15 keeps the image close to
+// its native resolution (only 15% upscale) while still giving room
+// to translate ~7.5% of section height in either direction. Larger
+// scale values blurred the image noticeably on Retina screens.
+const SCALE = 1.15;
 
 export default function ParallaxScroll() {
   const pathname = usePathname();

@@ -57,7 +57,7 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
         fallback:
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2560&auto=format&fit=crop&q=85",
         crop: "wide",
-        width: 2560,
+        width: 3840,
       })
     : "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2560&auto=format&fit=crop&q=85";
 
