@@ -1,42 +1,51 @@
 "use client";
 
 /**
- * Animated "AI-style" loader.
+ * Animated "AI-style" loader with golden gradient ring.
  *
- * Letters of the supplied text shimmer in a staggered wave while a
- * rotating gradient ring spins behind them. Built from CSS keyframes
- * defined in `app/globals.css` — no JS animation loop, no extra deps.
+ * Two modes:
  *
- * Usage:
- *   <AiLoader />                       // default "Generating"
- *   <AiLoader text="Sending" />        // form submit
- *   <AiLoader text="Saving" />         // admin save
- *   <AiLoader text="Loading" />        // page transition
+ *   1) inline — sits inside a button or row slot. Letters of the
+ *      supplied text shimmer in a staggered wave while the ring
+ *      rotates behind them.
  *
- *   <AiLoader text="Sending" className="my-4" />   // outer wrapper class
+ *      <AiLoader text="Sending" />        // form submit
+ *      <AiLoader text="Saving" />         // admin save
+ *      <AiLoader text="Generating" />     // default
+ *
+ *   2) fullscreen — fixed full-viewport overlay with a black-grey
+ *      gradient backdrop and the ring centered (no text by default).
+ *      Used by PageTransitionLoader between route changes.
+ *
+ *      <AiLoader fullscreen />            // ring only, dark overlay
+ *
+ * Pure CSS animations (no JS loop). Respects prefers-reduced-motion.
  */
 import { cn } from "@/lib/cn";
 
 export function AiLoader({
-  text = "Generating",
+  text,
   className,
+  fullscreen = false,
 }: {
-  /** The word whose letters shimmer. Letters animate with a stagger.
-   *  Spaces are preserved. Keep it short — long strings break the layout. */
+  /** Optional text whose letters shimmer next to the ring. Omit for a
+   *  ring-only loader (the fullscreen variant defaults to no text). */
   text?: string;
   /** Optional outer wrapper class for positioning / spacing. */
   className?: string;
+  /** Render as a centered full-viewport overlay with a dark backdrop. */
+  fullscreen?: boolean;
 }) {
-  // Split into letters so each gets its own animated span.
-  // Non-breaking space keeps spacing inside words like "Sending data".
-  const letters = Array.from(text);
+  const showText = typeof text === "string" && text.length > 0;
+  const letters = showText ? Array.from(text!) : [];
+  const ariaLabel = showText ? `${text}…` : "Loading";
 
-  return (
+  const ring = (
     <div
       role="status"
       aria-live="polite"
-      aria-label={`${text}…`}
-      className={cn("inline-flex", className)}
+      aria-label={ariaLabel}
+      className={cn(!fullscreen && "inline-flex", className)}
     >
       <div className="loader-wrapper">
         {letters.map((char, i) => (
@@ -46,13 +55,17 @@ export function AiLoader({
             style={{ animationDelay: `${i * 0.1}s` }}
             aria-hidden="true"
           >
-            {char === " " ? " " : char}
+            {char === " " ? " " : char}
           </span>
         ))}
         <div className="loader" aria-hidden="true" />
       </div>
     </div>
   );
+
+  if (!fullscreen) return ring;
+
+  return <div className="loader-overlay">{ring}</div>;
 }
 
 export default AiLoader;

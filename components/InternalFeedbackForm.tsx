@@ -9,6 +9,7 @@
 import { useState, useTransition } from "react";
 import { Star, Lock, Check } from "lucide-react";
 import { submitInternalReview } from "@/app/admin/reviews/actions";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 export default function InternalFeedbackForm() {
   const [pending, startTransition] = useTransition();
@@ -170,9 +171,13 @@ export default function InternalFeedbackForm() {
         </div>
       )}
 
-      <button type="submit" disabled={pending} className="btn-solid w-full sm:w-auto">
-        {pending ? "Sending…" : "Send privately to Shoukoufa"}
-      </button>
+      {pending ? (
+        <AiLoader text="Sending" />
+      ) : (
+        <button type="submit" className="btn-solid w-full sm:w-auto">
+          Send privately to Shoukoufa
+        </button>
+      )}
     </form>
   );
 }

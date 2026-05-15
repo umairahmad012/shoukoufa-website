@@ -20,6 +20,7 @@ import {
 } from "@/lib/brandTheme";
 import { saveBrandTheme } from "@/app/admin/brand/theme/actions";
 import { cn } from "@/lib/cn";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 export default function ThemeEditor({ initial }: { initial: BrandTheme }) {
   const router = useRouter();
@@ -95,15 +96,18 @@ export default function ThemeEditor({ initial }: { initial: BrandTheme }) {
             </span>
           )}
           {error && <span className="text-[11px] text-red-700">{error}</span>}
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={pending}
-            className="admin-btn"
-          >
-            <Save size={13} className="mr-2" />
-            {pending ? "Saving…" : "Save theme"}
-          </button>
+          {pending ? (
+            <AiLoader text="Saving" />
+          ) : (
+            <button
+              type="button"
+              onClick={handleSave}
+              className="admin-btn"
+            >
+              <Save size={13} className="mr-2" />
+              Save theme
+            </button>
+          )}
         </div>
       </div>
     </div>

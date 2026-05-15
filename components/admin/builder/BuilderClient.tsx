@@ -42,6 +42,7 @@ import {
 } from "@/lib/blockRegistry";
 import { FieldRenderer, MediaLibraryProvider } from "@/components/admin/content/Fields";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { AiLoader } from "@/components/ui/ai-loader";
 import type { PageBlockRow } from "@/lib/pageBlocks";
 import type { VideoLibraryItem } from "@/components/admin/media/VideoPicker";
 
@@ -328,6 +329,7 @@ export default function BuilderClient({
           library={library}
           onSave={handleSaveEdit}
           onClose={() => setEditingId(null)}
+          pending={pending}
         />
       )}
     </div>
@@ -446,11 +448,15 @@ function BlockEditor({
   library,
   onSave,
   onClose,
+  pending = false,
 }: {
   block: PageBlockRow;
   library: VideoLibraryItem[];
   onSave: (id: string, data: Record<string, unknown>) => void;
   onClose: () => void;
+  /** Save-in-flight flag from parent. When true, the Save button is
+   *  swapped for the animated AI loader. */
+  pending?: boolean;
 }) {
   // Escape to close + body-scroll lock
   useEffect(() => {
@@ -576,13 +582,17 @@ function BlockEditor({
           >
             Cancel
           </button>
-          <button
-            onClick={() => onSave(block.id, data)}
-            className="px-6 py-2 bg-navy text-white text-[0.7rem] tracking-[0.28em] uppercase rounded hover:opacity-90"
-            style={{ fontWeight: 500 }}
-          >
-            Save
-          </button>
+          {pending ? (
+            <AiLoader text="Saving" />
+          ) : (
+            <button
+              onClick={() => onSave(block.id, data)}
+              className="px-6 py-2 bg-navy text-white text-[0.7rem] tracking-[0.28em] uppercase rounded hover:opacity-90"
+              style={{ fontWeight: 500 }}
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
     </div>

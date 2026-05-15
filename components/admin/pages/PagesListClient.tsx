@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { createPage, updatePage, deletePage } from "@/app/admin/pages/actions";
 import type { CustomPage } from "@/lib/customPages";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 export default function PagesListClient({
   initialPages,
@@ -468,14 +469,17 @@ function EditPageModal({
           >
             Cancel
           </button>
-          <button
-            onClick={save}
-            disabled={pending}
-            className="px-6 py-2 bg-navy text-white text-[0.7rem] tracking-[0.28em] uppercase rounded hover:opacity-90 disabled:opacity-50"
-            style={{ fontWeight: 500 }}
-          >
-            {pending ? "Saving…" : "Save"}
-          </button>
+          {pending ? (
+            <AiLoader text="Saving" />
+          ) : (
+            <button
+              onClick={save}
+              className="px-6 py-2 bg-navy text-white text-[0.7rem] tracking-[0.28em] uppercase rounded hover:opacity-90"
+              style={{ fontWeight: 500 }}
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
     </div>

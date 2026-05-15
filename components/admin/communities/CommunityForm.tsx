@@ -11,6 +11,7 @@ import {
 } from "@/app/admin/communities/actions";
 import ImagePicker, { type LibraryItem } from "@/components/admin/media/ImagePicker";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { AiLoader } from "@/components/ui/ai-loader";
 import {
   DEFAULT_COMMUNITY_PHOTO,
   DEFAULT_COMMUNITY_HERO_PHOTO,
@@ -444,14 +445,18 @@ export default function CommunityForm({
           >
             Cancel
           </Link>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={pending || !v.name || !v.slug}
-            className="admin-btn"
-          >
-            <Save size={14} className="mr-2" /> Save
-          </button>
+          {pending ? (
+            <AiLoader text="Saving" />
+          ) : (
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={!v.name || !v.slug}
+              className="admin-btn"
+            >
+              <Save size={14} className="mr-2" /> Save
+            </button>
+          )}
         </div>
       </div>
     </div>

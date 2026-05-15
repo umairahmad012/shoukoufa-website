@@ -346,8 +346,15 @@ html {
    AI LOADER (components/ui/ai-loader.tsx)
    ============================================================
    Shimmering letters + rotating gradient ring. Pure CSS, no JS
-   animation loop. Sized at ~1em — wrap the loader at the call
-   site if you want a bigger or smaller indicator. */
+   animation loop.
+
+   Two modes:
+     • inline (default) — sits inside a button / row, sized ~1em
+     • fullscreen       — fixed overlay with dark-grey backdrop
+                          (used by PageTransitionLoader)
+
+   Palette: warm whites → amber → deep gold. Same gradient is used
+   for page transitions AND admin save buttons. */
 .loader-wrapper {
   position: relative;
   display: inline-flex;
@@ -379,12 +386,12 @@ html {
   z-index: 1;
   pointer-events: none;
   animation: loader-rotate 2s linear infinite;
-  /* Initial box-shadow set by the keyframe — kept here as the static
-     fallback for browsers / users with reduced motion. */
+  /* Initial box-shadow (gold). Mirrors the first keyframe so the
+     ring still reads correctly when prefers-reduced-motion is on. */
   box-shadow:
-    0 10px 20px 0 #fff inset,
-    0 20px 30px 0 #ad5fff inset,
-    0 60px 60px 0 #471eec inset;
+    0 10px 20px 0 #fffaf0 inset,
+    0 20px 30px 0 #f6c453 inset,
+    0 60px 60px 0 #b48507 inset;
 }
 @media (prefers-reduced-motion: reduce) {
   .loader,
@@ -398,23 +405,23 @@ html {
   0% {
     transform: rotate(90deg);
     box-shadow:
-      0 10px 20px 0 #fff inset,
-      0 20px 30px 0 #ad5fff inset,
-      0 60px 60px 0 #471eec inset;
+      0 10px 20px 0 #fffaf0 inset,
+      0 20px 30px 0 #f6c453 inset,
+      0 60px 60px 0 #b48507 inset;
   }
   50% {
     transform: rotate(270deg);
     box-shadow:
       0 10px 20px 0 #fff inset,
-      0 20px 10px 0 #d60a47 inset,
-      0 40px 60px 0 #311e80 inset;
+      0 20px 10px 0 #ffd166 inset,
+      0 40px 60px 0 #8a6300 inset;
   }
   100% {
     transform: rotate(450deg);
     box-shadow:
-      0 10px 20px 0 #fff inset,
-      0 20px 30px 0 #ad5fff inset,
-      0 60px 60px 0 #471eec inset;
+      0 10px 20px 0 #fffaf0 inset,
+      0 20px 30px 0 #f6c453 inset,
+      0 60px 60px 0 #b48507 inset;
   }
 }
 
@@ -432,6 +439,46 @@ html {
     opacity: 0.7;
     transform: translateY(0);
   }
+}
+
+/* Fullscreen overlay variant — used by the page-transition loader.
+   Sits above all content (z-200) on a neutral black-grey gradient.
+   Fades in/out smoothly so it doesn't flash on/off. */
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  animation: loader-overlay-fade 0.25s ease-out;
+}
+.loader-overlay--leaving {
+  animation: loader-overlay-fade-out 0.25s ease-in forwards;
+}
+.loader-overlay .loader-wrapper {
+  /* Bigger ring on the fullscreen variant. The fullscreen loader
+     never has letters next to it (text=undefined) so the wrapper
+     just hosts the ring. */
+  font-size: 1.4rem;
+  padding: 2em 2em;
+  color: #f6c453;
+}
+.loader-overlay .loader {
+  width: 6em;
+  height: 6em;
+  margin-top: -3em;
+  margin-left: -3em;
+}
+
+@keyframes loader-overlay-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes loader-overlay-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
 /* ============================================================

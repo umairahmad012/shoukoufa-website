@@ -22,6 +22,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { AiLoader } from "@/components/ui/ai-loader";
 import {
   testGoogleConnection,
   saveGoogleIntegration,
@@ -380,14 +381,18 @@ export default function GoogleIntegrationWizard({
               </p>
             )}
           </div>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={pending || !apiKey || !placeId}
-            className="admin-btn"
-          >
-            {pending ? "Saving…" : "Save & activate"}
-          </button>
+          {pending ? (
+            <AiLoader text="Saving" />
+          ) : (
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={!apiKey || !placeId}
+              className="admin-btn"
+            >
+              Save &amp; activate
+            </button>
+          )}
         </div>
       </div>
     </div>

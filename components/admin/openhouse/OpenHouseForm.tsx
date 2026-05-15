@@ -14,6 +14,7 @@ import ImagePicker, {
   type LibraryItem,
 } from "@/components/admin/media/ImagePicker";
 import { useConfirm } from "@/components/admin/ConfirmDialog";
+import { AiLoader } from "@/components/ui/ai-loader";
 import {
   OPEN_HOUSE_FEATURES,
   TOTAL_FLYER_PILLS,
@@ -616,14 +617,18 @@ export default function OpenHouseForm({
           >
             Cancel
           </Link>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={pending || !v.heading || !v.slug}
-            className="admin-btn"
-          >
-            <Save size={14} className="mr-2" /> Save
-          </button>
+          {pending ? (
+            <AiLoader text="Saving" />
+          ) : (
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={!v.heading || !v.slug}
+              className="admin-btn"
+            >
+              <Save size={14} className="mr-2" /> Save
+            </button>
+          )}
         </div>
       </div>
     </div>

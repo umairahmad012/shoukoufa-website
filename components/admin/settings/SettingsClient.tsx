@@ -19,6 +19,7 @@ import {
   updatePageMeta,
   sendNotificationTest,
 } from "@/app/admin/settings/actions";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 type Tab = "contact" | "social" | "nav" | "meta" | "footer" | "notifications";
 
@@ -897,14 +898,17 @@ function SaveBar({
           "Changes go live immediately when you save."
         )}
       </div>
-      <button
-        onClick={onSave}
-        disabled={pending}
-        className="inline-flex items-center gap-2 px-6 py-2.5 bg-navy text-white text-[0.7rem] tracking-[0.28em] uppercase rounded hover:opacity-90 disabled:opacity-50"
-        style={{ fontWeight: 500 }}
-      >
-        <Save size={14} /> {pending ? "Saving…" : "Save Changes"}
-      </button>
+      {pending ? (
+        <AiLoader text="Saving" />
+      ) : (
+        <button
+          onClick={onSave}
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-navy text-white text-[0.7rem] tracking-[0.28em] uppercase rounded hover:opacity-90"
+          style={{ fontWeight: 500 }}
+        >
+          <Save size={14} /> Save Changes
+        </button>
+      )}
     </div>
   );
 }

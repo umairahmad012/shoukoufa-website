@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Star, Send, Check } from "lucide-react";
 import { submitPublicReview } from "@/app/admin/reviews/actions";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 export default function LeaveReviewForm() {
   const [pending, startTransition] = useTransition();
@@ -153,15 +154,19 @@ export default function LeaveReviewForm() {
         <p className="text-xs text-red-700">{error}</p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending || !quote}
-        className="inline-flex items-center justify-center px-7 py-3 bg-navy text-white text-sm rounded hover:bg-navy-dark disabled:opacity-50"
-        style={{ fontWeight: 500, letterSpacing: "0.04em" }}
-      >
-        <Send size={14} className="mr-2" />
-        {pending ? "Sending…" : "Send my review"}
-      </button>
+      {pending ? (
+        <AiLoader text="Sending" />
+      ) : (
+        <button
+          type="submit"
+          disabled={!quote}
+          className="inline-flex items-center justify-center px-7 py-3 bg-navy text-white text-sm rounded hover:bg-navy-dark disabled:opacity-50"
+          style={{ fontWeight: 500, letterSpacing: "0.04em" }}
+        >
+          <Send size={14} className="mr-2" />
+          Send my review
+        </button>
+      )}
     </form>
   );
 }

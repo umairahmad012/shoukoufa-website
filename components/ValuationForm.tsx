@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { Check } from "lucide-react";
 import { submitBuiltInForm } from "@/app/admin/forms/actions";
+import { AiLoader } from "@/components/ui/ai-loader";
 
 export default function ValuationForm() {
   const [v, setV] = useState({
@@ -89,9 +90,13 @@ export default function ValuationForm() {
       </div>
       {error && <p className="text-xs text-red-700">{error}</p>}
       <div className="pt-4">
-        <button type="submit" disabled={pending} className="btn-solid">
-          {pending ? "Sending…" : "Get My Valuation"}
-        </button>
+        {pending ? (
+          <AiLoader text="Sending" />
+        ) : (
+          <button type="submit" className="btn-solid">
+            Get My Valuation
+          </button>
+        )}
         <p className="mt-6 text-xs text-ink-subtle italic">
           Typical response time: within 24 hours.
         </p>
