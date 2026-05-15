@@ -2,7 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Instagram, Facebook, Music2, Youtube, Linkedin } from "lucide-react";
+import {
+  Instagram,
+  Facebook,
+  Music2,
+  Youtube,
+  Linkedin,
+  Phone,
+  Mail,
+  MapPin,
+} from "lucide-react";
 import { site as staticSite } from "@/lib/site";
 import type { SiteSettings } from "@/lib/siteSettings";
 
@@ -101,20 +110,24 @@ export default function Footer({
           >
             Direct
           </p>
-          {/* Phone + email rendered as block links with min-h-[44px] so
-              they meet the 44px tap-target floor on phone. */}
-          <div className="text-base font-light leading-[1.85]">
+          {/* Phone + email — each row is a block-level flex with its
+              own icon. `flex` (not inline-flex) makes each <a> stack
+              vertically; min-h-[44px] keeps the tap target above the
+              WCAG floor on phone. */}
+          <div className="text-base font-light leading-[1.85] space-y-1">
             <a
               href={site.phoneHref}
-              className="inline-flex items-center min-h-[44px] hover:opacity-70 transition-opacity"
+              className="flex items-center gap-3 min-h-[44px] hover:opacity-70 transition-opacity"
             >
-              {site.phone}
+              <Phone size={16} strokeWidth={1.5} className="text-white/55 shrink-0" />
+              <span>{site.phone}</span>
             </a>
             <a
               href={site.emailHref}
-              className="block inline-flex items-center min-h-[44px] hover:opacity-70 transition-opacity"
+              className="flex items-center gap-3 min-h-[44px] hover:opacity-70 transition-opacity break-all"
             >
-              {site.email}
+              <Mail size={16} strokeWidth={1.5} className="text-white/55 shrink-0" />
+              <span>{site.email}</span>
             </a>
           </div>
 
@@ -126,22 +139,28 @@ export default function Footer({
             >
               Brokerage Office
             </p>
-            <p
-              className="text-sm font-light text-white/90 leading-[1.75] mb-2"
+            {/* Address — single flex row with pin icon top-aligned so
+                multi-line text reads cleanly next to a single icon. */}
+            <div
+              className="flex items-start gap-3 text-sm font-light text-white/90 leading-[1.75] mb-2"
               style={{ fontWeight: 300 }}
             >
-              {bo.name}
-              <br />
-              {bo.street}
-              <br />
-              {bo.cityStateZip}
-            </p>
+              <MapPin size={16} strokeWidth={1.5} className="text-white/55 shrink-0 mt-0.5" />
+              <span>
+                {bo.name}
+                <br />
+                {bo.street}
+                <br />
+                {bo.cityStateZip}
+              </span>
+            </div>
             <a
               href={bo.phoneHref}
-              className="inline-flex items-center min-h-[44px] text-sm font-light text-white/85 hover:opacity-70 transition-opacity"
+              className="flex items-center gap-3 min-h-[44px] text-sm font-light text-white/85 hover:opacity-70 transition-opacity"
               aria-label={`Office line: ${bo.phone}`}
             >
-              Office: {bo.phone}
+              <Phone size={16} strokeWidth={1.5} className="text-white/55 shrink-0" />
+              <span>Office: {bo.phone}</span>
             </a>
 
             {/* Broker logo — wired from Brand → Broker Image admin field */}
