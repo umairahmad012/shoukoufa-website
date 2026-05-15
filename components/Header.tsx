@@ -56,6 +56,11 @@ export default function Header({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the menu drawer whenever the route changes.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   // On standalone pages with a light background (open-house flyer renders
   // on cream-soft right at the top), the transparent-header + white-text
   // combo is invisible. Force a solid navy band there so the header is
