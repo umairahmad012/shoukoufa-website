@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BrandThemeStyle from "@/components/BrandThemeStyle";
 import PageTransitionLoader from "@/components/PageTransitionLoader";
+import ParallaxScroll from "@/components/ParallaxScroll";
 import { getPortrait, getFeaturedImage } from "@/lib/contentLoader";
 import { getAnalyticsMeasurementId } from "@/lib/integrationStore";
 import { siteOrigin } from "@/lib/qrcode";
@@ -109,6 +110,7 @@ export default async function RootLayout({
         {/* Fullscreen gold-on-dark overlay on every route change.
             Self-hides inside /admin so editing isn't interrupted. */}
         <PageTransitionLoader />
+        <ParallaxScroll />
         <Header
           portraitAvatar={portrait.avatar}
           fixedNavItems={fixedNavItems}

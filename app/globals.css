@@ -484,23 +484,18 @@ html {
 /* ============================================================
    PARALLAX BACKGROUND (full-bleed hero / break sections)
    ============================================================
-   Pins a background-image to the viewport so content scrolls
-   over a stationary image. Applied uniformly across desktop,
-   tablet, and mobile.
+   Visual is driven by components/ParallaxScroll.tsx — it applies
+   a `transform: scale(1.4) translate3d(...)` on each `.bg-parallax`
+   element on scroll, giving a "the image is anchored, content
+   scrolls over it" feel that works on every device (iOS Safari
+   ignores `background-attachment: fixed` or blurs it).
 
-   We honor prefers-reduced-motion (an OS-level accessibility
-   signal) by falling back to scroll attachment for users who
-   have asked their device to minimize motion. */
+   The class itself only establishes the cover/center backdrop
+   baseline. JS picks it up from there. */
 .bg-parallax {
-  background-attachment: fixed;
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-}
-@media (prefers-reduced-motion: reduce) {
-  .bg-parallax {
-    background-attachment: scroll;
-  }
 }
 
 /* ============================================================
