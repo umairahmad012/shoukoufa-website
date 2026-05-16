@@ -11,7 +11,7 @@ import { getPortrait, getFeaturedImage } from "@/lib/contentLoader";
 import { getAnalyticsMeasurementId } from "@/lib/integrationStore";
 import { siteOrigin } from "@/lib/qrcode";
 import { getNavPages } from "@/lib/customPages";
-import { getSiteSettings, FIXED_NAV_HREF } from "@/lib/siteSettings";
+import { getSiteSettings, FIXED_NAV_HREF, getPageMeta } from "@/lib/siteSettings";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -29,26 +29,39 @@ const montserrat = Montserrat({
  * specific fields like `openGraph.images` per page.
  */
 export async function generateMetadata(): Promise<Metadata> {
-  const ogImage = await getFeaturedImage();
+  const [ogImage, homeMeta] = await Promise.all([
+    getFeaturedImage(),
+    getPageMeta("home"),
+  ]);
+  // Hardcoded strings preserved as fallback so behavior is identical when
+  // page_meta('home') is empty. Once Shoukoufa edits the home title in
+  // /admin/seo, those values automatically replace these defaults — no
+  // code change needed.
+  const fallbackTitle =
+    "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.";
+  const fallbackDescription =
+    "Building legacies, one house at a time. Shoukoufa Aboubakri is a licensed Real Estate Specialist with REMAX Galaxy, serving the DMV — Virginia, Maryland, and Washington D.C.";
+  const fallbackOgDescription =
+    "Building legacies, one house at a time. Boutique real estate representation across the DMV.";
+  const title = homeMeta?.title || fallbackTitle;
+  const description = homeMeta?.description || fallbackDescription;
+  const ogDescription = homeMeta?.description || fallbackOgDescription;
   return {
     metadataBase: new URL(siteOrigin()),
-    title: "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.",
-    description:
-      "Building legacies, one house at a time. Shoukoufa Aboubakri is a licensed Real Estate Specialist with REMAX Galaxy, serving the DMV — Virginia, Maryland, and Washington D.C.",
+    title,
+    description,
     // Favicon is generated dynamically by `app/icon.tsx` (round PNG with
     // transparent corners). Next auto-discovers it; no manual entry needed.
     openGraph: {
-      title: "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.",
-      description:
-        "Building legacies, one house at a time. Boutique real estate representation across the DMV.",
+      title,
+      description: ogDescription,
       type: "website",
       images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Shoukoufa Aboubakri | Real Estate Specialist · Virginia · Maryland · D.C.",
-      description:
-        "Building legacies, one house at a time. Boutique real estate representation across the DMV.",
+      title,
+      description: ogDescription,
       images: [ogImage],
     },
   };
