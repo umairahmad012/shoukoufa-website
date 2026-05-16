@@ -33,6 +33,7 @@ import {
   BarChart3,
   Search,
   Layers,
+  HelpCircle,
 } from "lucide-react";
 import NextImage from "next/image";
 import { createClient } from "@/lib/supabase/client";
@@ -76,6 +77,12 @@ const NAV_GROUPS: NavGroup[] = [
       { href: "/admin/inbox", label: "Inbox", icon: Inbox, matchPrefix: true },
       { href: "/admin/forms", label: "Forms", icon: ClipboardList, matchPrefix: true },
       { href: "/admin/integrations/google", label: "Integrations", icon: Plug, matchPrefix: false },
+    ],
+  },
+  {
+    label: "Help",
+    items: [
+      { href: "/admin/support", label: "Get support", icon: HelpCircle, matchPrefix: true },
     ],
   },
 ];

@@ -66,6 +66,8 @@ export type SiteSettings = {
   notifyForms: boolean;
   notifyRsvp: boolean;
   fixedNav: NavEntry[];
+  /** Per-site prefix for support ticket numbers (e.g. "SH" → SH-0007). */
+  supportTicketPrefix: string;
 };
 
 const DEFAULT_FOOTER_COPY = {
@@ -177,6 +179,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     notifyForms: true,
     notifyRsvp: true,
     fixedNav: DEFAULT_FIXED_NAV,
+    supportTicketPrefix: "BB",
   };
 
   // Pull all three sources in parallel: site_settings row, brand identity
@@ -265,6 +268,9 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     fixedNav: Array.isArray(row?.fixed_nav)
       ? (row!.fixed_nav as NavEntry[])
       : fallback.fixedNav,
+    supportTicketPrefix:
+      (row?.support_ticket_prefix as string | null)?.trim() ||
+      fallback.supportTicketPrefix,
   };
 }
 

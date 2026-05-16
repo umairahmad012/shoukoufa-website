@@ -9,6 +9,7 @@
  */
 
 import { createContext, useContext, type ReactNode } from "react";
+import SupportFab from "@/components/admin/support/SupportFab";
 
 interface AdminLayoutContextValue {
   /** Resolved circular avatar URL — Cloudinary if uploaded, else static. */
@@ -29,6 +30,9 @@ export function AdminLayoutProvider({
   return (
     <AdminLayoutContext.Provider value={{ portraitUrl }}>
       {children}
+      {/* Floating "?" — opens the support wizard from any admin page.
+          Hidden on the wizard itself + the anonymous auth routes. */}
+      <SupportFab />
     </AdminLayoutContext.Provider>
   );
 }
