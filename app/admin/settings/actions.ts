@@ -52,23 +52,49 @@ export async function updateSiteSettings(
   return { ok: true };
 }
 
+/**
+ * Upsert (not just update) so a freshly-cloned site — where the
+ * page_meta table may be empty for some keys — still saves cleanly.
+ * Empty title means "use the agent-aware fallback in
+ * buildPageMetadata" — we represent that as a NULL title row OR no
+ * row at all, both of which the fallback path treats the same.
+ */
 export async function updatePageMeta(input: {
   page_key: string;
   title: string;
   description?: string;
 }): Promise<{ ok: true } | { ok: false; error: string }> {
-  if (!input.title.trim()) return { ok: false, error: "Title is required." };
   const supabase = await createClient();
-  const { error } = await supabase
-    .from("page_meta")
-    .update({
-      title: input.title.trim(),
-      description: input.description?.trim() || null,
-    })
-    .eq("page_key", input.page_key);
-  if (error) return { ok: false, error: error.message };
+  const title = input.title.trim();
+  const description = input.description?.trim() || null;
+  // If both fields are empty, delete the row so the fallback generator
+  // takes over cleanly. Saves admins from staring at a row labeled
+  // "(empty)" and wondering whether the fallback is actually firing.
+  if (!title && !description) {
+    const { error } = await supabase
+      .from("page_meta")
+      .delete()
+      .eq("page_key", input.page_key);
+    if (error) return { ok: false, error: error.message };
+  } else {
+    const { error } = await supabase
+      .from("page_meta")
+      .upsert(
+        {
+          page_key: input.page_key,
+          // Schema requires non-null title; if admin cleared the title
+          // but kept a description, store the title as empty string —
+          // buildPageMetadata treats empty as falsy and falls back.
+          title: title || "",
+          description,
+        },
+        { onConflict: "page_key" },
+      );
+    if (error) return { ok: false, error: error.message };
+  }
   revalidatePath(`/${input.page_key === "home" ? "" : input.page_key}`);
   revalidatePath(`/admin/settings`);
+  revalidatePath(`/admin/seo/pages`);
   return { ok: true };
 }
 

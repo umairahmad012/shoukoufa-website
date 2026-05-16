@@ -45,6 +45,13 @@ export default function ParallaxScroll() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
+    // On desktop/mouse devices the CSS `background-attachment: fixed`
+    // handles parallax natively — don't fight it with JS transforms.
+    // The JS path only runs on touch devices (phones/tablets) where
+    // iOS Safari breaks `background-attachment: fixed`.
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      return;
+    }
 
     const els = Array.from(
       document.querySelectorAll<HTMLElement>(".bg-parallax"),

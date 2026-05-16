@@ -303,35 +303,126 @@ export async function getAllPageMeta(): Promise<PageMetaRow[]> {
  * title + description + og:image so per-page generateMetadata() doesn't
  * accidentally drop openGraph.images (which Next.js shallow-merges out
  * when a page overrides only title/description in its openGraph block).
+ *
+ * Fallback strategy (cloned-site-friendly):
+ *   1. If admin has filled in page_meta for this key → use that.
+ *   2. Else generate a unique, agent-aware fallback from getSiteSettings()
+ *      — so a freshly-cloned site (John Doe, ACME Realty) already has
+ *      distinct per-page titles for SEO without anyone editing the SEO
+ *      panel first. Once Shoukoufa/clone-agent edits the per-page meta
+ *      in /admin/seo, those values transparently take over.
  */
 export async function buildPageMetadata(pageKey: string) {
-  const [meta, featured] = await Promise.all([
+  const [meta, featured, settings] = await Promise.all([
     getPageMeta(pageKey),
     // Import lazily to avoid a circular dep between siteSettings and contentLoader.
     import("./contentLoader").then((m) => m.getFeaturedImage()),
+    getSiteSettings(),
   ]);
-  if (!meta) {
-    // Even with no row, include the og:image so shares of an unconfigured
-    // page still get the brand featured photo.
-    return {
-      openGraph: featured ? { images: [{ url: featured }] } : undefined,
-      twitter: featured ? { images: [featured] } : undefined,
-    };
-  }
+
+  const fallback = buildFallbackPageMeta(pageKey, settings);
+  const title = meta?.title || fallback.title;
+  const description = meta?.description || fallback.description;
+
   return {
-    title: meta.title,
-    description: meta.description ?? undefined,
+    title,
+    description,
     openGraph: {
-      title: meta.title,
-      description: meta.description ?? undefined,
+      title,
+      description,
       ...(featured ? { images: [{ url: featured }] } : {}),
     },
     twitter: {
-      title: meta.title,
-      description: meta.description ?? undefined,
+      title,
+      description,
       ...(featured ? { images: [featured] } : {}),
     },
   };
+}
+
+/**
+ * Per-page fallback titles + descriptions, generated from the live
+ * site settings. Keeps cloned sites SEO-friendly even before admin
+ * fills in the per-page SEO editor.
+ *
+ * Add new page keys here when new fixed pages are introduced. Custom
+ * pages (block-builder) get their own metadata via their loader, not
+ * through buildPageMetadata().
+ */
+/** Exposed for the admin SEO editor so it can show admins what the
+ *  fallback would look like before they override. */
+export function buildFallbackPageMeta(
+  pageKey: string,
+  s: SiteSettings,
+): { title: string; description: string } {
+  const name = s.name;
+  const role = s.role || "Real Estate Specialist";
+  const area = s.serviceArea || "the DMV";
+  const brokerage = s.brokerage || "";
+  const brokerageBit = brokerage ? ` with ${brokerage}` : "";
+
+  switch (pageKey) {
+    case "home":
+      return {
+        title: `${name} | ${role} · ${area}`,
+        description: `${name} is a licensed ${role}${brokerageBit}, serving ${area}. ${s.tagline || "Boutique real estate representation."}`,
+      };
+    case "about":
+      return {
+        title: `About ${name} | ${role}`,
+        description: `Meet ${name} — ${role}${brokerageBit}. ${s.tagline || `Local expertise across ${area}.`}`,
+      };
+    case "buyers":
+      return {
+        title: `Buying a Home | ${name} — ${area} Buyer's Agent`,
+        description: `Looking to buy in ${area}? ${name} guides first-time buyers and seasoned investors through every step — search to closing.`,
+      };
+    case "sellers":
+      return {
+        title: `Selling Your Home | ${name} — ${area} Listing Agent`,
+        description: `Considering selling in ${area}? ${name} delivers concierge listing service: pricing strategy, staging, marketing, negotiation.`,
+      };
+    case "invest":
+      return {
+        title: `Investment Real Estate | ${name} — ${area}`,
+        description: `${name} works with investors across ${area} — rentals, flips, multifamily, 1031 exchanges, and long-term wealth building through real estate.`,
+      };
+    case "communities":
+      return {
+        title: `Communities | ${name}`,
+        description: `Explore the ${area} neighborhoods ${name} knows best — schools, lifestyle, market trends, and what each community is really like to live in.`,
+      };
+    case "closings":
+      return {
+        title: `Recent Closings | ${name}`,
+        description: `A portfolio of recent transactions closed by ${name}${brokerageBit} across ${area}.`,
+      };
+    case "partners":
+      return {
+        title: `Trusted Partners | ${name}`,
+        description: `Lenders, inspectors, contractors, designers — the vetted professionals ${name} recommends for every step of a real estate transaction.`,
+      };
+    case "reviews":
+      return {
+        title: `Client Reviews | ${name} — ${role}`,
+        description: `Read what past clients have said about working with ${name}${brokerageBit}.`,
+      };
+    case "contact":
+      return {
+        title: `Contact ${name} | ${role}`,
+        description: `Reach ${name} directly — phone, email, or schedule a consultation. ${role}${brokerageBit}, serving ${area}.`,
+      };
+    case "privacy":
+      return {
+        title: `Privacy Policy | ${name}`,
+        description: `How ${name} and this website collect, use, and protect visitor information.`,
+      };
+    default:
+      return {
+        title: `${name} | ${role}`,
+        description: s.tagline || `${role}${brokerageBit}, serving ${area}.`,
+      };
+  }
 }
 
 // Reference staticNav so the import isn't unused if we ever switch to a

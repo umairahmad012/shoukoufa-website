@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import BrandThemeStyle from "@/components/BrandThemeStyle";
 import PageTransitionLoader from "@/components/PageTransitionLoader";
 import ParallaxScroll from "@/components/ParallaxScroll";
+import StructuredData from "@/components/StructuredData";
 import { getPortrait, getFeaturedImage } from "@/lib/contentLoader";
 import { getAnalyticsMeasurementId } from "@/lib/integrationStore";
 import { siteOrigin } from "@/lib/qrcode";
@@ -107,6 +108,12 @@ export default async function RootLayout({
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        {/* Schema.org JSON-LD: tells Google this site represents a
+            specific RealEstateAgent, with the brokerage, licenses,
+            social profiles, and service area. Drives knowledge-panel
+            eligibility and rich snippets. Read fully from admin
+            settings — no hardcoded agent info. */}
+        <StructuredData />
       </head>
       <body>
         {/* Google Analytics 4 — auto-injected when configured in admin.

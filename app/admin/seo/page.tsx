@@ -10,6 +10,7 @@ import {
   Lock,
   Lightbulb,
   Sparkles,
+  FileText,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import AdminShell from "@/components/admin/AdminShell";
@@ -185,6 +186,48 @@ export default async function SeoHubPage() {
             </span>
           </a>
 
+          {/* — Per-page metadata (NEW: now live) — */}
+          <Link
+            href="/admin/seo/pages"
+            className="admin-card-elevated group/animated-card relative overflow-hidden rounded-xl p-6 hover:shadow-lg transition-shadow flex flex-col"
+            style={{ color: "var(--card-foreground)" }}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <span
+                className="flex h-10 w-10 items-center justify-center rounded-lg"
+                style={{
+                  background:
+                    "color-mix(in srgb, var(--primary) 16%, var(--card))",
+                  color: "var(--primary)",
+                  border:
+                    "1px solid color-mix(in srgb, var(--primary) 28%, transparent)",
+                }}
+              >
+                <FileText size={20} strokeWidth={1.6} />
+              </span>
+            </div>
+            <h3
+              className="text-base mb-1"
+              style={{ color: "var(--card-foreground)", fontWeight: 600 }}
+            >
+              Per-page SEO
+            </h3>
+            <p
+              className="text-xs leading-relaxed mb-4 flex-1"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              Edit the Google-facing title and meta description for each
+              public page (Home, Buyers, Sellers, etc.). Leave blank to
+              use the smart fallback built from your brand identity.
+            </p>
+            <span
+              className="text-[11px] uppercase tracking-[0.22em] inline-flex items-center gap-1.5"
+              style={{ color: "var(--primary)", fontWeight: 600 }}
+            >
+              Edit <ArrowUpRight size={12} />
+            </span>
+          </Link>
+
           {/* — Image alt-text audit — */}
           <SoonCard
             icon={ImageIcon}
@@ -209,11 +252,59 @@ export default async function SeoHubPage() {
           />
 
           {/* — Schema.org markup — */}
-          <SoonCard
-            icon={Sparkles}
-            title="Schema.org markup"
-            hint="Structured data for RealEstateAgent + LocalBusiness so Google shows rich snippets (rating stars, hours, photo) directly in search results."
-          />
+          <div
+            className="admin-card-elevated rounded-xl p-6 flex flex-col"
+            style={{ color: "var(--card-foreground)" }}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <span
+                className="flex h-10 w-10 items-center justify-center rounded-lg"
+                style={{
+                  background:
+                    "color-mix(in srgb, var(--primary) 14%, var(--card))",
+                  color: "var(--primary)",
+                  border:
+                    "1px solid color-mix(in srgb, var(--primary) 26%, transparent)",
+                }}
+              >
+                <Sparkles size={20} strokeWidth={1.6} />
+              </span>
+              <span
+                className="text-[10px] uppercase tracking-[0.18em] px-2 py-1 rounded-full"
+                style={{
+                  background:
+                    "color-mix(in srgb, var(--primary) 14%, transparent)",
+                  color: "var(--primary)",
+                  fontWeight: 700,
+                }}
+              >
+                Live · auto
+              </span>
+            </div>
+            <h3
+              className="text-base mb-1"
+              style={{ color: "var(--card-foreground)", fontWeight: 600 }}
+            >
+              Schema.org markup
+            </h3>
+            <p
+              className="text-xs leading-relaxed flex-1"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              JSON-LD <code className="admin-mono">RealEstateAgent</code>{" "}
+              schema is auto-emitted on every page using your brand
+              identity, license numbers, social URLs, and brokerage
+              info. Drives Google&rsquo;s knowledge panel + local map
+              results. Edit the source fields in{" "}
+              <Link
+                href="/admin/settings"
+                style={{ color: "var(--primary)", fontWeight: 600 }}
+              >
+                Settings
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </div>
     </AdminShell>

@@ -497,6 +497,19 @@ html {
   background-size: cover;
   background-repeat: no-repeat;
 }
+/* Desktop (mouse + hover) gets the classic "image is glued to the
+   viewport" effect via CSS. ParallaxScroll.tsx detects this same
+   media query and skips the JS path so the two don't fight. */
+@media (hover: hover) and (pointer: fine) {
+  .bg-parallax {
+    background-attachment: fixed;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-parallax {
+    background-attachment: scroll;
+  }
+}
 
 /* ============================================================
    STYLED TOOLTIPS (replaces ugly native title= attribute)
