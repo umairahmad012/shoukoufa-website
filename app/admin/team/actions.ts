@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
+import { siteOrigin } from "@/lib/qrcode";
 
 type Result = { ok: true } | { ok: false; error: string };
 
@@ -39,7 +40,18 @@ export async function inviteTeamMember(input: {
   if (!auth.ok) return { ok: false, error: auth.error };
 
   const admin = createServiceClient();
-  const { data, error } = await admin.auth.admin.inviteUserByEmail(input.email);
+  // Pin the post-click landing page to /admin/reset-password so the
+  // invitee can set their password immediately. Without this, Supabase
+  // sends them to the project's Site URL (defaults to "/") which has
+  // no handler for the invite token in the hash — the page just sits
+  // there, looking crashed.
+  // siteOrigin() resolves to NEXT_PUBLIC_SITE_URL → Netlify URL →
+  // DEPLOY_PRIME_URL → localhost, so it tracks whichever domain is
+  // active (custom domain or *.netlify.app).
+  const { data, error } = await admin.auth.admin.inviteUserByEmail(
+    input.email,
+    { redirectTo: `${siteOrigin()}/admin/reset-password` },
+  );
   if (error) return { ok: false, error: error.message };
 
   // Pre-set their team_members role. The handle_new_user trigger inserts
