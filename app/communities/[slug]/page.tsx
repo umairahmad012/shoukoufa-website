@@ -77,7 +77,11 @@ export default async function CommunityPage({
                 <Stat label="Days on Market" value={c.dom} pos={2} />
                 <Stat
                   label="Market"
-                  value={c.marketType === "Balanced" ? "Balanced" : `${c.marketType}'s`}
+                  // marketType is already stored as "Seller's" / "Buyer's" /
+                  // "Balanced" (see lib/communities.ts type + admin form).
+                  // The previous code appended an extra "'s" which produced
+                  // "Seller's's" / "Buyer's's" on the card. Render as-is.
+                  value={c.marketType}
                   small
                   pos={3}
                 />
