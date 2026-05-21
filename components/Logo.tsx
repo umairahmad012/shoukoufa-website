@@ -59,7 +59,7 @@ export default function Logo({
             it crowds the Contact button even when the wordmark is sized
             down, so we just don't show it. */}
         <span
-          className="text-[0.55rem] xl:text-[0.68rem] font-light tracking-[0.32em] xl:tracking-[0.4em] uppercase opacity-90 mt-1 lg:mt-1.5 self-end whitespace-nowrap hidden lg:inline"
+          className="text-[0.55rem] xl:text-[0.68rem] font-light tracking-[0.32em] xl:tracking-[0.4em] uppercase opacity-90 mt-1 lg:mt-1.5 self-start lg:self-end whitespace-nowrap inline md:hidden lg:inline"
           style={{ fontWeight: 300 }}
         >
           {displayRole}
