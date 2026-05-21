@@ -66,7 +66,7 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
   const stats = data.stats ?? [];
 
   return (
-    <section className={`relative w-full min-h-screen overflow-hidden bg-navy-dark ${textClass}`}>
+    <section className={`relative w-full min-h-[80vh] md:min-h-screen overflow-hidden bg-navy-dark ${textClass}`}>
       {/* Background */}
       <div className="absolute inset-0">
         {ytId ? (
@@ -82,16 +82,37 @@ export default async function HeroBlock({ data }: { data: HeroData }) {
             />
           </div>
         ) : (
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-parallax"
-            style={{ backgroundImage: `url('${bgImage}')` }}
-          />
+          <>
+            {/* Desktop: full-bleed bg with cover + parallax */}
+            <div
+              className="hidden md:block absolute inset-0 bg-cover bg-center bg-parallax"
+              style={{ backgroundImage: `url('${bgImage}')` }}
+            />
+            {/* Mobile: real <img> anchored to top, scaled UP via object-cover
+                so the architecture stays in frame (landscape at the bottom
+                of the source crops off). Image occupies the top 58vh, then
+                a mask-image fade dissolves the bottom ~32% of the image
+                into the navy section just below the headline. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={bgImage}
+              alt=""
+              aria-hidden="true"
+              className="md:hidden absolute inset-x-0 top-0 w-full h-[58vh] object-cover object-top select-none"
+              style={{
+                maskImage:
+                  "linear-gradient(to bottom, black 0%, black 68%, transparent 100%)",
+                WebkitMaskImage:
+                  "linear-gradient(to bottom, black 0%, black 68%, transparent 100%)",
+              }}
+            />
+          </>
         )}
         <div className="absolute inset-0 overlay-hero" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 min-h-screen flex flex-col">
+      <div className="relative z-10 min-h-[80vh] md:min-h-screen flex flex-col">
         <div className="flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-8 pt-28 md:pt-32 pb-10 md:pb-12">
           {data.eyebrow ? (
             <p
