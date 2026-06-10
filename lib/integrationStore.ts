@@ -21,7 +21,10 @@ import { getServiceClient } from "./contentLoader";
 
 // ─────────────────────────── Types ──────────────────────────────
 
-export type IntegrationKey = "google_places" | "google_analytics";
+export type IntegrationKey =
+  | "google_places"
+  | "google_analytics"
+  | "boldtrail";
 
 export interface GooglePlacesConfig {
   apiKey: string;
@@ -35,6 +38,15 @@ export interface GooglePlacesConfig {
 export interface GoogleAnalyticsConfig {
   /** GA4 Measurement ID — looks like "G-XXXXXXXXXX". */
   measurementId: string;
+}
+
+export interface BoldtrailConfig {
+  /** Boldtrail (kvCORE) Lead Capture JWT — issued in Settings → Integrations
+   *  → Lead Capture API. Long-lived (1 year+), pasted by the agent. */
+  apiKey: string;
+  /** Free-text source label that shows up in Boldtrail next to each lead.
+   *  Defaults to the site's primary domain when not set. */
+  sourceLabel?: string;
 }
 
 export interface IntegrationRow<TConfig = unknown> {
@@ -116,4 +128,10 @@ export async function getAnalyticsMeasurementId(): Promise<string | null> {
   const id = row.config?.measurementId?.trim() ?? "";
   if (!id || !/^G-[A-Z0-9]+$/.test(id)) return null;
   return id;
+}
+
+// ─────────────────────────── Boldtrail CRM ──────────────────────
+
+export async function getBoldtrailIntegration() {
+  return getIntegration<BoldtrailConfig>("boldtrail");
 }

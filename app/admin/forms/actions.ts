@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { extractCommon, type FormField } from "@/lib/forms";
 import { sendLeadNotification } from "@/lib/emailNotifications";
+import { sendBoldtrailLead, deriveLeadFromForm } from "@/lib/boldtrail";
 
 type Result = { ok: true; id?: string; slug?: string } | { ok: false; error: string };
 
@@ -118,6 +119,25 @@ export async function submitFormPublic(input: {
     }
   });
 
+  // Push to Boldtrail CRM. Same fire-and-forget pattern as the email —
+  // if Boldtrail rejects, the lead still sits in Supabase + email, so
+  // we never lose a contact. Failures surface in Netlify function logs
+  // for the admin to re-push from /admin/inbox.
+  void sendBoldtrailLead(
+    deriveLeadFromForm({
+      source: input.source,
+      name: common.name,
+      email: common.email,
+      phone: common.phone,
+      message: common.message,
+      data: input.data,
+    }),
+  ).then((r) => {
+    if (!r.ok && r.reason !== "not-configured" && r.reason !== "disabled") {
+      console.error("[boldtrail]", r.reason, r.error);
+    }
+  });
+
   revalidatePath("/admin/inbox");
   return { ok: true };
 }
@@ -155,6 +175,23 @@ export async function submitBuiltInForm(input: {
   }).then((r) => {
     if (!r.ok && r.reason === "send-failed") {
       console.error("[lead-notify]", r.error);
+    }
+  });
+
+  // Push to Boldtrail CRM — see comment above on submitFormPublic for
+  // why this is fire-and-forget alongside the email.
+  void sendBoldtrailLead(
+    deriveLeadFromForm({
+      source: input.source,
+      name: common.name,
+      email: common.email,
+      phone: common.phone,
+      message: common.message,
+      data: input.data,
+    }),
+  ).then((r) => {
+    if (!r.ok && r.reason !== "not-configured" && r.reason !== "disabled") {
+      console.error("[boldtrail]", r.reason, r.error);
     }
   });
 
